@@ -13,7 +13,7 @@ public class IntBoardTests {
 		board = new IntBoard(); //constructor should call calcAjacencies() so you can test them
 		
 	}
-	
+	//Changed adjacency lists tests, so that they would work within a 4x4 grid, rather than the whole board
 	@Test
 	public void testAdjacencyTopLeft0() {
 		BoardCell cell = board.getCell(0,0);
@@ -73,6 +73,7 @@ public class IntBoardTests {
 		assertEquals(4, testList.size());
 	}
 	
+	//Test targets, starting cell is the point (0,0) in this case, and a pathLength of 3
 	@Test
 	public void testTargets0_0_3()
 	{
