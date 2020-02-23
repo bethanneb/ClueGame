@@ -19,7 +19,7 @@ public class IntBoard {
 	}
 	
 	public Set<BoardCell> getAdjList() {
-		
+		return visited;
 	}
 	
 	public void calcTargets( int startCell, int pathLength) {
@@ -27,7 +27,7 @@ public class IntBoard {
 	}
 	
 	public Set<BoardCell> getTargets() {
-		
+		return targets;
 	}
 
 	
