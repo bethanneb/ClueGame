@@ -18,9 +18,9 @@ public class IntBoard {
 		
 	}
 	
-	public Set<BoardCell> getAdjList() {
+	public Set<BoardCell> getAdjList(BoardCell boardCell) {
 		//return list for specific cell
-		return adjMtx[BoardCell];
+		return adjMtx.get(boardCell);
 	}
 	
 	//start cell shouldn't be an int maybe? I made it a BoarcCell
@@ -30,7 +30,7 @@ public class IntBoard {
 		//initialize placement
 		BoardCell currentCell = startCell;
 		//for all of our adjacent cells
-		for(BoardCell adjacentCell: adjMtx[currentCell]) {
+		for(BoardCell adjacentCell: getAdjList(currentCell)) {
 			//if on visited list already continue
 			for(BoardCell alreadyVisited: visited) {
 				if(alreadyVisited == adjacentCell) {
