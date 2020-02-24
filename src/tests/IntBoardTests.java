@@ -1,4 +1,6 @@
 package tests;
+import experiment.BoardCell;
+import experiment.IntBoard;
 
 import static org.junit.Assert.*;
 
@@ -7,18 +9,15 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import experiment.IntBoard;
-
 public class IntBoardTests {
+	private IntBoard board;
 
 	@Before 
 	public void beforeAll() {
-		//add first IntBoard???
 		board = new IntBoard(); //constructor should call calcAjacencies() so you can test them
-		
 	}
 	
-	//Changed adjacency lists tests, so that they would work within a 4x4 grid, rather than the whole board
+	//Adjacency lists tests, should work within a 4x4 grid, rather than the whole board
 	@Test
 	public void testAdjacencyTopLeft0() {
 		BoardCell cell = board.getCell(0,0);
@@ -78,7 +77,7 @@ public class IntBoardTests {
 		assertEquals(4, testList.size());
 	}
 	
-	//Test targets, starting cell is the point (0,0) in this case, and a pathLength of 3
+	//Test targets with path length of 3:
 	@Test
 	public void testTargets0_0_3()
 	{
@@ -115,13 +114,14 @@ public class IntBoardTests {
 		BoardCell cell = board.getCell(1, 3);
 		board.calcTargets(cell, 3);
 		Set targets = board.getTargets();
-		assertEquals(6, targets.size());
+		assertEquals(7, targets.size());
 		assertTrue(targets.contains(board.getCell(1, 0)));
 		assertTrue(targets.contains(board.getCell(0, 1)));
 		assertTrue(targets.contains(board.getCell(2, 1)));
 		assertTrue(targets.contains(board.getCell(3, 2)));
 		assertTrue(targets.contains(board.getCell(2, 3)));
 		assertTrue(targets.contains(board.getCell(1, 2)));
+		assertTrue(targets.contains(board.getCell(0, 3)));
 	}
 	
 	@Test
@@ -139,7 +139,7 @@ public class IntBoardTests {
 		assertTrue(targets.contains(board.getCell(3, 3)));
 	}
 	
-	//added two more tests and fixed 1_1_3
+	//Test targets with path length of 3:
 	@Test
 	public void testTargets1_1_2()
 	{
