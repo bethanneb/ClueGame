@@ -18,6 +18,7 @@ public class IntBoard {
 	}
 	
 	public Set<BoardCell> getAdjList() {
+		
 		return visited;
 	}
 	
