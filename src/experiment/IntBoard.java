@@ -19,11 +19,37 @@ public class IntBoard {
 	}
 	
 	public Set<BoardCell> getAdjList() {
-		return visited;
+		//return list for specific cell
+		return adjMtx[BoardCell];
 	}
 	
-	public void calcTargets( int startCell, int pathLength) {
-		
+	//start cell shouldn't be an int maybe? I made it a BoarcCell
+	public void calcTargets(BoardCell startCell, int pathLength) {
+		//how many steps you have
+		int numSteps = pathLength;
+		//initialize placement
+		BoardCell currentCell = startCell;
+		//for all of our adjacent cells
+		for(BoardCell adjacentCell: adjMtx[currentCell]) {
+			//if on visited list already continue
+			for(BoardCell alreadyVisited: visited) {
+				if(alreadyVisited == adjacentCell) {
+					continue;
+				}
+				else {
+					visited.add(currentCell);
+					if(numSteps == 1) {
+						targets.add(adjacentCell);
+					}
+					else {
+						numSteps--;
+						calcTargets(adjacentCell, numSteps);
+					}
+				}
+			}
+			visited.remove(adjacentCell);
+			
+		}
 	}
 	
 	public Set<BoardCell> getTargets() {
