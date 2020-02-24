@@ -2,6 +2,9 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.util.Set;
+
+import org.junit.Before;
 import org.junit.Test;
 
 import experiment.IntBoard;
@@ -10,9 +13,11 @@ public class IntBoardTests {
 
 	@Before 
 	public void beforeAll() {
+		//add first IntBoard???
 		board = new IntBoard(); //constructor should call calcAjacencies() so you can test them
 		
 	}
+	
 	//Changed adjacency lists tests, so that they would work within a 4x4 grid, rather than the whole board
 	@Test
 	public void testAdjacencyTopLeft0() {

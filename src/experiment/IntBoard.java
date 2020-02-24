@@ -9,7 +9,6 @@ public class IntBoard {
 	private Set<BoardCell> targets;
 	private BoardCell [][] grid;
 	
-	
 	public IntBoard() {
 		calcAdjacencies();
 	}
@@ -22,7 +21,7 @@ public class IntBoard {
 		return visited;
 	}
 	
-	public void calcTargets( int startCell, int pathLength) {
+	public void calcTargets(int startCell, int pathLength) {
 		
 	}
 	
@@ -30,5 +29,4 @@ public class IntBoard {
 		return targets;
 	}
 
-	
 }
