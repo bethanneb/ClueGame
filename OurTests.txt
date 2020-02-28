@@ -1,0 +1,5 @@
+The kitchen has 3 doorways that open RIGHT, at cells (2,1), (2,2), and (2,3). We want to make sure that those all test as doorways. Jim's desk has a doorway that could open DOWN or RIGHT, but we chose to just have it open RIGHT, so we want to test that it opens the correct way. In the Warehouse, there are 2 doors that open LEFT, so we want to test one of those. We want to test that the Break Room door opens UP. We want to test that the Vance Refrigeration door opens DOWN.
+We tested a cell in the Break Room that is right next to the door, to make sure that it comes back as false as being a doorway.
+We tested a cell in the bottom column in between the Break Room and Michaels Office.
+We have 17 doors, instead of 16.
+There are comments indicating the location of each of the cells and the corresponding initials that are tested. 

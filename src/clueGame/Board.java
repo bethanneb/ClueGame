@@ -1,3 +1,4 @@
+//Authors: Elizabeth Bauch and Danella Bunavi
 package clueGame;
 
 import java.util.HashMap;

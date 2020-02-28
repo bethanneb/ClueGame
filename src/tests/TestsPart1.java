@@ -1,3 +1,4 @@
+//Authors: Elizabeth Bauch and Danella Bunavi
 package tests;
 
 import static org.junit.Assert.assertEquals;
