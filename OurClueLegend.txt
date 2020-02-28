@@ -1,0 +1,11 @@
+﻿C, Conference Room, Card
+H, Warehouse, Card
+F, Front Desk, Card
+V, Vance Refrigeration, Card
+B, Break Room, Card
+K, Kitchen, Card
+J, Jim’s Desk, Card
+M, Michael’s House, Card
+D, Dwight’s Desk, Card
+X, Closet, Other
+W, Walkway, Other
