@@ -1,0 +1,79 @@
+commit ba5cf529506589faea3fda24888f786858576375
+Merge: 63a514e 9fa3411
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Feb 24 15:00:04 2020 -0700
+
+    Part 2 finishes, all tests pass, and comments added
+
+commit 63a514ecdee858462911f5c16ff3e84329a077d0
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Feb 24 13:42:20 2020 -0700
+
+    comments/imported libraries
+
+commit 488a803a72806c07bf726bfab9f978984d183874
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Feb 24 13:26:43 2020 -0700
+
+    comments/imported some libraries
+
+commit 9fa3411abb2cd222efa9640dcecc9ac2c1864157
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Mon Feb 24 11:57:56 2020 -0700
+
+    Tried fixing getter for getAdjList
+
+commit 6739d51ad248f54d494ae2f2cb4cd9aa31a00082
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Mon Feb 24 10:05:43 2020 -0700
+
+    super rough draft of calcTargets
+
+commit 40ea59c159e912194db3eed3abe92e1da86dafab
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Feb 23 13:36:32 2020 -0700
+
+    Added return statements to IntBoard
+
+commit 2d22d0ad7ae1fd3b7130b3796036d04b8cbecf8d
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Sun Feb 23 13:11:49 2020 -0700
+
+    finished creating tests
+
+commit 7776841729c830df813b880e4f8253bf29799c20
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Feb 23 12:24:31 2020 -0700
+
+    Added some comments toIntBoardTests file
+
+commit 422c1fb4c16016dfd8ebf6197056c3c0ca2f79a8
+Merge: 4321220 5708a07
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Feb 23 12:18:44 2020 -0700
+
+    Merge branch 'master' of https://github.com/bethanneb/ClueGame
+
+commit 432122051ee314f7e4e65ec98760cb05bbf720e9
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Feb 23 12:02:00 2020 -0700
+
+    Changed coordinates to 4x4 square in tests, and started to add testTarget methods
+
+commit 5708a07e9b1967752c3fc5af4329787eff4f5bfc
+Author: bethanneb <60114224+bethanneb@users.noreply.github.com>
+Date:   Thu Feb 20 16:13:53 2020 -0700
+
+    Create README.md
+
+commit 4d592925d81913cde90505cfae113223874a52b7
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Feb 20 16:13:05 2020 -0700
+
+    added .gitignore
+
+commit ca3f24d9a6d85c72d63d4b5077479619f3e78e04
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Feb 20 15:52:16 2020 -0700
+
+    Initial commit: Started part 1 of the failing tests, but still unfinished. Created BoardCell, IntBoard, and IntBoardTests classes, but nothing has been tested yet
