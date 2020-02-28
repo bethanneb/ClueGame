@@ -41,7 +41,6 @@ public class Board {
 		}
 	
 	
-	//need this?
 	public Board(String boardConfigFile, String roomConfigFile) { //constructor with board and room files passed in for testing with other files
 		super();
 		this.boardConfigFile = boardConfigFile;
@@ -128,28 +127,27 @@ public class Board {
 		}
 	}
 	
-	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
+	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException{
 		FileReader reader = new FileReader(roomConfigFile);
 		Scanner in = new Scanner(reader);
-		Map<Character, String> tempRooms = new HashMap<Character, String>();
-		while (in.hasNextLine()){
-			String value = in.nextLine();
-			value = value.replace(", ", " ");
-			value = value.replace(",", "");
-			int lastSpot = value.lastIndexOf(" "); // get rid of card
-			value = value.substring(0, lastSpot);
-			if(!value.contains(" ")) {
-				in.close();
-				throw new BadConfigFormatException("Bad legend file; lacks a room name for initial");
+		legend = new HashMap<Character, String>();
+		while (in.hasNextLine()) {
+			String line = in.nextLine();
+			char initial = line.charAt(0);
+			String roomName = "";
+			boolean card = false;
+			int i;
+			for (i = 3; line.charAt(i) != ','; i++) {
+				roomName += line.charAt(i);
 			}
-			Scanner scan = new Scanner(value);
-			char key = scan.next().charAt(0);
-			String put = scan.nextLine();
-			scan.close();
-			put = put.trim();
-			tempRooms.put(key, put);
+			if (line.charAt(i+2) == 'C') {
+				card = true;
+			}
+			else if (line.charAt(i+2) != 'O') {
+				throw new BadConfigFormatException("ERROR: Bad file format! Config not loaded! Line:" + line);
+			}
+			legend.put(initial, roomName);
 		}
-		legend = tempRooms;
 		in.close();
 	}
 	
