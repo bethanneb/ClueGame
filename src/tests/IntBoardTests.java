@@ -1,3 +1,8 @@
+/*
+ * author: Elizabeth Bauch
+ * author: Danella Bunavi
+ */
+
 package tests;
 import experiment.BoardCell;
 import experiment.IntBoard;

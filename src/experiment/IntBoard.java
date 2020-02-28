@@ -1,3 +1,8 @@
+/*
+ * author: Elizabeth Bauch
+ * author: Danella Bunavi
+ */
+
 package experiment;
 
 import java.util.HashMap;
