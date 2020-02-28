@@ -139,7 +139,7 @@ public class IntBoardTests {
 		assertTrue(targets.contains(board.getCell(3, 3)));
 	}
 	
-	//Test targets with path length of 3:
+	//Test targets with path length of 2:
 	@Test
 	public void testTargets1_1_2()
 	{

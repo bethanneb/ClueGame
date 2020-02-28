@@ -1,8 +1,8 @@
 package experiment;
 
 public class BoardCell {
-	public int row;
-	public int column;
+	private int row;
+	private int column;
 	
 	public BoardCell () {
 		
@@ -12,5 +12,4 @@ public class BoardCell {
 		row = i;
 		column = j;
 	}
-
 }
