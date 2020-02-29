@@ -80,7 +80,6 @@ public class Board {
 			count++;
 		}
 		scan.close();
-		//System.out.println("Row count: " + count);
 		numRows = count;
 		return numRows;
 	}
@@ -107,14 +106,12 @@ public class Board {
 			}
 			else {
 				if(count != maxCount) {
-					//System.out.println("Max count: " + maxCount + "Count: " + count);
 					throw new BadConfigFormatException("Number of rows or columns is not consistent");
 				}
 			}
 		}
 		scan.close();
 		numColumns = count;
-		//System.out.println("Column count: " + count);
 		return numColumns;
 	}
 	
@@ -137,24 +134,19 @@ public class Board {
 		legend = new HashMap<>();
 		BufferedReader reader = null;
 		try {
-			//read entire file and put into standard characters
 			reader = new BufferedReader(new FileReader(roomConfigFile, StandardCharsets.UTF_8));
 			String line = reader.readLine();
 			while (line != null) {
 				String[] splits = line.split(",");
-				// no character for room
 				if(splits[1] == null || "".equals(splits[1])) {
 					throw new BadConfigFormatException("Bad legend file; lacks a room name for initial");
 				}
-				//not a valid card or walkway or closet
 				if(!("Card".equalsIgnoreCase(splits[2].trim()) || "Other".equalsIgnoreCase(splits[2].trim()))) {
 					throw new BadConfigFormatException("It is not card or other");
 				}
 				String keyScan = splits[0].trim();
 				char key = keyScan.charAt(0);
-				//if it is being converted into special characters for some reason
 				if (keyScan.length()>1) {
-					//get only the initial we want
 					key = keyScan.charAt(keyScan.length()-1);
 				}
 				legend.put(key, splits[1].trim());
@@ -163,7 +155,6 @@ public class Board {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			//want to make sure that file will be close no matter what, even if error is thrown
 		} finally {
 			if (reader != null) {
 				try {
