@@ -77,6 +77,7 @@ public class Board {
 			count++;
 		}
 		scan.close();
+		//System.out.println("Row count: " + count);
 		numRows = count;
 		return numRows;
 	}
@@ -103,12 +104,14 @@ public class Board {
 			}
 			else {
 				if(count != maxCount) {
+					//System.out.println("Max count: " + maxCount + "Count: " + count);
 					throw new BadConfigFormatException("Number of rows or columns is not consistent");
 				}
 			}
 		}
 		scan.close();
 		numColumns = count;
+		//System.out.println("Column count: " + count);
 		return numColumns;
 	}
 	

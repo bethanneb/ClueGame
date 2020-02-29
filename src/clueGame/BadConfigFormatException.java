@@ -3,6 +3,10 @@ package clueGame;
 
 public class BadConfigFormatException extends Exception {
 	String message;
+	
+	public BadConfigFormatException() {
+		message = "Bad Configuration";
+	}
 
 	public BadConfigFormatException(String message) {
 		this.message = message;
