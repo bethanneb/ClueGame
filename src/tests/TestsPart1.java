@@ -19,8 +19,8 @@ public class TestsPart1 {
 	// Constants that I will use to test whether the file was loaded correctly
 	public static final int LEGEND_SIZE = 11; //our legend size is also 11
 	//number of rows and columns are the same
-	public static final int NUM_ROWS = 21;
-	public static final int NUM_COLUMNS = 21;
+	public static final int NUM_ROWS = 22;
+	public static final int NUM_COLUMNS = 22;
 	
 	private static Board board;
 	
@@ -45,8 +45,8 @@ public class TestsPart1 {
 		assertEquals("Conference Room", legend.get('C'));
 		assertEquals("Warehouse", legend.get('H'));
 		assertEquals("Kitchen", legend.get('K'));
-		assertEquals("Michael's House", legend.get('M'));
-		assertEquals("Dwight's Desk", legend.get('D'));
+		assertEquals("Michael’s House", legend.get('M'));
+		assertEquals("Dwight’s Desk", legend.get('D'));
 	}
 	
 	@Test
