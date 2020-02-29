@@ -63,29 +63,29 @@ public class TestsPart1 {
 	@Test
 	public void TestFourDoorDirectionsAndNotDoorways() {
 		//kitchen has 3 doorways that open RIGHT
-		BoardCell room = board.getCellAt(2, 2);
+		BoardCell room = board.getCellAt(1, 2);
 		assertTrue(room.isDoorway());
 		assertEquals(DoorDirection.RIGHT, room.getDoorDirection());
-		room = board.getCellAt(2, 1);
+		room = board.getCellAt(2, 2);
 		assertTrue(room.isDoorway());
 		assertEquals(DoorDirection.RIGHT, room.getDoorDirection());
-		room = board.getCellAt(2, 3);
+		room = board.getCellAt(3, 2);
 		assertTrue(room.isDoorway());
 		assertEquals(DoorDirection.RIGHT, room.getDoorDirection());
 		//Jim's desk
-		room = board.getCellAt(8, 2);
+		room = board.getCellAt(2, 8);
 		assertTrue(room.isDoorway());
 		assertEquals(DoorDirection.RIGHT, room.getDoorDirection());
 		//Warehouse
-		room = board.getCellAt(17, 18);
+		room = board.getCellAt(19, 17);
 		assertTrue(room.isDoorway());
 		assertEquals(DoorDirection.LEFT, room.getDoorDirection());
 		//Break Room
-		room = board.getCellAt(10, 16);
+		room = board.getCellAt(16, 10);
 		assertTrue(room.isDoorway());
 		assertEquals(DoorDirection.UP, room.getDoorDirection());
 		//Vance Refrigeration
-		room = board.getCellAt(19, 3);
+		room = board.getCellAt(3, 19);
 		assertTrue(room.isDoorway());
 		assertEquals(DoorDirection.DOWN, room.getDoorDirection());
 		// Test that room pieces that aren't doors know it
