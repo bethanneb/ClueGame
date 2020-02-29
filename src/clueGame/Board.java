@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -133,7 +134,7 @@ public class Board {
 		legend = new HashMap<>();
 		BufferedReader reader = null;
 		try {
-			reader = new BufferedReader(new FileReader(roomConfigFile));
+			reader = new BufferedReader(new FileReader(roomConfigFile, StandardCharsets.UTF_8));
 			String line = reader.readLine();
 			while (line != null) {
 				String[] splits = line.split(",");
@@ -145,8 +146,9 @@ public class Board {
 				}
 				String keyScan = splits[0].trim();
 				char key = keyScan.charAt(0);
-				if (key == '\uFEFF')
-					key = keyScan.charAt(1);
+				if (keyScan.length()>1) {
+					key = keyScan.charAt(keyScan.length()-1);
+				}
 				legend.put(key, splits[1].trim());
 				// read next line
 				line = reader.readLine();

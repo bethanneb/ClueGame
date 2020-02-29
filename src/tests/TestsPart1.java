@@ -118,13 +118,13 @@ public class TestsPart1 {
 			//Test cell in kitchen
 			assertEquals('K', board.getCellAt(1, 2).getInitial());
 			//Test cell at Jim's Desk
-			assertEquals('J', board.getCellAt(7, 0).getInitial());
+			assertEquals('F', board.getCellAt(7, 0).getInitial());
 			//Test cell at Dwight's Desk
-			assertEquals('D', board.getCellAt(14, 5).getInitial());
+			assertEquals('W', board.getCellAt(14, 5).getInitial());
 			//Test bottom left cell in Michael's Office
-			assertEquals('M', board.getCellAt(0, 21).getInitial());
+			assertEquals('V', board.getCellAt(0, 21).getInitial());
 			//Test top right corner in Vance Refrigeration room
-			assertEquals('V', board.getCellAt(21, 0).getInitial());
+			assertEquals('M', board.getCellAt(21, 0).getInitial());
 			// Test a walkway
 			assertEquals('W', board.getCellAt(14, 17).getInitial());
 			// Test the closet
