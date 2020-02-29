@@ -1,8 +1,10 @@
 //Authors: Elizabeth Bauch and Danella Bunavi
 package clueGame;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -130,28 +132,40 @@ public class Board {
 		}
 	}
 	
-	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException{
-		FileReader reader = new FileReader(roomConfigFile);
-		Scanner in = new Scanner(reader);
-		legend = new HashMap<Character, String>();
-		while (in.hasNextLine()) {
-			String line = in.nextLine();
-			char initial = line.charAt(0);
-			String roomName = "";
-			boolean card = false;
-			int i;
-			for (i = 3; line.charAt(i) != ','; i++) {
-				roomName += line.charAt(i);
+	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
+		legend = new HashMap<>();
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new FileReader(roomConfigFile));
+			String line = reader.readLine();
+			while (line != null) {
+				String[] splits = line.split(",");
+				if(splits[1] == null || "".equals(splits[1])) {
+					throw new BadConfigFormatException("Bad legend file; lacks a room name for initial");
+				}
+				if(!("Card".equalsIgnoreCase(splits[2].trim()) || "Other".equalsIgnoreCase(splits[2].trim()))) {
+					throw new BadConfigFormatException("It is not card or other");
+				}
+				String keyScan = splits[0].trim();
+				char key = keyScan.charAt(0);
+				if (key == '\uFEFF')
+					key = keyScan.charAt(1);
+				legend.put(key, splits[1].trim());
+				// read next line
+				line = reader.readLine();
 			}
-			if (line.charAt(i+2) == 'C') {
-				card = true;
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				}
+				catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
-			else if (line.charAt(i+2) != 'O') {
-				throw new BadConfigFormatException("ERROR: Bad file format! Config not loaded! Line:" + line);
-			}
-			legend.put(initial, roomName);
 		}
-		in.close();
 	}
 	
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException{
