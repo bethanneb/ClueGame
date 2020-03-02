@@ -1,10 +1,12 @@
-package tests;
+//Authors: Elizabeth Bauch and Danella Bunavi
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+package tests;
 
 import java.util.Set;
 
+//Doing a static import allows me to write assertEquals rather than
+//assertEquals
+import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -12,6 +14,7 @@ import clueGame.Board;
 import clueGame.BoardCell;
 
 public class TestsPart3 {
+
 	private static Board board;
 	@BeforeClass
 	public static void setUp() {
@@ -307,6 +310,11 @@ public class TestsPart3 {
 		assertTrue(targets.contains(board.getCellAt(4, 19)));
 		assertTrue(targets.contains(board.getCellAt(5, 20)));
 		assertTrue(targets.contains(board.getCellAt(4, 21)));
+=======
+
+	public TestsPart3() {
+		// TODO Auto-generated constructor stub
+>>>>>>> 93aaf9479ecc078e29f013a0db349c8f423981f2
 	}
 
 }
