@@ -310,11 +310,6 @@ public class TestsPart3 {
 		assertTrue(targets.contains(board.getCellAt(4, 19)));
 		assertTrue(targets.contains(board.getCellAt(5, 20)));
 		assertTrue(targets.contains(board.getCellAt(4, 21)));
-=======
-
-	public TestsPart3() {
-		// TODO Auto-generated constructor stub
->>>>>>> 93aaf9479ecc078e29f013a0db349c8f423981f2
 	}
 
 }
