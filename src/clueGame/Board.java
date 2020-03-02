@@ -25,8 +25,8 @@ public class Board {
 	private BoardCell cell;
 	private Map<Character, String> legend;
 	private Set<BoardCell> visited;
-	
-	
+
+
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
 	// constructor is private to ensure only one can be created
@@ -35,14 +35,14 @@ public class Board {
 	public static Board getInstance() {
 		return theInstance;
 	}
-	
+
 	public Board() { //default constructor
 		super();
 		this.boardConfigFile = "OurClueLayout.csv";
 		this.roomConfigFile = "OurClueLegend.txt";
-		}
-	
-	
+	}
+
+
 	public Board(String boardConfigFile, String roomConfigFile) { //constructor with board and room files passed in for testing with other files
 		super();
 		this.boardConfigFile = boardConfigFile;
@@ -57,19 +57,19 @@ public class Board {
 		this.boardConfigFile = boardConfigFile;
 		this.roomConfigFile = roomConfigFile;
 	}
-	
+
 	public int getNumRows() {
 		return numRows;
 	}
-	
+
 	public int getNumColumns() {
 		return numColumns;
 	}
-	
+
 	public Set<BoardCell> getTargets() {
 		return targets;
 	}
-	
+
 	private int getBoardConfigRows() throws FileNotFoundException  {
 		FileReader fin = new FileReader(boardConfigFile);
 		Scanner scan = new Scanner(fin);
@@ -82,7 +82,7 @@ public class Board {
 		numRows = count;
 		return numRows;
 	}
-	
+
 	private int getBoardConfigColumns() throws FileNotFoundException, BadConfigFormatException {
 		FileReader fin = new FileReader(boardConfigFile);
 		Scanner scan = new Scanner(fin);
@@ -113,7 +113,7 @@ public class Board {
 		numColumns = count;
 		return numColumns;
 	}
-	
+
 	public BoardCell getCellAt(int row, int column){
 		return board[row][column];
 	}
@@ -128,7 +128,7 @@ public class Board {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
 		legend = new HashMap<>();
 		BufferedReader reader = null;
@@ -171,7 +171,7 @@ public class Board {
 			}
 		}
 	}
-	
+
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException{
 		numRows = getBoardConfigRows();
 		numColumns = getBoardConfigColumns();
@@ -212,59 +212,66 @@ public class Board {
 		for(int i = 0; i < numRows; i++) {
 			for(int j = 0; j < numColumns; j++) {
 				HashSet<BoardCell> neighbors = new HashSet<BoardCell>();
-				if (board[i][j].isRoom() && !board[i][j].isDoorway()){
-					adjMatrix.put(board[i][j], neighbors);
-					continue;
+				
+				// cell above
+				if (isInBoard(i + 1, j) && allowedAdj(i, j, i + 1, j, DoorDirection.DOWN, DoorDirection.UP)) {
+					neighbors.add(board[i + 1][j]);
 				}
-				else if (board[i][j].isDoorway()) {
-					DoorDirection initial = board[i][j].getDoorDirection();
-					switch(initial) {							// the enumerator class
-					case UP: if(i > 0) {
-						neighbors.add(board[i - 1][j]);
-						adjMatrix.put(board[i][j], neighbors);
-					}
-					break;
-					case DOWN: if(i < numRows - 1) {
-						neighbors.add(board[i + 1][j]);
-						adjMatrix.put(board[i][j], neighbors);
-					}
-					break;
-					case LEFT: if(j > 0) {
-						neighbors.add(board[i][j - 1]);
-						adjMatrix.put(board[i][j], neighbors);
-					}
-					break;
-					case RIGHT: if(j < numColumns - 1) {
-						neighbors.add(board[i][j + 1]);
-						adjMatrix.put(board[i][j], neighbors);
-					}
-					break;
-					default: System.out.println("Unknown Door Direction");;
-					}
+				
+				// cell below
+				if (isInBoard(i - 1, j) && allowedAdj(i, j, i - 1, j, DoorDirection.UP, DoorDirection.DOWN)) {
+					neighbors.add(board[i - 1][j]);
 				}
-				else {
-					if(i > 0) {
-						if (!board[i - 1][j].isRoom() || (board[i - 1][j].isDoorway() && board[i - 1][j].getDoorDirection() == DoorDirection.DOWN))
-							neighbors.add(board[i - 1][j]);
-					}
-					if(i < numRows - 1) {
-						if (!board[i + 1][j].isRoom() || (board[i + 1][j].isDoorway() && board[i + 1][j].getDoorDirection() == DoorDirection.UP))
-							neighbors.add(board[i + 1][j]);
-					}
-					if(j > 0) {
-						if(!board[i][j - 1].isRoom() || (board[i][j - 1].isDoorway() && board[i][j - 1].getDoorDirection() == DoorDirection.RIGHT))
-							neighbors.add(board[i][j - 1]);
-					}
-					if(j < numColumns - 1) {
-						if (!board[i][j + 1].isRoom() || (board[i][j + 1].isDoorway() && board[i][j + 1].getDoorDirection() == DoorDirection.LEFT))
-							neighbors.add(board[i][j + 1]);
-					}
-					adjMatrix.put(board[i][j], neighbors);
+				
+				// cell to the right
+				if (isInBoard(i, j + 1) && allowedAdj(i, j, i, j + 1, DoorDirection.RIGHT, DoorDirection.LEFT)) {
+					neighbors.add(board[i][j + 1]);
 				}
+				
+				// cell to the left
+				if (isInBoard(i, j - 1) && allowedAdj(i, j, i, j - 1, DoorDirection.LEFT, DoorDirection.RIGHT)) {
+					neighbors.add(board[i][j - 1]);
+				}
+				adjMatrix.put(board[i][j], neighbors);
 			}
 		}
 	}
-	
+
+
+	private boolean isInBoard(int row, int column) {
+		if(row >= 0 && row < numRows && column >= 0 && column < numColumns) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean allowedAdj(int i, int j, int nextI, int nextJ, DoorDirection directionOut, DoorDirection directionIn) {
+
+		// Can go to walkway if not in room
+		if (board[nextI][nextJ].isWalkway() && !board[i][j].isRoom()) {
+			return true;
+		}
+
+		// Can get out of door if at the correct direction
+		else if (board[i][j].isDoorway() && board[i][j].getDoorDirection() == directionOut) {
+			return true;
+		}
+
+		// Can get into door if at the correct location
+		else if (!board[i][j].isDoorway() && board[nextI][nextJ].getDoorDirection() == directionIn) {
+			return true;
+		}
+
+		// If you are in the room part of the room (not the doorway), you stay in the room
+		else if (board[i][j].isRoom() && !board[i][j].isDoorway()) {
+			return false;
+		}
+
+		// if none of these it's not adjacent
+		return false;
+
+	}
+
 	public void calcTargets(int row, int column, int pathLength){
 		visited = new HashSet<BoardCell>(); //should we set these up here? might be ineff.
 		targets = new HashSet<BoardCell>();
@@ -273,7 +280,7 @@ public class Board {
 		visited.add(board[row][column]);
 		targets = findAllTargets(board[row][column], pathLength);
 	}
-	
+
 	private Set<BoardCell> findAllTargets(BoardCell currentCell, int remainingSteps) {
 		visited.add(currentCell);
 		HashSet<BoardCell> adj = new HashSet<BoardCell>(adjMatrix.get(currentCell));	//new linked list of cells that have not been visited
@@ -281,26 +288,20 @@ public class Board {
 			adj.remove(i);
 		}
 		for (BoardCell i:adj){
-			if (i.isDoorway()){
-				targets.add(i);
-			}
-			else if (i.isRoom()) {
-				targets.add(i);
-			}
-			else if(remainingSteps == 1){
+			if (i.isDoorway() || remainingSteps == 1){
 				targets.add(i);
 			}
 			else {
-				targets.addAll(findAllTargets(i, remainingSteps-1));
+				findAllTargets(i, remainingSteps-1);
 			}
 			visited.remove(i);
 		}
 		return targets;
 	}
-	
+
 	public Set<BoardCell> getAdjList(int i, int j) {
 		return adjMatrix.get(board[i][j]);
 	}
-	
+
 
 }
