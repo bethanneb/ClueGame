@@ -281,10 +281,13 @@ public class Board {
 			adj.remove(i);
 		}
 		for (BoardCell i:adj){
-			if(remainingSteps == 1){
+			if (i.isDoorway()){
 				targets.add(i);
 			}
-			else if (i.isDoorway()){
+			else if (i.isRoom()) {
+				targets.add(i);
+			}
+			else if(remainingSteps == 1){
 				targets.add(i);
 			}
 			else {

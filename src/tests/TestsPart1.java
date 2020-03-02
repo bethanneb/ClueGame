@@ -45,8 +45,8 @@ public class TestsPart1 {
 		assertEquals("Conference Room", legend.get('C'));
 		assertEquals("Warehouse", legend.get('H'));
 		assertEquals("Kitchen", legend.get('K'));
-		assertEquals("Michaelâ€™s House", legend.get('M'));
-		assertEquals("Dwightâ€™s Desk", legend.get('D'));
+		assertEquals("Michael’s House", legend.get('M'));
+		assertEquals("Dwight’s Desk", legend.get('D'));
 	}
 	
 	@Test

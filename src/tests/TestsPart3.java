@@ -187,10 +187,11 @@ public class TestsPart3 {
 
 		board.calcTargets(5, 21, 2);
 		targets= board.getTargets();
-		assertEquals(3, targets.size());
+		assertEquals(4, targets.size());
 		assertTrue(targets.contains(board.getCellAt(4, 20)));
 		assertTrue(targets.contains(board.getCellAt(5, 19)));	
-		assertTrue(targets.contains(board.getCellAt(6, 20)));			
+		assertTrue(targets.contains(board.getCellAt(6, 20)));	
+		assertTrue(targets.contains(board.getCellAt(7, 21)));
 	}
 
 	// Tests of just walkways, 4 steps
