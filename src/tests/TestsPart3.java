@@ -137,6 +137,12 @@ public class TestsPart3 {
 		assertTrue(testList.contains(board.getCellAt(9, 15)));
 		assertTrue(testList.contains(board.getCellAt(11, 15)));
 		assertEquals(4, testList.size());
+	}
+
+	@Test
+	public void testAdjacencyWalkwaysRoomPiece()
+	{
+		Set<BoardCell> testList = board.getAdjList(0, 15);
 		// Test on bottom edge of board, next to 1 room piece
 		testList = board.getAdjList(21, 4);
 		assertTrue(testList.contains(board.getCellAt(21, 5)));
@@ -147,6 +153,12 @@ public class TestsPart3 {
 		assertTrue(testList.contains(board.getCellAt(14, 21)));
 		assertTrue(testList.contains(board.getCellAt(15, 20)));
 		assertEquals(2, testList.size());
+	}
+
+	@Test
+	public void testAdjacencyWalkwaysDoor()
+	{
+		Set<BoardCell> testList = board.getAdjList(0, 15);
 		// Test on walkway next to door that is not in the needed
 		// direction to enter
 		testList = board.getAdjList(8, 2);
@@ -155,6 +167,7 @@ public class TestsPart3 {
 		assertTrue(testList.contains(board.getCellAt(8, 3)));
 		assertEquals(3, testList.size());
 	}
+
 
 	// Tests of just walkways, 1 step, includes bottom and right edge of board
 	// These are YELLOW on the planning spreadsheet
