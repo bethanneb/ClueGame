@@ -34,14 +34,15 @@ public class Board {
 		return theInstance;
 	}
 
-	public Board() { //default constructor
+	//default constructor
+	public Board() { 
 		super();
 		this.boardConfigFile = "OurClueLayout.csv";
 		this.roomConfigFile = "OurClueLegend.txt";
 	}
 
-
-	public Board(String boardConfigFile, String roomConfigFile) { //constructor with board and room files passed in for testing with other files
+	//constructor with board and room files passed in for testing with other files
+	public Board(String boardConfigFile, String roomConfigFile) { 
 		super();
 		this.boardConfigFile = boardConfigFile;
 		this.roomConfigFile = roomConfigFile;
@@ -51,6 +52,7 @@ public class Board {
 		return legend;
 	}
 
+	//tests given to us call this function, to pass in their files for testing
 	public void setConfigFiles(String boardConfigFile, String roomConfigFile) {
 		this.boardConfigFile = boardConfigFile;
 		this.roomConfigFile = roomConfigFile;
@@ -64,10 +66,12 @@ public class Board {
 		return numColumns;
 	}
 
+	//returns the targets (where the player can go)
 	public Set<BoardCell> getTargets() {
 		return targets;
 	}
 
+	//Scanner wraps FileReader to read in the board file (.csv)
 	private int getBoardConfigRows() throws FileNotFoundException  {
 		FileReader fin = new FileReader(boardConfigFile);
 		Scanner scan = new Scanner(fin);
@@ -77,10 +81,13 @@ public class Board {
 			count++;
 		}
 		scan.close();
+		//assigns number of rows to count
 		numRows = count;
 		return numRows;
 	}
 
+	//scans in board file, uses commas as delimiters in order to find the number of columns (comma separated values)
+	//REFACTOR
 	private int getBoardConfigColumns() throws FileNotFoundException, BadConfigFormatException {
 		FileReader fin = new FileReader(boardConfigFile);
 		Scanner scan = new Scanner(fin);
@@ -112,10 +119,14 @@ public class Board {
 		return numColumns;
 	}
 
+	//returns the cell's row and column 
 	public BoardCell getCellAt(int row, int column){
 		return board[row][column];
 	}
 
+	//makes sure that both the board and legend files are there
+	//prints the name of the file if it isn't found
+	//REFACTOR exception file and below function????
 	public void initialize() {
 		try {
 			loadRoomConfig();
@@ -127,6 +138,10 @@ public class Board {
 		}
 	}
 
+	//reads in the room using BufferedReader, why did we use this again??
+	//several exceptions- change messages???
+	//had to already fix this because of issues with our file
+	//
 	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
 		legend = new HashMap<>();
 		BufferedReader reader = null;
@@ -170,6 +185,7 @@ public class Board {
 		}
 	}
 
+	//REFACTOR???
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException{
 		numRows = getBoardConfigRows();
 		numColumns = getBoardConfigColumns();
@@ -206,6 +222,7 @@ public class Board {
 		calcAdjacencies();
 	}
 
+	//checks that the neighbors of a cell are adjacent to where the player is at, and if it's an allowed adjacency, it's added to the set
 	public void calcAdjacencies(){
 		for(int i = 0; i < numRows; i++) {
 			for(int j = 0; j < numColumns; j++) {
@@ -235,7 +252,8 @@ public class Board {
 		}
 	}
 
-
+	
+	//checks that the cell is within the borders of the board
 	private boolean isInBoard(int row, int column) {
 		if(row >= 0 && row < numRows && column >= 0 && column < numColumns) {
 			return true;
@@ -243,6 +261,7 @@ public class Board {
 		return false;
 	}
 
+	//checks what is necessary to make sure an adjacency is allowed
 	private boolean allowedAdj(int i, int j, int nextI, int nextJ, DoorDirection directionOut, DoorDirection directionIn) {
 
 		// Can go to walkway if not in room
@@ -270,6 +289,7 @@ public class Board {
 
 	}
 
+	//REFACTOR???
 	public void calcTargets(int row, int column, int pathLength){
 		//move to constructor
 		visited = new HashSet<BoardCell>(); //should we set these up here? might be inefficient.
@@ -280,9 +300,11 @@ public class Board {
 		targets = findAllTargets(board[row][column], pathLength);
 	}
 
+	//this recursive function adds all of the cells that are targets for where the player currently is, based on whether a player can't love there based on the rules:
+	//if they have already visited a cell they can't revisit, or if a cell is a doorway within their number of steps they can go there
 	private Set<BoardCell> findAllTargets(BoardCell currentCell, int remainingSteps) {
 		visited.add(currentCell);
-		HashSet<BoardCell> adj = new HashSet<BoardCell>(adjMatrix.get(currentCell));	//new linked list of cells that have not been visited
+		HashSet<BoardCell> adj = new HashSet<BoardCell>(adjMatrix.get(currentCell));	//new hash set of cells that have not been visited
 		for (BoardCell i:visited){
 			adj.remove(i);
 		}
@@ -298,6 +320,7 @@ public class Board {
 		return targets;
 	}
 
+	//returns the matrix of allowed adjacency cells
 	public Set<BoardCell> getAdjList(int i, int j) {
 		return adjMatrix.get(board[i][j]);
 	}
