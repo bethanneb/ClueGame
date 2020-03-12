@@ -71,6 +71,7 @@ public class Board {
 		return targets;
 	}
 
+	//REFACTOR: Possibly combine getBoardConfigRows() and getBoardConfigColumns()
 	//Scanner wraps FileReader to read in the board file (.csv)
 	private int getBoardConfigRows() throws FileNotFoundException  {
 		FileReader fin = new FileReader(boardConfigFile);
@@ -138,6 +139,8 @@ public class Board {
 		}
 	}
 
+	//REFACTOR: possibly combine loadRoomConfig() and loadBoardConfig()
+	
 	//reads in the room using BufferedReader, why did we use this again??
 	//several exceptions- change messages???
 	//had to already fix this because of issues with our file
@@ -218,6 +221,7 @@ public class Board {
 			row++;
 		}
 		scan.close();
+		//move to constructor???
 		adjMatrix = new HashMap<BoardCell, Set<BoardCell>>();
 		calcAdjacencies();
 	}

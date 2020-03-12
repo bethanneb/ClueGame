@@ -20,6 +20,8 @@ public class BoardCell {
 		this.doorDirection = doorDirection;
 	}
 	
+	//REFACTOR, declare as class attributes and separate classes for getting and setting
+	
 	public boolean isWalkway() {
 		if(initial == 'W') {
 			return true;
