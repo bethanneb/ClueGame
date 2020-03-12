@@ -25,6 +25,8 @@ public class Board {
 	private Set<BoardCell> visited;
 
 
+	//REFACTOR - clean up
+	
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
 	// constructor is private to ensure only one can be created
@@ -78,7 +80,7 @@ public class Board {
 		Scanner scan = new Scanner(fin);
 		int count = 0;
 		while(scan.hasNext()) {
-			scan.next();
+			scan.next(); //REFACTOR - is this necessary??
 			count++;
 		}
 		scan.close();
@@ -111,7 +113,7 @@ public class Board {
 			}
 			else {
 				if(count != maxCount) {
-					throw new BadConfigFormatException("Number of rows or columns is not consistent");
+					throw new BadConfigFormatException("Number of rows or columns is not what is expected");
 				}
 			}
 		}
@@ -156,11 +158,11 @@ public class Board {
 				String[] splits = line.split(",");
 				// no character for room
 				if(splits[1] == null || "".equals(splits[1])) {
-					throw new BadConfigFormatException("Bad legend file; lacks a room name for initial");
+					throw new BadConfigFormatException("Bad legend file; there is no room name");
 				}
 				//not a valid card or walkway or closet
 				if(!("Card".equalsIgnoreCase(splits[2].trim()) || "Other".equalsIgnoreCase(splits[2].trim()))) {
-					throw new BadConfigFormatException("It is not card or other");
+					throw new BadConfigFormatException("It is not a card or other");
 				}
 				String keyScan = splits[0].trim();
 				char key = keyScan.charAt(0);

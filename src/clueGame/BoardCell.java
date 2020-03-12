@@ -6,6 +6,7 @@ public class BoardCell {
 	private char initial;
 	private DoorDirection doorDirection;
 	
+	//do we need this constructor?
 	public BoardCell () {
 		row = 0;
 		column = 0;
