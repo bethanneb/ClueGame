@@ -13,24 +13,18 @@ import java.util.Set;
 
 public class Board {
 	public static final int MAX_BOARD_SIZE = 50;
-	private int numRows;
-	private int numColumns;
+	private int numRows, numColumns;
 	private BoardCell[][] board;
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
-	private Set<BoardCell> targets;
-	private String boardConfigFile;
-	private String roomConfigFile;
+	private Set<BoardCell> targets, visited;
+	private String boardConfigFile, roomConfigFile;
 	private BoardCell cell;
 	private Map<Character, String> legend;
-	private Set<BoardCell> visited;
-
-
-	//REFACTOR - clean up
+	
+	//used for tests
 	
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
-	// constructor is private to ensure only one can be created
-	//private Board() {}
 	// this method returns the only Board
 	public static Board getInstance() {
 		return theInstance;
@@ -39,6 +33,8 @@ public class Board {
 	//default constructor
 	public Board() { 
 		super();
+		visited = new HashSet<BoardCell>(); //should we set these up here? might be inefficient.
+		targets = new HashSet<BoardCell>();
 		this.boardConfigFile = "OurClueLayout.csv";
 		this.roomConfigFile = "OurClueLegend.txt";
 	}
@@ -80,7 +76,7 @@ public class Board {
 		Scanner scan = new Scanner(fin);
 		int count = 0;
 		while(scan.hasNext()) {
-			scan.next(); //REFACTOR - is this necessary??
+			scan.nextLine(); //changed from next to nextLine
 			count++;
 		}
 		scan.close();
@@ -94,12 +90,11 @@ public class Board {
 	private int getBoardConfigColumns() throws FileNotFoundException, BadConfigFormatException {
 		FileReader fin = new FileReader(boardConfigFile);
 		Scanner scan = new Scanner(fin);
-		int count = 0;
-		int maxCount = 0;
+		int count = 0, maxCount = 0; //compressed
 		boolean firstGo = true;
 		while(scan.hasNext()) {
 			count = 0;
-			String nextCol = scan.next();
+			String nextCol = scan.nextLine(); //next to nextLine
 			Scanner scanIn = new Scanner(nextCol);
 			scanIn.useDelimiter(",");
 			while(scanIn.hasNext()) {
@@ -151,7 +146,7 @@ public class Board {
 		legend = new HashMap<>();
 		BufferedReader reader = null;
 		try {
-			//read entire file and put into standard characters
+			//read entire file and put into standard characters (we had some issues with special characters so we used BufferedReader)
 			reader = new BufferedReader(new FileReader(roomConfigFile, StandardCharsets.UTF_8));
 			String line = reader.readLine();
 			while (line != null) {
@@ -297,9 +292,7 @@ public class Board {
 
 	//REFACTOR???
 	public void calcTargets(int row, int column, int pathLength){
-		//move to constructor
-		visited = new HashSet<BoardCell>(); //should we set these up here? might be inefficient.
-		targets = new HashSet<BoardCell>();
+		//move to constructor (MOVED)
 		visited.clear(); //clear the visited set
 		targets.clear(); //clear the targets set
 		visited.add(board[row][column]);
