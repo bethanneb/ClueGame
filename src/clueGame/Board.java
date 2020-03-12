@@ -11,8 +11,6 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-//import experiment.BoardCell;
-
 public class Board {
 	public static final int MAX_BOARD_SIZE = 50;
 	private int numRows;
@@ -183,7 +181,7 @@ public class Board {
 		while(scan.hasNext()) {
 			column = 0;
 			String nextLine = scan.next();	// This is a single line of comma-separated values
-			nextLine = nextLine.replace(',', ' ');		// Commas replaced by spaces, to generate a readable list
+			nextLine = nextLine.replace(',', ' '); // Commas replaced by spaces, to generate a readable list
 			Scanner scanIn = new Scanner(nextLine);
 			while(scanIn.hasNext()) {
 				String nextEntry = scanIn.next();
@@ -273,7 +271,8 @@ public class Board {
 	}
 
 	public void calcTargets(int row, int column, int pathLength){
-		visited = new HashSet<BoardCell>(); //should we set these up here? might be ineff.
+		//move to constructor
+		visited = new HashSet<BoardCell>(); //should we set these up here? might be inefficient.
 		targets = new HashSet<BoardCell>();
 		visited.clear(); //clear the visited set
 		targets.clear(); //clear the targets set
