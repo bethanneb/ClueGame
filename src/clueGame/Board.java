@@ -290,9 +290,7 @@ public class Board {
 
 	}
 
-	//REFACTOR???
 	public void calcTargets(int row, int column, int pathLength){
-		//move to constructor (MOVED)
 		visited.clear(); //clear the visited set
 		targets.clear(); //clear the targets set
 		visited.add(board[row][column]);
@@ -303,7 +301,8 @@ public class Board {
 	//if they have already visited a cell they can't revisit, or if a cell is a doorway within their number of steps they can go there
 	private Set<BoardCell> findAllTargets(BoardCell currentCell, int remainingSteps) {
 		visited.add(currentCell);
-		HashSet<BoardCell> adj = new HashSet<BoardCell>(adjMatrix.get(currentCell));	//new hash set of cells that have not been visited
+		//new hash set of cells that have not been visited
+		HashSet<BoardCell> adj = new HashSet<BoardCell>(adjMatrix.get(currentCell));
 		for (BoardCell i:visited){
 			adj.remove(i);
 		}
