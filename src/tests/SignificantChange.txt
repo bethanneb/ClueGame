@@ -50,3 +50,45 @@ CODE BEFORE SIGNIFICANT CHANGE:
 	}
 	
 CODE AFTER SIGNIFICANT CHANGE:
+//scans in board file; find the number of rows by scanning them in while there is still another row to scan; 
+	//uses commas as delimiters in order to find the number of columns (comma separated values)
+	private int determineNumRowsAndColumns() throws FileNotFoundException, BadConfigFormatException {
+		FileReader reader = new FileReader(boardConfigFile);
+		FileReader fin = new FileReader(boardConfigFile);
+		Scanner scan = new Scanner(fin);
+		Scanner scanner = new Scanner(reader);
+		int columns = 0, maxCount = 0, rows = 0; //compressed
+		boolean firstGo = true; //initialize boolean to true
+		//determine numRows
+		while(scanner.hasNext()) {
+			scanner.nextLine(); 
+			rows++;
+		}
+		scanner.close();
+		//assigns number of rows
+		numRows = rows;
+		//determine numColumns
+		while(scan.hasNext()) {
+			columns = 0;
+			String nextCol = scan.nextLine();
+			Scanner scanIn = new Scanner(nextCol);
+			scanIn.useDelimiter(","); //csv file (comma separated values)
+			while(scanIn.hasNext()) {
+				scanIn.next();
+				columns++;
+			}
+			scanIn.close();
+			if(firstGo) {
+				maxCount = columns;
+				firstGo = false;
+			}
+			else {
+				if(columns != maxCount) {
+					throw new BadConfigFormatException("Number of rows or columns are not consistent");
+				}
+			}
+		}
+		scan.close();
+		numColumns = columns;
+		return numColumns;
+	}

@@ -22,7 +22,6 @@ public class Board {
 	private Map<Character, String> legend;
 	
 	//used for tests
-	
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
 	// this method returns the only Board
@@ -69,52 +68,46 @@ public class Board {
 		return targets;
 	}
 
-	//REFACTOR: Possibly combine getBoardConfigRows() and getBoardConfigColumns()
-	//Scanner wraps FileReader to read in the board file (.csv)
-	//returns the number of rows in board
-	private int getBoardConfigRows() throws FileNotFoundException  {
+	//scans in board file; find the number of rows by scanning them in while there is still another row to scan; 
+	//uses commas as delimiters in order to find the number of columns (comma separated values)
+	private int determineNumRowsAndColumns() throws FileNotFoundException, BadConfigFormatException {
+		FileReader reader = new FileReader(boardConfigFile);
 		FileReader fin = new FileReader(boardConfigFile);
 		Scanner scan = new Scanner(fin);
-		int count = 0;
-		while(scan.hasNext()) {
-			scan.nextLine(); //changed from next to nextLine
-			count++;
+		Scanner scanner = new Scanner(reader);
+		int columns = 0, maxCount = 0, rows = 0; //compressed
+		boolean firstGo = true; //initialize boolean to true
+		//determine numRows
+		while(scanner.hasNext()) {
+			scanner.nextLine(); 
+			rows++;
 		}
-		scan.close();
-		//assigns number of rows to count
-		numRows = count;
-		return numRows;
-	}
-
-	//scans in board file, uses commas as delimiters in order to find the number of columns (comma separated values)
-	//REFACTOR
-	private int getBoardConfigColumns() throws FileNotFoundException, BadConfigFormatException {
-		FileReader fin = new FileReader(boardConfigFile);
-		Scanner scan = new Scanner(fin);
-		int count = 0, maxCount = 0; //compressed
-		boolean firstGo = true;
+		scanner.close();
+		//assigns number of rows
+		numRows = rows;
+		//determine numColumns
 		while(scan.hasNext()) {
-			count = 0;
-			String nextCol = scan.nextLine(); //next to nextLine
+			columns = 0;
+			String nextCol = scan.nextLine();
 			Scanner scanIn = new Scanner(nextCol);
-			scanIn.useDelimiter(",");
+			scanIn.useDelimiter(","); //csv file (comma separated values)
 			while(scanIn.hasNext()) {
 				scanIn.next();
-				count++;
+				columns++;
 			}
 			scanIn.close();
 			if(firstGo) {
-				maxCount = count;
+				maxCount = columns;
 				firstGo = false;
 			}
 			else {
-				if(count != maxCount) {
-					throw new BadConfigFormatException("Number of rows or columns is not what is expected");
+				if(columns != maxCount) {
+					throw new BadConfigFormatException("Number of rows or columns are not consistent");
 				}
 			}
 		}
 		scan.close();
-		numColumns = count;
+		numColumns = columns;
 		return numColumns;
 	}
 
@@ -125,7 +118,6 @@ public class Board {
 
 	//makes sure that both the board and legend files are there
 	//prints the name of the file if it isn't found
-	//REFACTOR exception file and below function????
 	public void initialize() {
 		try {
 			loadRoomConfig();
@@ -137,12 +129,9 @@ public class Board {
 		}
 	}
 
-	//REFACTOR: possibly combine loadRoomConfig() and loadBoardConfig()
 	
-	//reads in the room using BufferedReader, why did we use this again??
-	//several exceptions- change messages???
-	//had to already fix this because of issues with our file
-	//
+	//reads in the room using BufferedReader (did this because of some special characters issues we were having from our file)
+	//several exceptions to indicate certain, more common errors
 	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
 		legend = new HashMap<>();
 		BufferedReader reader = null;
@@ -154,7 +143,7 @@ public class Board {
 				String[] splits = line.split(",");
 				// no character for room
 				if(splits[1] == null || "".equals(splits[1])) {
-					throw new BadConfigFormatException("Bad legend file; there is no room name");
+					throw new BadConfigFormatException("Bad legend file; no character to represent the room");
 				}
 				//not a valid card or walkway or closet
 				if(!("Card".equalsIgnoreCase(splits[2].trim()) || "Other".equalsIgnoreCase(splits[2].trim()))) {
@@ -186,10 +175,8 @@ public class Board {
 		}
 	}
 
-	//REFACTOR???
-	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException{
-		getBoardConfigRows();
-		getBoardConfigColumns();
+	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException {
+		determineNumRowsAndColumns();
 		board = new BoardCell[numRows][numColumns];
 		FileReader fin = new FileReader(boardConfigFile);
 		Scanner scan = new Scanner(fin);
