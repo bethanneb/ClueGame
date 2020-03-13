@@ -33,7 +33,7 @@ public class TestsPart1 {
 		// Initialize will load BOTH config files 
 		board.initialize();
 	}
-
+	
 	@Test
 	public void testRoomsAndLegendFile() {
 		// Get the map of initial => room 
@@ -45,8 +45,8 @@ public class TestsPart1 {
 		assertEquals("Conference Room", legend.get('C'));
 		assertEquals("Warehouse", legend.get('H'));
 		assertEquals("Kitchen", legend.get('K'));
-		assertEquals("Michael’s House", legend.get('M'));
-		assertEquals("Dwight’s Desk", legend.get('D'));
+		assertEquals("Michaelâ€™s House", legend.get('M'));
+		assertEquals("Dwightâ€™s Desk", legend.get('D'));
 	}
 
 	@Test

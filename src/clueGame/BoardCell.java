@@ -7,12 +7,12 @@ public class BoardCell {
 	private DoorDirection doorDirection;
 	
 	//do we need this constructor?
-	public BoardCell () {
-		row = 0;
-		column = 0;
-		initial = '0';
-		doorDirection = DoorDirection.NONE;
-	}
+//	public BoardCell () {
+//		row = 0;
+//		column = 0;
+//		initial = '0';
+//		doorDirection = DoorDirection.NONE;
+//	}
 	
 	public BoardCell(int row, int column, char initial, DoorDirection doorDirection) {
 		this.row = row;
@@ -20,8 +20,6 @@ public class BoardCell {
 		this.initial = initial;
 		this.doorDirection = doorDirection;
 	}
-	
-	//REFACTOR, declare as class attributes and separate classes for getting and setting
 	
 	public boolean isWalkway() {
 		if(initial == 'W') {

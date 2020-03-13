@@ -71,6 +71,7 @@ public class Board {
 
 	//REFACTOR: Possibly combine getBoardConfigRows() and getBoardConfigColumns()
 	//Scanner wraps FileReader to read in the board file (.csv)
+	//returns the number of rows in board
 	private int getBoardConfigRows() throws FileNotFoundException  {
 		FileReader fin = new FileReader(boardConfigFile);
 		Scanner scan = new Scanner(fin);
@@ -187,8 +188,8 @@ public class Board {
 
 	//REFACTOR???
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException{
-		numRows = getBoardConfigRows();
-		numColumns = getBoardConfigColumns();
+		getBoardConfigRows();
+		getBoardConfigColumns();
 		board = new BoardCell[numRows][numColumns];
 		FileReader fin = new FileReader(boardConfigFile);
 		Scanner scan = new Scanner(fin);
