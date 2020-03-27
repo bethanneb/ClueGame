@@ -310,6 +310,29 @@ public class Board {
 	public Set<BoardCell> getAdjList(int i, int j) {
 		return adjMatrix.get(board[i][j]);
 	}
+	
+	//load players in (I think)
+	public void loadConfigFiles() {
+		
+	}
+	
+	//makes the solution for the game (I think...?)
+	public void selectAnswer() {
+		
+	}
+	
+	/*I'm not sure what this does and we dont know what it takes yet so I'm gonna comment it out for now
+	 * public Card handleSolution(TBD) {
+	 * 
+	 * }
+	 */
+	
+	//checks if accusation is correct
+	public boolean checkAccusation(Solution accusation) {
+		//set to return false for now
+		return false;
+	}
+	
 
 
 }
