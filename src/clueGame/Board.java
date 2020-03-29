@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -20,6 +21,10 @@ public class Board {
 	private String boardConfigFile, roomConfigFile;
 	private BoardCell cell;
 	private Map<Character, String> legend;
+	private Set<Card> deck;
+	private ArrayList<String> weapons;
+	private String playersConfigFile;
+	private String weaponsConfigFile;
 	
 	//used for tests
 	// variable used for singleton pattern
@@ -53,6 +58,14 @@ public class Board {
 	public void setConfigFiles(String boardConfigFile, String roomConfigFile) {
 		this.boardConfigFile = boardConfigFile;
 		this.roomConfigFile = roomConfigFile;
+	}
+	
+	//to use when passing in file names in testing file
+	public void setCardFiles(String players, String weapons) {
+		//Stores file path to a variable in the board
+		this.playersConfigFile = players;
+		this.weaponsConfigFile = weapons;
+
 	}
 
 	public int getNumRows() {
@@ -312,7 +325,9 @@ public class Board {
 	}
 	
 	//load players in (I think)
+	//I think it could be to load in players and cards because they are both .txt files
 	public void loadConfigFiles() {
+
 		
 	}
 	

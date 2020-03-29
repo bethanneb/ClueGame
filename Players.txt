@@ -1,0 +1,8 @@
+Michael Scott,black,3,0
+Dwight Schrute,yellow,0,5
+Jim Halpert,blue,0,13
+Pam Halpert,pink,4,21
+Kevin Malone,red,13,21
+Andy Bernard,orange,21,4
+Oscar Martinez,green,17,0
+Angela Martin,purple,11,0
