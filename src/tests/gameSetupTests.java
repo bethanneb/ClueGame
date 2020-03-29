@@ -18,6 +18,7 @@ public class gameSetupTests {
 	// We make the Board static because we can load it one time and 
 	// then do all the tests. 
 	private static Board board;
+	
 	@BeforeClass
 	public static void setUp() {
 		// Board is singleton, get the only instance
@@ -28,5 +29,21 @@ public class gameSetupTests {
 		board.setCardFiles("Players.txt", "Cards.txt");		
 		// Initialize will load BOTH config files 
 		board.initialize();
+	}
+	
+	@Test
+	public void testLoadingPeople() {
+		// all players will be in an ArrayList
+		ArrayList<Player> player = board.getPlayerList();
+		
+		// human character
+		
+		// computer character
+		
+		// 1st character
+		assertEquals("Micheal Scott", player.get(1).playerName);
+		// 3rd character
+		
+		// last character
 	}
 }
