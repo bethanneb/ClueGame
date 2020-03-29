@@ -6,6 +6,10 @@ public class BoardCell {
 	private char initial;
 	private DoorDirection doorDirection;
 	
+	public BoardCell() {
+		
+	}
+	
 	public BoardCell(int row, int column, char initial, DoorDirection doorDirection) {
 		this.row = row;
 		this.column = column;

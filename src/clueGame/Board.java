@@ -318,7 +318,7 @@ public class Board {
 	
 	//makes the solution for the game (I think...?)
 	public void selectAnswer() {
-		
+
 	}
 	
 	/*I'm not sure what this does and we dont know what it takes yet so I'm gonna comment it out for now
@@ -329,9 +329,13 @@ public class Board {
 	
 	//checks if accusation is correct
 	public boolean checkAccusation(Solution accusation) {
-		//set to return false for now
-		return false;
+		if (accusation.person == Solution.person && accusation.room == Solution.room && accusation.weapon == Solution.weapon) {
+			return true;
+			
+		}
+			return false;
 	}
+	
 	
 
 
