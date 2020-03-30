@@ -17,8 +17,23 @@ public class Player {
 		this.column = column;
 		this.color = color;
 	}
+	
+	public String getName() {
+		return playerName;
+	}
+	
+	public int getRow() {
+		return row;
+	}
+	
+	public int getColumn() {
+		return column;
+	}
 
-
+	public Color getColor() {
+		return color;
+	}
+	
 	public boolean isHuman() {
 		return false;
 	}
