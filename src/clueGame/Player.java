@@ -1,10 +1,11 @@
 package clueGame;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
-//I think it is suppose to implement Solution (but I can't remember exactly what dotted arrows mean from the UML)
 public class Player {
 	private String playerName;
 	private int row;
@@ -12,7 +13,7 @@ public class Player {
 	private Color color;
 	private Set<Card> myCards;
 	private Set<Card> seenCards;
-	
+
 	// constructor
 	public Player(String playerName, int row, int column, Color color) {
 		super();
@@ -20,17 +21,18 @@ public class Player {
 		this.row = row;
 		this.column = column;
 		this.color = color;
+		myCards = new HashSet<Card>();
 		seenCards = new HashSet<Card>();
 	}
-	
+
 	public String getName() {
 		return playerName;
 	}
-	
+
 	public int getRow() {
 		return row;
 	}
-	
+
 	public int getColumn() {
 		return column;
 	}
@@ -38,30 +40,46 @@ public class Player {
 	public Color getColor() {
 		return color;
 	}
-	
+
 	public boolean isHuman() {
 		return false;
 	}
-	
+
 	public boolean isComputer() {
 		return false;
 	}
-	
-	//created instance of Card class to return a card type object for now 
-	public Card disproveSuggestion(Solution suggestion) {
-		Card card = new Card();
-		return card;
+
+	public Card disproveSuggestion(Solution suggestion){
+
+		ArrayList<Card> possibilities = new ArrayList<Card>();
+
+		for(Card c : myCards){
+			if(suggestion.person.equals(c.getCardName()))
+				possibilities.add(c);
+			if(suggestion.weapon.equals(c.getCardName()))
+				possibilities.add(c);
+			if(suggestion.room.equals(c.getCardName()))
+				possibilities.add(c);
+		}
+
+		if(possibilities.size() > 0){
+			Random rand = new Random();
+			int randCard = rand.nextInt(possibilities.size());
+			return possibilities.get(randCard);
+		}
+
+		return null;
 	}
-	
+
 	public Set<Card> getMyCards() {
 		return myCards;
 	}
-	
+
 	public void giveCard(Card card) {
 		myCards.add(card);
 		seeCard(card);
 	}
-	
+
 	public void seeCard(Card card) {
 		seenCards.add(card);
 	}

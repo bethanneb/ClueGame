@@ -144,14 +144,13 @@ public class Board {
 			loadRoomConfig();
 			loadBoardConfig();
 			loadConfigFiles();
-			//loadPlayers();
 			loadCards();
+			dealCards(); //Why will the tests not run when I uncomment this??
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found. " + e.getMessage());
 		} catch (BadConfigFormatException e) {
 			System.out.println(e.getMessage());
 		}
-		//dealCards();
 	}
 
 
@@ -410,7 +409,7 @@ public class Board {
 
 	private void loadCards() throws FileNotFoundException {
 		cards = new Card[21];
-		FileReader fin = new FileReader("Cards.txt");	// Initializing a bunch of variables.
+		FileReader fin = new FileReader(cardsConfigFile);	// Initializing a bunch of variables.
 		Scanner in = new Scanner(fin);
 		String temp;
 		
@@ -426,15 +425,11 @@ public class Board {
 			temp = in.nextLine();
 			cards[i+12] = new Card(CardType.ROOM, temp);
 		}
-		
-		//for(int i = 0; i < 21; i++){
-		//	cards[i] = new Card(CardType.PERSON, "Card");
-		//}
 	}
 	
 	private void loadPlayers() throws FileNotFoundException{
 		players = new Player[6];
-		FileReader fin = new FileReader("Players.txt");	// Initializing a bunch of variables.
+		FileReader fin = new FileReader(playersConfigFile);	// Initializing a bunch of variables.
 		Scanner in = new Scanner(fin);
 		String temp;
 		int i=0;
@@ -502,6 +497,7 @@ public class Board {
 		deck.remove(card3);
 	}
 	
+	//not sure if this is working correctly
 	private void dealCards() {
 		Card[] backup = new Card[21];
 		for(int i = 0; i < 21 ; i++){
@@ -546,10 +542,6 @@ public class Board {
 	public Card[] getCards() {
 		return cards;
 	}
-	
-//	public Player[] getPlayers() {
-//		return players;
-//	}
 
 	public ArrayList<Player> getPlayerList(){
 		return playersList;

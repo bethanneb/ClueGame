@@ -99,42 +99,32 @@ public class gameSetupTests {
 		//if this is true, then the names on those three cards were loaded correctly
 		assertTrue(person && weapon && room);
 	}
-
-
-	// CHECKS THAT EACH PLAYER HAS 3 CARDS (21 - 3 solution cards = 18 --> 18 / 6 = 3)
-	// THEN CHECKS THAT NO ONE HAS A DUPLICATE CARD BY ADDING ALL PLAYER CARDS BACK TO A NEW SET (18 cards)
-	// FINALLY CHECKS THAT NO PLAYER HAS A CARD THAT THE SOLUTION CONTAINS, THEREFORE IT ALSO CHECKS ALL CARDS HAVE BEEN DELT AND NO DUPLICATES
+	
 	@Test
 	public void testDealingCards() {
-		for(Player p : board.getPlayerList()){
-			assertEquals(3, p.getMyCards().size());
-		}
-
-		Set<Card> cardList = new HashSet<Card>();
-		for(Player p : board.getPlayerList()){ //might not work, array versus ArrayList?
-			for(Card c : p.getMyCards()){
-				if(!cardList.contains(c))
-					cardList.add(c);
+		//Gets player list so we can do tests with their cards
+		ArrayList<Player> playerList = board.getPlayerList();
+		boolean dealtTwice = false;
+		int avgCardsPerPlayer = board.getDeck().size() / board.getPlayerList().size();
+		
+		Set<Card> testCardsDealt = new HashSet<>();
+		for (Player player: playerList) {
+			//this test assures each player has roughly the same amount of cards
+			assert(player.getMyCards().size() <= avgCardsPerPlayer +1 &&
+					player.getMyCards().size() >= avgCardsPerPlayer -1);
+			//gets each player's set of cards
+			for(Card card: player.getMyCards()) {
+				//tests if a card already exists, then adds to test set
+				if (testCardsDealt.contains(card))
+					dealtTwice = true;
+				testCardsDealt.add(card);
+				
 			}
 		}
-		assertEquals(18, cardList.size()); // 18 b/c 3 cards are in the solution
-
-		for(Card c : cardList){
-			switch(c.getType()){
-			case PERSON:
-				if(board.solution.person.equals(c.getCardName()))
-					fail("Player has person solution card.");
-				break;
-			case WEAPON:
-				if(board.solution.weapon.equals(c.getCardName()))
-					fail("Player has weapon solution card.");
-				break;
-			case ROOM:
-				if(board.solution.room.equals(c.getCardName()))
-					fail("Player has room solution card.");
-				break;
-			}
-		}
+		//if the test set is equal to the original deck of cards, then all the cards were dealt
+		assert(testCardsDealt.equals(board.getDeck()));
+		//No card should be dealt twice
+		assertFalse(dealtTwice);
 	}
 
 
