@@ -20,6 +20,7 @@ public class ComputerPlayer extends Player {
 		
 	}
 	
+	@Override
 	public boolean isComputer() {
 		return true;
 	}

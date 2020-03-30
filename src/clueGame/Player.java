@@ -19,6 +19,14 @@ public class Player {
 	}
 
 
+	public boolean isHuman() {
+		return false;
+	}
+	
+	public boolean isComputer() {
+		return false;
+	}
+	
 	//created instance of Card class to return a card type object for now 
 	public Card disproveSuggestion(Solution suggestion) {
 		Card card = new Card();
