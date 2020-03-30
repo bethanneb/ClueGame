@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -27,8 +28,10 @@ public class Board {
 	private ArrayList<String> weapons;
 	private ArrayList<Player> players;
 	private String playersConfigFile;
-	private String weaponsConfigFile;
-	
+	private String cardsConfigFile;
+	private Card[] cards;
+	public Solution solution = new Solution();
+
 	//used for tests
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
@@ -62,12 +65,12 @@ public class Board {
 		this.boardConfigFile = boardConfigFile;
 		this.roomConfigFile = roomConfigFile;
 	}
-	
+
 	//to use when passing in file names in testing file
-	public void setCardFiles(String players, String weapons) {
+	public void setCardFiles(String players, String cards) {
 		//Stores file path to a variable in the board
 		this.playersConfigFile = players;
-		this.weaponsConfigFile = weapons;
+		this.cardsConfigFile = cards;
 
 	}
 
@@ -146,7 +149,7 @@ public class Board {
 		}
 	}
 
-	
+
 	//reads in the room using BufferedReader (did this because of some special characters issues we were having from our file)
 	//several exceptions to indicate certain, more common errors
 	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
@@ -233,22 +236,22 @@ public class Board {
 		for(int i = 0; i < numRows; i++) {
 			for(int j = 0; j < numColumns; j++) {
 				HashSet<BoardCell> neighbors = new HashSet<BoardCell>();
-				
+
 				// cell above
 				if (isInBoard(i + 1, j) && allowedAdj(i, j, i + 1, j, DoorDirection.DOWN, DoorDirection.UP)) {
 					neighbors.add(board[i + 1][j]);
 				}
-				
+
 				// cell below
 				if (isInBoard(i - 1, j) && allowedAdj(i, j, i - 1, j, DoorDirection.UP, DoorDirection.DOWN)) {
 					neighbors.add(board[i - 1][j]);
 				}
-				
+
 				// cell to the right
 				if (isInBoard(i, j + 1) && allowedAdj(i, j, i, j + 1, DoorDirection.RIGHT, DoorDirection.LEFT)) {
 					neighbors.add(board[i][j + 1]);
 				}
-				
+
 				// cell to the left
 				if (isInBoard(i, j - 1) && allowedAdj(i, j, i, j - 1, DoorDirection.LEFT, DoorDirection.RIGHT)) {
 					neighbors.add(board[i][j - 1]);
@@ -258,7 +261,7 @@ public class Board {
 		}
 	}
 
-	
+
 	//checks that the cell is within the borders of the board
 	private boolean isInBoard(int row, int column) {
 		if(row >= 0 && row < numRows && column >= 0 && column < numColumns) {
@@ -327,7 +330,7 @@ public class Board {
 	public Set<BoardCell> getAdjList(int i, int j) {
 		return adjMatrix.get(board[i][j]);
 	}
-	
+
 	//load players in (I think)
 	//I think it could be to load in players and cards because they are both .txt files
 	public void loadConfigFiles() throws FileNotFoundException, BadConfigFormatException {
@@ -339,7 +342,7 @@ public class Board {
 			String line = reader.readLine();
 			while (line != null) {
 				String[] splits = line.split(",");
-				
+
 				// makes sure we have every element for player
 				if(splits[0].trim() == null) {
 					throw new BadConfigFormatException("No name found");
@@ -353,13 +356,13 @@ public class Board {
 				if(splits[3].trim() == null) {
 					throw new BadConfigFormatException("No column found");
 				}
-				
+
 				// define all elements to put into constructor
 				String name = splits[0].trim();
 				String colorString = splits[1].trim();
 				int row = Integer.parseInt(splits[2].trim());
 				int column = Integer.parseInt(splits[3].trim());
-				
+
 				//convert string with color name into color
 				Color color;
 				try {
@@ -368,16 +371,18 @@ public class Board {
 				}catch(Exception e) {
 					color = null;
 				}
-				
+
 				// Michael is human player and Jim is computer player, otherwise just normal player
 				if(name.equals("Michael Scott")){
 					players.add(new HumanPlayer(name, row, column, color));
-				}else if(name.equals("Jim Halpert")) {
+				}
+				else if(name.equals("Jim Halpert")) {
 					players.add(new ComputerPlayer(name, row, column, color));
-				}else {
+				}
+				else {
 					players.add(new Player(name, row, column, color));
 				}
-				
+
 				// read next line
 				line = reader.readLine();
 			}
@@ -394,9 +399,98 @@ public class Board {
 				}
 			}
 		}
-		
+
+	}
+
+	public void loadWeapons() {
+		FileReader reader = null;
+		weapons = new ArrayList<>();
+		try {
+			reader = new FileReader(weaponConfigFile);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} 
+		//splits by , and then stores the resulting array in an array list
+		Scanner scanner = new Scanner(reader);
+		while(scanner.hasNextLine()){
+			String weapon = scanner.nextLine();
+			weapons.add(weapon);
+		}
+	}
+
+	public void loadCards() throws FileNotFoundException {
+		cards = new Card[21];
+		FileReader fin = new FileReader("Cards.txt");	// Initializing a bunch of variables.
+		Scanner in = new Scanner(fin);
+		String str;
+
+		for(int i = 0; i < 8; i++){
+			str = in.nextLine();
+			cards[i] = new Card(CardType.PERSON, str);
+		}
+		for(int i = 0; i < 8; i++){
+			str = in.nextLine();
+			cards[i+6] = new Card(CardType.WEAPON, str);
+		}
+		for(int i = 0; i < 9; i++){
+			str = in.nextLine();
+			cards[i+12] = new Card(CardType.ROOM, str);
+		}
+
+		//for(int i = 0; i < 21; i++){
+		//	cards[i] = new Card(CardType.PERSON, "Card");
+		//}
+	}
+
+	public void makeSolution() {
+
+		Card card1 = null;
+		Card card2 = null;
+		Card card3 = null;
+
+		ArrayList<Card> cardList = new ArrayList<>();
+		for (Card c: deck) {
+			cardList.add(c);
+		}
+		Collections.shuffle(cardList);
+
+		for (Card card: cardList) {
+			if (card.getType() == CardType.PERSON ) {
+				if (getSolution().person == null) {
+					getSolution().person = card.getName();
+					card1 = card;
+				}
+			} else if (card.getType() == CardType.ROOM) {
+				if (getSolution().room == null) {
+					getSolution().room = card.getName();
+					card2 = card;
+				}
+			} else if (card.getType() == CardType.WEAPON) {
+				if (getSolution().weapon == null) {
+					getSolution().weapon = card.getName();
+					card3 = card;
+				}
+			}
+		}
+		deck.remove(card1);
+		deck.remove(card2);
+		deck.remove(card3);
+
+
+	}
+
+	public Set<Card> getDeck(){
+		return deck;
+	}
+
+	public Card[] getCards() {
+		return cards;
 	}
 	
+//	public Player[] getPlayers() {
+//		return players;
+//	}
+
 	public ArrayList<Player> getPlayerList(){
 		return players;
 	}
@@ -404,23 +498,27 @@ public class Board {
 	public void selectAnswer() {
 
 	}
-	
+
 	/*I'm not sure what this does and we dont know what it takes yet so I'm gonna comment it out for now
 	 * public Card handleSolution(TBD) {
 	 * 
 	 * }
 	 */
-	
+
 	//checks if accusation is correct
 	public boolean checkAccusation(Solution accusation) {
 		if (accusation.person == Solution.person && accusation.room == Solution.room && accusation.weapon == Solution.weapon) {
 			return true;
-			
+
 		}
-			return false;
+		return false;
 	}
-	
-	
+
+	public Solution getSolution() {
+		return solution;
+	}
+
+
 
 
 }
