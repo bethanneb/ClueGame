@@ -25,6 +25,7 @@ public class Card {
 	public CardType getType() {
 		return cardType;
 	}
+	
 
 	@Override
 	public boolean equals(Object obj) {

@@ -13,6 +13,7 @@ import clueGame.Board;
 import clueGame.Card;
 import clueGame.CardType;
 import clueGame.Player;
+import clueGame.Solution;
 
 public class gameSetupTests {
 	//static so that it only has to be loaded one time
@@ -35,6 +36,9 @@ public class gameSetupTests {
 
 	@Test
 	public void testLoadingPeople() {
+		// right amount of people have been loaded
+		assertEquals(8, players.size());
+		
 		// 1st character and also human player
 		assertEquals("Michael Scott", players.get(0).getName()); //name
 		assertEquals(Color.BLACK, players.get(0).getColor()); //color
@@ -102,26 +106,34 @@ public class gameSetupTests {
 	
 	@Test
 	public void testDealingCards() {
-		//Gets player list so we can do tests with their cards
-		ArrayList<Player> playerList = board.getPlayerList();
+	
 		boolean dealtTwice = false;
-		int avgCardsPerPlayer = board.getDeck().size() / board.getPlayerList().size();
+		int avgCardsPerPlayer = board.getCards().length / players.size();
 		
 		Set<Card> testCardsDealt = new HashSet<>();
-		for (Player player: playerList) {
+		for (Player player: players) {
 			//this test assures each player has roughly the same amount of cards
 			assert(player.getMyCards().size() <= avgCardsPerPlayer +1 &&
 					player.getMyCards().size() >= avgCardsPerPlayer -1);
 			//gets each player's set of cards
 			for(Card card: player.getMyCards()) {
 				//tests if a card already exists, then adds to test set
-				if (testCardsDealt.contains(card))
+				if (testCardsDealt.contains(card)) {
 					dealtTwice = true;
+				}
 				testCardsDealt.add(card);
 				
 			}
 		}
+		
+		//add solution to test dealt cards
+		//testCardsDealt.add(new Card(CardType.PERSON, board.getSolution().getPerson()));
+		//testCardsDealt.add(new Card(CardType.WEAPON, board.getSolution().getWeapon()));
+		//testCardsDealt.add(new Card(CardType.ROOM, board.getSolution().getRoom()));
+				
 		//if the test set is equal to the original deck of cards, then all the cards were dealt
+		System.out.println(testCardsDealt.size());
+		System.out.println(board.getDeck().size());
 		assert(testCardsDealt.equals(board.getDeck()));
 		//No card should be dealt twice
 		assertFalse(dealtTwice);

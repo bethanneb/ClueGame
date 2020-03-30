@@ -368,13 +368,7 @@ public class Board {
 				int column = Integer.parseInt(splits[3].trim());
 
 				//convert string with color name into color
-				Color color;
-				try {
-					Field field = Class.forName("java.awt.Color").getField(colorString);
-					color = (Color)field.get(null);
-				}catch(Exception e) {
-					color = null;
-				}
+				Color color = convertColor(colorString);
 
 				// Michael is human player and Jim is computer player, otherwise just normal player
 				if(name.equals("Michael Scott")){
@@ -427,28 +421,28 @@ public class Board {
 		}
 	}
 	
-	private void loadPlayers() throws FileNotFoundException{
-		players = new Player[6];
-		FileReader fin = new FileReader(playersConfigFile);	// Initializing a bunch of variables.
-		Scanner in = new Scanner(fin);
-		String temp;
-		int i=0;
-		while (in.hasNextLine()){
-			temp = in.nextLine();
-			String name = temp.substring(0, temp.indexOf(','));
-			temp = temp.substring(temp.indexOf(',')+1);
-			String color = temp.substring(0, temp.indexOf(','));
-			temp = temp.substring(temp.indexOf(',')+1);
-			String sRow = temp.substring(0, temp.indexOf(','));
-			temp = temp.substring(temp.indexOf(',')+1);
-			String sCol = temp;
-			if(i == 0)
-				players[i] = new HumanPlayer(name, Integer.parseInt(sRow), Integer.parseInt(sCol), convertColor(color));
-			else
-				players[i] = new ComputerPlayer(name, Integer.parseInt(sRow), Integer.parseInt(sCol), convertColor(color));
-			i++;
-		}
-	}
+	//private void loadPlayers() throws FileNotFoundException{
+		//players = new Player[6];
+		//FileReader fin = new FileReader(playersConfigFile);	// Initializing a bunch of variables.
+		//Scanner in = new Scanner(fin);
+		//String temp;
+		//int i=0;
+		//while (in.hasNextLine()){
+			//temp = in.nextLine();
+			//String name = temp.substring(0, temp.indexOf(','));
+			//temp = temp.substring(temp.indexOf(',')+1);
+			//String color = temp.substring(0, temp.indexOf(','));
+			//temp = temp.substring(temp.indexOf(',')+1);
+			//String sRow = temp.substring(0, temp.indexOf(','));
+			//temp = temp.substring(temp.indexOf(',')+1);
+			//String sCol = temp;
+			//if(i == 0)
+				//players[i] = new HumanPlayer(name, Integer.parseInt(sRow), Integer.parseInt(sCol), convertColor(color));
+			//else
+				//players[i] = new ComputerPlayer(name, Integer.parseInt(sRow), Integer.parseInt(sCol), convertColor(color));
+			//i++;
+		//}
+	//}
 	
 	public Color convertColor(String strColor) {
 		Color color; 
@@ -499,8 +493,8 @@ public class Board {
 	
 	//not sure if this is working correctly
 	private void dealCards() {
-		Card[] backup = new Card[21];
-		for(int i = 0; i < 21 ; i++){
+		Card[] backup = new Card[cards.length];
+		for(int i = 0; i < cards.length ; i++){
 			backup[i] = cards[i];
 		}
 		
@@ -514,23 +508,27 @@ public class Board {
 		cards[solutionWeapon] = null;
 		cards[solutionRoom] = null;
 		
-		int randPlayer = rand.nextInt(6);
+		int cardsRemaining = 21;
+		int cardIndex = 0;
 		
-		for(int i = 0; i < cards.length; i++){
-			randPlayer = rand.nextInt(6);
-			if(cards[i] == null){
-				continue;
-			}
-			else if(players[randPlayer].getMyCards().size() < 3){
-				players[randPlayer].giveCard(cards[i]);
-				cards[i] = null;
-			}
-			else{
-				i--;
+		while(cardsRemaining != 0) {
+			for(int i=0; i<playersList.size(); i++) {
+				if(cardIndex == 21) {
+					break;
+				}
+				else if(cards[cardIndex] == null) {
+					i--;
+				}else {
+					playersList.get(i).giveCard(cards[cardIndex]);
+					cards[cardIndex] = null;
+				}
+				cardsRemaining --;
+				cardIndex++;
 			}
 		}
+
 		
-		for(int i = 0; i < 21 ; i++){
+		for(int i = 0; i < cards.length ; i++){
 			cards[i] = backup[i];
 		}
 	}
