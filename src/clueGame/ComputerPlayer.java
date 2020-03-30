@@ -20,6 +20,9 @@ public class ComputerPlayer extends Player {
 		
 	}
 	
+	public boolean isComputer() {
+		return true;
+	}
 	//I also commented this out because we don't know what this is suppose to do yet
 //	public createSuggestion(TBD) {
 //		

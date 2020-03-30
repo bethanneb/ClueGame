@@ -23,6 +23,7 @@ public class Board {
 	private Map<Character, String> legend;
 	private Set<Card> deck;
 	private ArrayList<String> weapons;
+	private ArrayList<Player> player;
 	private String playersConfigFile;
 	private String weaponsConfigFile;
 	
@@ -331,6 +332,9 @@ public class Board {
 		
 	}
 	
+	public ArrayList<Player> getPlayerList(){
+		return player;
+	}
 	//makes the solution for the game (I think...?)
 	public void selectAnswer() {
 
