@@ -19,6 +19,7 @@ public class gameSetupTests {
 	// We make the Board static because we can load it one time and 
 	// then do all the tests. 
 	private static Board board;
+	private static ArrayList<Player> players;
 	
 	@BeforeClass
 	public static void setUp() {
@@ -30,13 +31,15 @@ public class gameSetupTests {
 		board.setCardFiles("Players.txt", "Cards.txt");		
 		// Initialize will load BOTH config files 
 		board.initialize();
+		players = board.getPlayerList();
 	}
+	
 	
 	@Test
 	public void testLoadingPeople() {
 		// all players will be in an ArrayList
 		// should this be in @Before?
-		ArrayList<Player> players = board.getPlayerList();
+		//ArrayList<Player> players = board.getPlayerList();
 
 		// 1st character and also human player
 		assertEquals("Michael Scott", players.get(0).getName()); //name
