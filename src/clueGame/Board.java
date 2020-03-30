@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -26,11 +27,12 @@ public class Board {
 	private Map<Character, String> legend;
 	private Set<Card> deck;
 	private ArrayList<String> weapons;
-	private ArrayList<Player> players;
+	private ArrayList<Player> playersList;
 	private String playersConfigFile;
 	private String cardsConfigFile;
 	private Card[] cards;
-	public Solution solution = new Solution();
+	public Solution solution;
+	private Player[] players;
 
 	//used for tests
 	// variable used for singleton pattern
@@ -142,11 +144,14 @@ public class Board {
 			loadRoomConfig();
 			loadBoardConfig();
 			loadConfigFiles();
+			//loadPlayers();
+			loadCards();
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found. " + e.getMessage());
 		} catch (BadConfigFormatException e) {
 			System.out.println(e.getMessage());
 		}
+		//dealCards();
 	}
 
 
@@ -334,7 +339,7 @@ public class Board {
 	//load players in (I think)
 	//I think it could be to load in players and cards because they are both .txt files
 	public void loadConfigFiles() throws FileNotFoundException, BadConfigFormatException {
-		players = new ArrayList<Player>();
+		playersList = new ArrayList<Player>();
 		BufferedReader reader = null;
 		try {
 			//read entire file and put into standard characters (we had some issues with special characters so we used BufferedReader)
@@ -374,13 +379,13 @@ public class Board {
 
 				// Michael is human player and Jim is computer player, otherwise just normal player
 				if(name.equals("Michael Scott")){
-					players.add(new HumanPlayer(name, row, column, color));
+					playersList.add(new HumanPlayer(name, row, column, color));
 				}
 				else if(name.equals("Jim Halpert")) {
-					players.add(new ComputerPlayer(name, row, column, color));
+					playersList.add(new ComputerPlayer(name, row, column, color));
 				}
 				else {
-					players.add(new Player(name, row, column, color));
+					playersList.add(new Player(name, row, column, color));
 				}
 
 				// read next line
@@ -402,44 +407,64 @@ public class Board {
 
 	}
 
-	public void loadWeapons() {
-		FileReader reader = null;
-		weapons = new ArrayList<>();
-		try {
-			reader = new FileReader(weaponConfigFile);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} 
-		//splits by , and then stores the resulting array in an array list
-		Scanner scanner = new Scanner(reader);
-		while(scanner.hasNextLine()){
-			String weapon = scanner.nextLine();
-			weapons.add(weapon);
-		}
-	}
 
-	public void loadCards() throws FileNotFoundException {
+	private void loadCards() throws FileNotFoundException {
 		cards = new Card[21];
 		FileReader fin = new FileReader("Cards.txt");	// Initializing a bunch of variables.
 		Scanner in = new Scanner(fin);
-		String str;
-
-		for(int i = 0; i < 8; i++){
-			str = in.nextLine();
-			cards[i] = new Card(CardType.PERSON, str);
+		String temp;
+		
+		for(int i = 0; i < 6; i++){
+			temp = in.nextLine();
+			cards[i] = new Card(CardType.PERSON, temp);
 		}
-		for(int i = 0; i < 8; i++){
-			str = in.nextLine();
-			cards[i+6] = new Card(CardType.WEAPON, str);
+		for(int i = 0; i < 6; i++){
+			temp = in.nextLine();
+			cards[i+6] = new Card(CardType.WEAPON, temp);
 		}
 		for(int i = 0; i < 9; i++){
-			str = in.nextLine();
-			cards[i+12] = new Card(CardType.ROOM, str);
+			temp = in.nextLine();
+			cards[i+12] = new Card(CardType.ROOM, temp);
 		}
-
+		
 		//for(int i = 0; i < 21; i++){
 		//	cards[i] = new Card(CardType.PERSON, "Card");
 		//}
+	}
+	
+	private void loadPlayers() throws FileNotFoundException{
+		players = new Player[6];
+		FileReader fin = new FileReader("Players.txt");	// Initializing a bunch of variables.
+		Scanner in = new Scanner(fin);
+		String temp;
+		int i=0;
+		while (in.hasNextLine()){
+			temp = in.nextLine();
+			String name = temp.substring(0, temp.indexOf(','));
+			temp = temp.substring(temp.indexOf(',')+1);
+			String color = temp.substring(0, temp.indexOf(','));
+			temp = temp.substring(temp.indexOf(',')+1);
+			String sRow = temp.substring(0, temp.indexOf(','));
+			temp = temp.substring(temp.indexOf(',')+1);
+			String sCol = temp;
+			if(i == 0)
+				players[i] = new HumanPlayer(name, Integer.parseInt(sRow), Integer.parseInt(sCol), convertColor(color));
+			else
+				players[i] = new ComputerPlayer(name, Integer.parseInt(sRow), Integer.parseInt(sCol), convertColor(color));
+			i++;
+		}
+	}
+	
+	public Color convertColor(String strColor) {
+		Color color; 
+		try {     
+			// We can use reflection to convert the string to a color
+			Field field = Class.forName("java.awt.Color").getField(strColor.trim());     
+			color = (Color)field.get(null); } 
+		catch (Exception e) {  
+			color = null; // Not defined } 
+		}
+		return color;
 	}
 
 	public void makeSolution() {
@@ -457,17 +482,17 @@ public class Board {
 		for (Card card: cardList) {
 			if (card.getType() == CardType.PERSON ) {
 				if (getSolution().person == null) {
-					getSolution().person = card.getName();
+					getSolution().person = card.getCardName();
 					card1 = card;
 				}
 			} else if (card.getType() == CardType.ROOM) {
 				if (getSolution().room == null) {
-					getSolution().room = card.getName();
+					getSolution().room = card.getCardName();
 					card2 = card;
 				}
 			} else if (card.getType() == CardType.WEAPON) {
 				if (getSolution().weapon == null) {
-					getSolution().weapon = card.getName();
+					getSolution().weapon = card.getCardName();
 					card3 = card;
 				}
 			}
@@ -475,8 +500,43 @@ public class Board {
 		deck.remove(card1);
 		deck.remove(card2);
 		deck.remove(card3);
-
-
+	}
+	
+	private void dealCards() {
+		Card[] backup = new Card[21];
+		for(int i = 0; i < 21 ; i++){
+			backup[i] = cards[i];
+		}
+		
+		Random rand = new Random();
+		int solutionPlayer = rand.nextInt(6);
+		int solutionWeapon = rand.nextInt(6) + 6;
+		int solutionRoom = rand.nextInt(9) + 12;
+		
+		solution = new Solution(cards[solutionPlayer].getCardName(), cards[solutionWeapon].getCardName(), cards[solutionRoom].getCardName());
+		cards[solutionPlayer] = null;
+		cards[solutionWeapon] = null;
+		cards[solutionRoom] = null;
+		
+		int randPlayer = rand.nextInt(6);
+		
+		for(int i = 0; i < cards.length; i++){
+			randPlayer = rand.nextInt(6);
+			if(cards[i] == null){
+				continue;
+			}
+			else if(players[randPlayer].getMyCards().size() < 3){
+				players[randPlayer].giveCard(cards[i]);
+				cards[i] = null;
+			}
+			else{
+				i--;
+			}
+		}
+		
+		for(int i = 0; i < 21 ; i++){
+			cards[i] = backup[i];
+		}
 	}
 
 	public Set<Card> getDeck(){
@@ -492,13 +552,31 @@ public class Board {
 //	}
 
 	public ArrayList<Player> getPlayerList(){
-		return players;
+		return playersList;
 	}
 	//makes the solution for the game (I think...?)
 	public void selectAnswer() {
 
 	}
 
+	//I think this is what handleSolution is suppose to do (decide if the solution is accurate or not)
+	public Card handleSolution(Solution suggestion, String accusingPlayer, BoardCell clicked){
+		int startIndex = 0;
+		for(int i = 0; i < 6; i++){
+			if(players[i].getName().equals(accusingPlayer)){
+				startIndex = i;
+				break;
+			}
+		}
+		
+		Card answer = null;
+		for(int i = (startIndex+1)%(players.length); i != startIndex; i = (i+1)%(players.length)){
+			answer = players[i].disproveSuggestion(suggestion);
+			if (answer != null) return answer;
+		}
+		
+		return answer;
+	}
 	/*I'm not sure what this does and we dont know what it takes yet so I'm gonna comment it out for now
 	 * public Card handleSolution(TBD) {
 	 * 
@@ -517,7 +595,6 @@ public class Board {
 	public Solution getSolution() {
 		return solution;
 	}
-
 
 
 

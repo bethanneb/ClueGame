@@ -56,103 +56,50 @@ public class gameSetupTests {
 		assertEquals(0, players.get(7).getColumn()); //column
 	}
 
-	//	@Test
-	//	public void testLoadingDeck() {
-	//		board.loadCards(); //move to @beforeclass?
-	//
-	//		Set<Card> deck = board.getDeck(); //move to @beforeclass?
-	//		int numWeapons = 0, numPeople = 0, numRooms = 0;
-	//		for (Card card : deck) {
-	//			if(card.getType() == CardType.PERSON)
-	//				numPeople++;
-	//			else if(card.getType() == CardType.ROOM)
-	//				numRooms++;
-	//			else if(card.getType() == CardType.WEAPON)
-	//				numWeapons++;
-	//
-	//		}
-	//		//checks that the deck size is correct
-	//		assertEquals(27, deck.size());
-	//
-	//		//checks for correct number of each type of card
-	//		assertEquals(8, numPeople);
-	//		assertEquals(8, numWeapons);
-	//		assertEquals(9, numRooms);
-	//
-	//		//makes sure the deck loaded cards correctly
-	//		assert(deck.contains(board.getCard("Poison Dart", CardType.WEAPON)));
-	//		assert(deck.contains(board.getCard("Angela Martin", CardType.PERSON)));
-	//		assert(deck.contains(board.getCard("Conference Room", CardType.ROOM)));
-	//	}
-
-	// TESTS THAT THE DECK IN THE BOARD CLASS CONTAINS 21 CARDS
-	// THEN CHECKS THAT THERE ARE THE CORRECT NUMBER OF EACH CARD TYPE
-	// LASTLY CHECKS THAT THE NAMES LOADED CORRECTLY
+	/*
+	 * Ensures correct deck size, correct number of each type of card, and that names on the cards are being loaded correctly
+	 */
 	@Test
-	public void testLoadCards() {
+	public void testLoadingDeck() {
+		//Ensures deck contains the correct total number of cards (21)
 		assertEquals(21, board.getCards().length);
 
-		int p=0, r=0, w=0;
+		int people = 0, rooms = 0, weapons = 0;
 		for(Card c : board.getCards()){
 			switch(c.getType()){
 			case PERSON:
-				p++;
-				break;
-			case WEAPON:
-				w++;
+				people++;
 				break;
 			case ROOM:
-				r++;
+				rooms++;
+				break;
+			case WEAPON:
+				weapons++;
 				break;
 			}
 		}
-		assertEquals(6, p);
-		assertEquals(6, w);
-		assertEquals(9, r);
+		//Ensures the deck contains the correct number of each type of card
+		assertEquals(6, people);
+		assertEquals(9, rooms);
+		assertEquals(6, weapons);
 
-		boolean roo = false, wep = false, per = false;
+		//ensures the deck contains one certain room, weapon, and person
+		boolean room = false, weapon = false, person = false;
 		for(Card c : board.getCards()){
-			if(c.getName().equals("Miss Scarlett")){
-				per = true;
+			if(c.getCardName().equals("Angela Martin")){
+				person = true;
 			}
-			if(c.getName().equals("Wrench")){
-				wep = true;
+			if(c.getCardName().equals("Poison Dart")){
+				weapon = true;
 			}
-			if(c.getName().equals("Lounge")){
-				roo = true;
+			if(c.getCardName().equals("Conference Room")){
+				room = true;
 			}
 		}
-		assertTrue(per && wep && roo);
+		//if this is true, then the names on those three cards were loaded correctly
+		assertTrue(person && weapon && room);
 	}
 
-	//	@Test
-	//	public void testDealingCards() {
-	//		
-	//		
-	//		//Gets player list so we can do tests with their cards
-	//		ArrayList<Player> playerList = board.getPlayerList();
-	//		boolean dealtTwice = false;
-	//		int avgCardsPerPlayer = board.getDeck().size() / board.getPlayerList().size();
-	//		
-	//		Set<Card> testCardsDealt = new HashSet<>();
-	//		for (Player player: playerList) {
-	//			//this test assures each player has roughly the same amount of cards
-	//			assert(player.getCards().size() <= avgCardsPerPlayer +1 &&
-	//					player.getCards().size() >= avgCardsPerPlayer -1);
-	//			//gets each player's set of cards
-	//			for(Card card: player.getCards()) {
-	//				//tests if a card already exists, then adds to test set
-	//				if (testCardsDealt.contains(card))
-	//					dealtTwice = true;
-	//				testCardsDealt.add(card);
-	//				
-	//			}
-	//		}
-	//		//if the test set is equal to the original deck of cards, then all the cards were dealt
-	//		assert(testCardsDealt.equals(board.getDeck()));
-	//		//No card should be dealt twice
-	//		assertFalse(dealtTwice);
-	//	}
 
 	// CHECKS THAT EACH PLAYER HAS 3 CARDS (21 - 3 solution cards = 18 --> 18 / 6 = 3)
 	// THEN CHECKS THAT NO ONE HAS A DUPLICATE CARD BY ADDING ALL PLAYER CARDS BACK TO A NEW SET (18 cards)
@@ -175,15 +122,15 @@ public class gameSetupTests {
 		for(Card c : cardList){
 			switch(c.getType()){
 			case PERSON:
-				if(board.solution.person.equals(c.getName()))
+				if(board.solution.person.equals(c.getCardName()))
 					fail("Player has person solution card.");
 				break;
 			case WEAPON:
-				if(board.solution.weapon.equals(c.getName()))
+				if(board.solution.weapon.equals(c.getCardName()))
 					fail("Player has weapon solution card.");
 				break;
 			case ROOM:
-				if(board.solution.room.equals(c.getName()))
+				if(board.solution.room.equals(c.getCardName()))
 					fail("Player has room solution card.");
 				break;
 			}

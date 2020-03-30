@@ -5,7 +5,8 @@ public class Card {
 	private CardType cardType;
 	
 	public Card() {
-		
+		cardName = null;
+		cardType = null;
 	}
 	
 	public String getCardName() {
@@ -19,10 +20,6 @@ public class Card {
 	public Card(CardType cardType, String cardName) {
 		this.cardName = cardName;
 		this.cardType = cardType;
-	}
-	
-	public String getName() {
-		return cardName;
 	}
 	
 	public CardType getType() {
@@ -42,6 +39,10 @@ public class Card {
 		this.cardType = cardType;
 	}
 
-	
+	public boolean equals(Card c){
+		if (this.cardName.equals(c.cardName))
+			return true;
+		return false;
+	}
 
 }
