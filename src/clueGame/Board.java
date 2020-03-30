@@ -1,9 +1,11 @@
 package clueGame;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +25,7 @@ public class Board {
 	private Map<Character, String> legend;
 	private Set<Card> deck;
 	private ArrayList<String> weapons;
-	private ArrayList<Player> player;
+	private ArrayList<Player> players;
 	private String playersConfigFile;
 	private String weaponsConfigFile;
 	
@@ -136,6 +138,7 @@ public class Board {
 		try {
 			loadRoomConfig();
 			loadBoardConfig();
+			loadConfigFiles();
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found. " + e.getMessage());
 		} catch (BadConfigFormatException e) {
@@ -327,13 +330,75 @@ public class Board {
 	
 	//load players in (I think)
 	//I think it could be to load in players and cards because they are both .txt files
-	public void loadConfigFiles() {
-
+	public void loadConfigFiles() throws FileNotFoundException, BadConfigFormatException {
+		players = new ArrayList<Player>();
+		BufferedReader reader = null;
+		try {
+			//read entire file and put into standard characters (we had some issues with special characters so we used BufferedReader)
+			reader = new BufferedReader(new FileReader(playersConfigFile, StandardCharsets.UTF_8));
+			String line = reader.readLine();
+			while (line != null) {
+				String[] splits = line.split(",");
+				
+				// makes sure we have every element for player
+				if(splits[0].trim() == null) {
+					throw new BadConfigFormatException("No name found");
+				}
+				if(splits[1].trim() == null) {
+					throw new BadConfigFormatException("No color found");
+				}
+				if(splits[2].trim() == null) {
+					throw new BadConfigFormatException("No row found");
+				}
+				if(splits[3].trim() == null) {
+					throw new BadConfigFormatException("No column found");
+				}
+				
+				// define all elements to put into constructor
+				String name = splits[0].trim();
+				String colorString = splits[1].trim();
+				int row = Integer.parseInt(splits[2].trim());
+				int column = Integer.parseInt(splits[3].trim());
+				
+				//convert string with color name into color
+				Color color;
+				try {
+					Field field = Class.forName("java.awt.Color").getField(colorString);
+					color = (Color)field.get(null);
+				}catch(Exception e) {
+					color = null;
+				}
+				
+				// Michael is human player and Jim is computer player, otherwise just normal player
+				if(name.equals("Michael Scott")){
+					players.add(new HumanPlayer(name, row, column, color));
+				}else if(name.equals("Jim Halpert")) {
+					players.add(new ComputerPlayer(name, row, column, color));
+				}else {
+					players.add(new Player(name, row, column, color));
+				}
+				
+				// read next line
+				line = reader.readLine();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			//want to make sure that file will be close no matter what, even if error is thrown
+		} finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				}
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		
 	}
 	
 	public ArrayList<Player> getPlayerList(){
-		return player;
+		return players;
 	}
 	//makes the solution for the game (I think...?)
 	public void selectAnswer() {

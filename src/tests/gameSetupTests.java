@@ -1,6 +1,7 @@
 package tests;
 import static org.junit.Assert.*;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,26 +36,26 @@ public class gameSetupTests {
 	public void testLoadingPeople() {
 		// all players will be in an ArrayList
 		// should this be in @Before?
-		ArrayList<Player> player = board.getPlayerList();
+		ArrayList<Player> players = board.getPlayerList();
 
 		// 1st character and also human player
-		assertEquals("Micheal Scott", player.get(0).getName()); //name
-		assertEquals("black", player.get(0).getColor()); //color, not sure if syntax is correct
-		assertEquals(3, player.get(0).getRow()); //row
-		assertEquals(0, player.get(0).getColumn()); //column
-		assertTrue(player.get(0).isHuman()); //is the human player
+		assertEquals("Michael Scott", players.get(0).getName()); //name
+		assertEquals(Color.BLACK, players.get(0).getColor()); //color
+		assertEquals(3, players.get(0).getRow()); //row
+		assertEquals(0, players.get(0).getColumn()); //column
+		assertTrue(players.get(0).isHuman()); //is the human player
 		
 		// 3rd character and also computer player
-		assertEquals("Jim Halpert", player.get(2).getName()); //name
-		assertEquals("blue", player.get(2).getColor()); //color
-		assertEquals(0, player.get(2).getRow()); //row
-		assertEquals(13, player.get(2).getColumn()); //column
-		assertTrue(player.get(0).isComputer()); //is the computer player
+		assertEquals("Jim Halpert", players.get(2).getName()); //name
+		assertEquals(Color.BLUE, players.get(2).getColor()); //color
+		assertEquals(0, players.get(2).getRow()); //row
+		assertEquals(13, players.get(2).getColumn()); //column
+		assertTrue(players.get(2).isComputer()); //is the computer player
 		
 		// last character
-		assertEquals("Angela Martin", player.get(7).getName()); //name
-		assertEquals("purple", player.get(7).getColor()); //color
-		assertEquals(11, player.get(7).getRow()); //row 
-		assertEquals(0, player.get(7).getColumn()); //column
+		assertEquals("Angela Martin", players.get(7).getName()); //name
+		assertEquals(Color.MAGENTA, players.get(7).getColor()); //color
+		assertEquals(11, players.get(7).getRow()); //row 
+		assertEquals(0, players.get(7).getColumn()); //column
 	}
 }
