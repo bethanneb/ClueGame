@@ -2,7 +2,6 @@ package clueGame;
 
 import java.awt.Color;
 
-//I think it is suppose to implement Solution (but I can't remember exactly what dotted arrows mean from the UML)
 public class Player {
 	private String playerName;
 	private int row;

@@ -15,10 +15,9 @@ import clueGame.CardType;
 import clueGame.Player;
 
 public class gameSetupTests {
-	//Copied the test beforeclass method from CTEST
-	// We make the Board static because we can load it one time and 
-	// then do all the tests. 
+	//static so that it only has to be loaded one time
 	private static Board board;
+	//static so we only have one copy of the ArrayList
 	private static ArrayList<Player> players;
 	
 	@BeforeClass
@@ -37,9 +36,6 @@ public class gameSetupTests {
 	
 	@Test
 	public void testLoadingPeople() {
-		// all players will be in an ArrayList
-		// should this be in @Before?
-		//ArrayList<Player> players = board.getPlayerList();
 
 		// 1st character and also human player
 		assertEquals("Michael Scott", players.get(0).getName()); //name
@@ -61,4 +57,100 @@ public class gameSetupTests {
 		assertEquals(11, players.get(7).getRow()); //row 
 		assertEquals(0, players.get(7).getColumn()); //column
 	}
+	
+	@Test
+	public void testLoadingDeck() {
+		board.loadCards(); //move to @beforeclass?
+
+		Set<Card> deck = board.getDeck(); //move to @beforeclass?
+		int numWeapons = 0, numPeople = 0, numRooms = 0;
+		for (Card card : deck) {
+			if(card.getType() == CardType.PERSON)
+				numPeople++;
+			else if(card.getType() == CardType.ROOM)
+				numRooms++;
+			else if(card.getType() == CardType.WEAPON)
+				numWeapons++;
+
+		}
+		//checks that the deck size is correct
+		assertEquals(27, deck.size());
+
+		//checks for correct number of each type of card
+		assertEquals(8, numPeople);
+		assertEquals(8, numWeapons);
+		assertEquals(9, numRooms);
+
+		//makes sure the deck loaded cards correctly
+		assert(deck.contains(board.getCard("Poison Dart", CardType.WEAPON)));
+		assert(deck.contains(board.getCard("Angela Martin", CardType.PERSON)));
+		assert(deck.contains(board.getCard("Conference Room", CardType.ROOM)));
+	}
+	
+	@Test
+	public void testDealingCards() {
+		
+		
+		//Gets player list so we can do tests with their cards
+		ArrayList<Player> playerList = board.getPlayerList();
+		boolean dealtTwice = false;
+		int avgCardsPerPlayer = board.getDeckOfCards().size() / board.getPlayerList().size();
+		
+		Set<Card> testCardsDealt = new HashSet<>();
+		for (Player player: playerList) {
+			//this test assures each player has roughly the same amount of cards
+			assert(player.getCards().size() <= avgCardsPerPlayer +1 &&
+					player.getCards().size() >= avgCardsPerPlayer -1);
+			//gets each player's set of cards
+			for(Card card: player.getCards()) {
+				//tests if a card already exists, then adds to test set
+				if (testCardsDealt.contains(card))
+					dealtTwice = true;
+				testCardsDealt.add(card);
+				
+			}
+		}
+		//if the test set is equal to the original deck of cards, then all the cards were dealt
+		assert(testCardsDealt.equals(board.getDeckOfCards()));
+		//No card should be dealt twice
+		assertFalse(dealtTwice);
+		
+		
+		
+		
+		
+	}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
