@@ -33,6 +33,7 @@ public class Board {
 	private Map<Character, String> legend;
 	private ArrayList<Character> legendKeys;
 	public Set<Card> deck; //CHANGE TO PRIVATE
+	public Set<Card> testCardsDealt;
 	private ArrayList<String> weapons;
 	private ArrayList<Player> playersList;
 	private String playersConfigFile;
@@ -40,6 +41,7 @@ public class Board {
 	private Card[] cards;
 	public Solution solution;
 	private Player[] players;
+	
 
 	//used for tests
 	// variable used for singleton pattern
@@ -408,6 +410,7 @@ public class Board {
 
 	private void loadCards() throws FileNotFoundException {
 		deck = new HashSet<>();
+		testCardsDealt = new HashSet<>();
 		cards = new Card[DECK_SIZE];
 		FileReader fin = new FileReader(cardsConfigFile);
 		Scanner in = new Scanner(fin);
@@ -420,6 +423,7 @@ public class Board {
 			cards[i] = new Card(CardType.PERSON, temp);
 			//System.out.println(currentCard);
 			deck.add(currentCard);
+			testCardsDealt.add(currentCard);
 		}
 		for(int i = 0; i < NUM_WEAPONS; i++){
 			temp = in.nextLine();
@@ -427,6 +431,7 @@ public class Board {
 			cards[i+NUM_PEOPLE] = new Card(CardType.WEAPON, temp);
 			//System.out.println(currentCard);
 			deck.add(currentCard);
+			testCardsDealt.add(currentCard);
 		}
 		for(int i = 0; i < NUM_ROOMS; i++){
 			temp = in.nextLine();
@@ -434,6 +439,7 @@ public class Board {
 			cards[i+(NUM_PEOPLE+NUM_WEAPONS)] = new Card(CardType.ROOM, temp);
 			//System.out.println(currentCard);
 			deck.add(currentCard);
+			testCardsDealt.add(currentCard);
 		}
 		//ensures that deck has all 21 clue cards in it
 		//System.out.println(deck.toString());
@@ -464,17 +470,20 @@ public class Board {
 		int solutionRoom = rand.nextInt(NUM_ROOMS) + (NUM_PEOPLE+NUM_WEAPONS);
 		
 		solution = new Solution(cards[solutionPlayer].getCardName(), cards[solutionWeapon].getCardName(), cards[solutionRoom].getCardName());
-		System.out.println("Before: "+ getDeck().size());
+		//System.out.println("Before: "+ getDeck().size());
 		Card remove = getCard(solution.getPerson(), CardType.PERSON);
-		System.out.println("Card object: " + remove);
+		//System.out.println("Card object: " + remove);
 		deck.remove(remove);
+		testCardsDealt.remove(remove);
 		remove = getCard(solution.getWeapon(), CardType.WEAPON);
-		System.out.println("Card object: " + remove);
+		//System.out.println("Card object: " + remove);
 		deck.remove(remove);
+		testCardsDealt.remove(remove);
 		remove = getCard(solution.getRoom(), CardType.ROOM);
-		System.out.println("Card object: " + remove);
+		//System.out.println("Card object: " + remove);
 		deck.remove(remove);
-		System.out.println("After: "+ getDeck().size());
+		testCardsDealt.remove(remove);
+		//System.out.println("After: "+ getDeck().size());
 		
 		cards[solutionPlayer] = null;
 		cards[solutionWeapon] = null;

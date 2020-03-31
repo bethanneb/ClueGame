@@ -108,7 +108,7 @@ public class gameSetupTests {
 	public void testDealingCards() {
 		
 		boolean dealtTwice = false;
-		int avgCardsPerPlayer = board.getCards().length / playersList.size();
+		int avgCardsPerPlayer = board.getDeck().size() / playersList.size();
 		
 		Set<Card> testCardsDealt = new HashSet<>();
 		for (Player player: playersList) {
@@ -144,14 +144,7 @@ public class gameSetupTests {
 		}
 				
 		//if the test set is equal to the original deck of cards, then all the cards were dealt
-		System.out.println(testCardsDealt.size());
-		System.out.println(board.getDeck().size());
-		System.out.println(board.deck.toString());
-		System.out.println(testCardsDealt.toString());
-		int testCardSize = testCardsDealt.size();
-		int deckSize = board.getDeck().size();
-		//assert(testCardSize.equals(deckSize));
-		assert(testCardsDealt.equals(board.getDeck()));
+		assert(board.testCardsDealt.equals(board.getDeck()));
 		//No card should be dealt twice
 		assertFalse(dealtTwice);
 	}
