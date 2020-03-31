@@ -22,9 +22,7 @@ public class Card {
 		this.cardType = cardType;
 	}
 	
-	public Card(String cardName, CardType cardType) {
-		this.cardName = cardName;
-		this.cardType = cardType;
+	public Card(String cardName, CardType card) {
 	}
 
 	public CardType getType() {
