@@ -20,10 +20,9 @@ import java.util.Set;
 
 public class Board {
 	public static final int MAX_BOARD_SIZE = 50;
-	public static final int DECK_SIZE = 21;
-	public static final int DECK_NO_SOLUTION = 18;
-	public static final int NUM_WEAPONS = 6;
-	public static final int NUM_PEOPLE = 6;
+	public static final int DECK_SIZE = 25;
+	public static final int NUM_WEAPONS = 8;
+	public static final int NUM_PEOPLE = 8;
 	public static final int NUM_ROOMS = 9;
 	private int numRows, numColumns;
 	private BoardCell[][] board;
@@ -33,7 +32,7 @@ public class Board {
 	private BoardCell cell;
 	private Map<Character, String> legend;
 	private ArrayList<Character> legendKeys;
-	private Set<Card> deck;
+	public Set<Card> deck; //CHANGE TO PRIVATE
 	private ArrayList<String> weapons;
 	private ArrayList<Player> playersList;
 	private String playersConfigFile;
@@ -485,6 +484,7 @@ public class Board {
 		int cardsRemaining = DECK_SIZE;
 		int cardIndex = 0;
 		
+		//gives cards that are not in the solution to the players
 		while(cardsRemaining != 0) {
 			for(int i=0; i<playersList.size(); i++) {
 				if(cardIndex == DECK_SIZE) {
@@ -505,7 +505,6 @@ public class Board {
 		for(int i = 0; i < cards.length ; i++){
 			cards[i] = backup[i];
 		}
-		//makeSolution();
 	}
 	
 	public Card getCard(String name, CardType type) {

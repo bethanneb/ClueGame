@@ -66,7 +66,7 @@ public class gameSetupTests {
 	@Test
 	public void testLoadingDeck() {
 		//Ensures deck contains the correct total number of cards (21)
-		assertEquals(21, board.getCards().length);
+		assertEquals(25, board.getCards().length);
 
 		int people = 0, rooms = 0, weapons = 0;
 		for(Card c : board.getCards()){
@@ -83,9 +83,9 @@ public class gameSetupTests {
 			}
 		}
 		//Ensures the deck contains the correct number of each type of card
-		assertEquals(6, people);
+		assertEquals(8, people);
 		assertEquals(9, rooms);
-		assertEquals(6, weapons);
+		assertEquals(8, weapons);
 
 		//ensures the deck contains one certain room, weapon, and person
 		boolean room = false, weapon = false, person = false;
@@ -106,7 +106,7 @@ public class gameSetupTests {
 	
 	@Test
 	public void testDealingCards() {
-	
+		
 		boolean dealtTwice = false;
 		int avgCardsPerPlayer = board.getCards().length / playersList.size();
 		
@@ -125,11 +125,7 @@ public class gameSetupTests {
 			}
 		}
 		
-		//add solution to test dealt cards
-		//testCardsDealt.add(new Card(CardType.PERSON, board.getSolution().getPerson()));
-		//testCardsDealt.add(new Card(CardType.WEAPON, board.getSolution().getWeapon()));
-		//testCardsDealt.add(new Card(CardType.ROOM, board.getSolution().getRoom()));
-		
+		//Tests dealt cards
 		for(Card c : testCardsDealt){
 			switch(c.getType()){
 			case PERSON:
@@ -150,6 +146,11 @@ public class gameSetupTests {
 		//if the test set is equal to the original deck of cards, then all the cards were dealt
 		System.out.println(testCardsDealt.size());
 		System.out.println(board.getDeck().size());
+		System.out.println(board.deck.toString());
+		System.out.println(testCardsDealt.toString());
+		int testCardSize = testCardsDealt.size();
+		int deckSize = board.getDeck().size();
+		//assert(testCardSize.equals(deckSize));
 		assert(testCardsDealt.equals(board.getDeck()));
 		//No card should be dealt twice
 		assertFalse(dealtTwice);
