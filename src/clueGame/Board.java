@@ -8,9 +8,11 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
@@ -18,6 +20,11 @@ import java.util.Set;
 
 public class Board {
 	public static final int MAX_BOARD_SIZE = 50;
+	public static final int DECK_SIZE = 21;
+	public static final int DECK_NO_SOLUTION = 18;
+	public static final int NUM_WEAPONS = 6;
+	public static final int NUM_PEOPLE = 6;
+	public static final int NUM_ROOMS = 9;
 	private int numRows, numColumns;
 	private BoardCell[][] board;
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
@@ -25,6 +32,7 @@ public class Board {
 	private String boardConfigFile, roomConfigFile;
 	private BoardCell cell;
 	private Map<Character, String> legend;
+	private ArrayList<Character> legendKeys;
 	private Set<Card> deck;
 	private ArrayList<String> weapons;
 	private ArrayList<Player> playersList;
@@ -145,7 +153,7 @@ public class Board {
 			loadBoardConfig();
 			loadConfigFiles();
 			loadCards();
-			dealCards(); //Why will the tests not run when I uncomment this??
+			dealCards();
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found. " + e.getMessage());
 		} catch (BadConfigFormatException e) {
@@ -397,52 +405,40 @@ public class Board {
 				}
 			}
 		}
-
 	}
-
 
 	private void loadCards() throws FileNotFoundException {
-		cards = new Card[21];
-		FileReader fin = new FileReader(cardsConfigFile);	// Initializing a bunch of variables.
+		deck = new HashSet<>();
+		cards = new Card[DECK_SIZE];
+		FileReader fin = new FileReader(cardsConfigFile);
 		Scanner in = new Scanner(fin);
 		String temp;
+		Card currentCard;
 		
-		for(int i = 0; i < 6; i++){
+		for(int i = 0; i < NUM_PEOPLE; i++){
 			temp = in.nextLine();
+			currentCard = new Card(CardType.PERSON, temp);
 			cards[i] = new Card(CardType.PERSON, temp);
+			//System.out.println(currentCard);
+			deck.add(currentCard);
 		}
-		for(int i = 0; i < 6; i++){
+		for(int i = 0; i < NUM_WEAPONS; i++){
 			temp = in.nextLine();
-			cards[i+6] = new Card(CardType.WEAPON, temp);
+			currentCard = new Card(CardType.WEAPON, temp);
+			cards[i+NUM_PEOPLE] = new Card(CardType.WEAPON, temp);
+			//System.out.println(currentCard);
+			deck.add(currentCard);
 		}
-		for(int i = 0; i < 9; i++){
+		for(int i = 0; i < NUM_ROOMS; i++){
 			temp = in.nextLine();
-			cards[i+12] = new Card(CardType.ROOM, temp);
+			currentCard = new Card(CardType.ROOM, temp);
+			cards[i+(NUM_PEOPLE+NUM_WEAPONS)] = new Card(CardType.ROOM, temp);
+			//System.out.println(currentCard);
+			deck.add(currentCard);
 		}
+		//ensures that deck has all 21 clue cards in it
+		//System.out.println(deck.toString());
 	}
-	
-	//private void loadPlayers() throws FileNotFoundException{
-		//players = new Player[6];
-		//FileReader fin = new FileReader(playersConfigFile);	// Initializing a bunch of variables.
-		//Scanner in = new Scanner(fin);
-		//String temp;
-		//int i=0;
-		//while (in.hasNextLine()){
-			//temp = in.nextLine();
-			//String name = temp.substring(0, temp.indexOf(','));
-			//temp = temp.substring(temp.indexOf(',')+1);
-			//String color = temp.substring(0, temp.indexOf(','));
-			//temp = temp.substring(temp.indexOf(',')+1);
-			//String sRow = temp.substring(0, temp.indexOf(','));
-			//temp = temp.substring(temp.indexOf(',')+1);
-			//String sCol = temp;
-			//if(i == 0)
-				//players[i] = new HumanPlayer(name, Integer.parseInt(sRow), Integer.parseInt(sCol), convertColor(color));
-			//else
-				//players[i] = new ComputerPlayer(name, Integer.parseInt(sRow), Integer.parseInt(sCol), convertColor(color));
-			//i++;
-		//}
-	//}
 	
 	public Color convertColor(String strColor) {
 		Color color; 
@@ -451,69 +447,47 @@ public class Board {
 			Field field = Class.forName("java.awt.Color").getField(strColor.trim());     
 			color = (Color)field.get(null); } 
 		catch (Exception e) {  
-			color = null; // Not defined } 
+			color = null; // Not defined
 		}
 		return color;
-	}
-
-	public void makeSolution() {
-
-		Card card1 = null;
-		Card card2 = null;
-		Card card3 = null;
-
-		ArrayList<Card> cardList = new ArrayList<>();
-		for (Card c: deck) {
-			cardList.add(c);
-		}
-		Collections.shuffle(cardList);
-
-		for (Card card: cardList) {
-			if (card.getType() == CardType.PERSON ) {
-				if (getSolution().person == null) {
-					getSolution().person = card.getCardName();
-					card1 = card;
-				}
-			} else if (card.getType() == CardType.ROOM) {
-				if (getSolution().room == null) {
-					getSolution().room = card.getCardName();
-					card2 = card;
-				}
-			} else if (card.getType() == CardType.WEAPON) {
-				if (getSolution().weapon == null) {
-					getSolution().weapon = card.getCardName();
-					card3 = card;
-				}
-			}
-		}
-		deck.remove(card1);
-		deck.remove(card2);
-		deck.remove(card3);
 	}
 	
 	//not sure if this is working correctly
 	private void dealCards() {
 		Card[] backup = new Card[cards.length];
-		for(int i = 0; i < cards.length ; i++){
+		for(int i = 0; i < DECK_SIZE; i++){
 			backup[i] = cards[i];
 		}
 		
 		Random rand = new Random();
-		int solutionPlayer = rand.nextInt(6);
-		int solutionWeapon = rand.nextInt(6) + 6;
-		int solutionRoom = rand.nextInt(9) + 12;
+		int solutionPlayer = rand.nextInt(NUM_PEOPLE);
+		int solutionWeapon = rand.nextInt(NUM_WEAPONS) + NUM_PEOPLE;
+		int solutionRoom = rand.nextInt(NUM_ROOMS) + (NUM_PEOPLE+NUM_WEAPONS);
 		
 		solution = new Solution(cards[solutionPlayer].getCardName(), cards[solutionWeapon].getCardName(), cards[solutionRoom].getCardName());
+		System.out.println("Before: "+ getDeck().size());
+		Card remove = getCard(solution.getPerson(), CardType.PERSON);
+		System.out.println("Card object: " + remove);
+		deck.remove(remove);
+		remove = getCard(solution.getWeapon(), CardType.WEAPON);
+		System.out.println("Card object: " + remove);
+		deck.remove(remove);
+		remove = getCard(solution.getRoom(), CardType.ROOM);
+		System.out.println("Card object: " + remove);
+		deck.remove(remove);
+		System.out.println("After: "+ getDeck().size());
+		
 		cards[solutionPlayer] = null;
 		cards[solutionWeapon] = null;
 		cards[solutionRoom] = null;
+		//System.out.println(deck.contains(solutionPlayer));
 		
-		int cardsRemaining = 21;
+		int cardsRemaining = DECK_SIZE;
 		int cardIndex = 0;
 		
 		while(cardsRemaining != 0) {
 			for(int i=0; i<playersList.size(); i++) {
-				if(cardIndex == 21) {
+				if(cardIndex == DECK_SIZE) {
 					break;
 				}
 				else if(cards[cardIndex] == null) {
@@ -531,6 +505,18 @@ public class Board {
 		for(int i = 0; i < cards.length ; i++){
 			cards[i] = backup[i];
 		}
+		//makeSolution();
+	}
+	
+	public Card getCard(String name, CardType type) {
+
+		for (Card card : deck) {
+			if (card.getCardName().contentEquals(name) && card.getType().equals(type)) {
+				return card;
+			}
+
+		}
+		return null;
 	}
 
 	public Set<Card> getDeck(){

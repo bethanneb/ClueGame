@@ -19,7 +19,7 @@ public class gameSetupTests {
 	//static so that it only has to be loaded one time
 	private static Board board;
 	//static so we only have one copy of the ArrayList
-	private static ArrayList<Player> players;
+	private static ArrayList<Player> playersList;
 
 	@BeforeClass
 	public static void setUp() {
@@ -31,33 +31,33 @@ public class gameSetupTests {
 		board.setCardFiles("Players.txt", "Cards.txt");		
 		// Initialize will load BOTH config files 
 		board.initialize();
-		players = board.getPlayerList();
+		playersList = board.getPlayerList();
 	}
 
 	@Test
 	public void testLoadingPeople() {
 		// right amount of people have been loaded
-		assertEquals(8, players.size());
+		assertEquals(8, playersList.size());
 		
 		// 1st character and also human player
-		assertEquals("Michael Scott", players.get(0).getName()); //name
-		assertEquals(Color.BLACK, players.get(0).getColor()); //color
-		assertEquals(3, players.get(0).getRow()); //row
-		assertEquals(0, players.get(0).getColumn()); //column
-		assertTrue(players.get(0).isHuman()); //is the human player
+		assertEquals("Michael Scott", playersList.get(0).getName()); //name
+		assertEquals(Color.BLACK, playersList.get(0).getColor()); //color
+		assertEquals(3, playersList.get(0).getRow()); //row
+		assertEquals(0, playersList.get(0).getColumn()); //column
+		assertTrue(playersList.get(0).isHuman()); //is the human player
 
 		// 3rd character and also computer player
-		assertEquals("Jim Halpert", players.get(2).getName()); //name
-		assertEquals(Color.BLUE, players.get(2).getColor()); //color
-		assertEquals(0, players.get(2).getRow()); //row
-		assertEquals(13, players.get(2).getColumn()); //column
-		assertTrue(players.get(2).isComputer()); //is the computer player
+		assertEquals("Jim Halpert", playersList.get(2).getName()); //name
+		assertEquals(Color.BLUE, playersList.get(2).getColor()); //color
+		assertEquals(0, playersList.get(2).getRow()); //row
+		assertEquals(13, playersList.get(2).getColumn()); //column
+		assertTrue(playersList.get(2).isComputer()); //is the computer player
 
 		// last character
-		assertEquals("Angela Martin", players.get(7).getName()); //name
-		assertEquals(Color.MAGENTA, players.get(7).getColor()); //color
-		assertEquals(11, players.get(7).getRow()); //row 
-		assertEquals(0, players.get(7).getColumn()); //column
+		assertEquals("Angela Martin", playersList.get(7).getName()); //name
+		assertEquals(Color.MAGENTA, playersList.get(7).getColor()); //color
+		assertEquals(11, playersList.get(7).getRow()); //row 
+		assertEquals(0, playersList.get(7).getColumn()); //column
 	}
 
 	/*
@@ -108,10 +108,10 @@ public class gameSetupTests {
 	public void testDealingCards() {
 	
 		boolean dealtTwice = false;
-		int avgCardsPerPlayer = board.getCards().length / players.size();
+		int avgCardsPerPlayer = board.getCards().length / playersList.size();
 		
 		Set<Card> testCardsDealt = new HashSet<>();
-		for (Player player: players) {
+		for (Player player: playersList) {
 			//this test assures each player has roughly the same amount of cards
 			assert(player.getMyCards().size() <= avgCardsPerPlayer +1 &&
 					player.getMyCards().size() >= avgCardsPerPlayer -1);
@@ -122,7 +122,6 @@ public class gameSetupTests {
 					dealtTwice = true;
 				}
 				testCardsDealt.add(card);
-				
 			}
 		}
 		
@@ -130,6 +129,23 @@ public class gameSetupTests {
 		//testCardsDealt.add(new Card(CardType.PERSON, board.getSolution().getPerson()));
 		//testCardsDealt.add(new Card(CardType.WEAPON, board.getSolution().getWeapon()));
 		//testCardsDealt.add(new Card(CardType.ROOM, board.getSolution().getRoom()));
+		
+		for(Card c : testCardsDealt){
+			switch(c.getType()){
+			case PERSON:
+				if(board.solution.person.equals(c.getCardName()))
+					fail("Player has person solution card.");
+				break;
+			case WEAPON:
+				if(board.solution.weapon.equals(c.getCardName()))
+					fail("Player has weapon solution card.");
+				break;
+			case ROOM:
+				if(board.solution.room.equals(c.getCardName()))
+					fail("Player has room solution card.");
+				break;
+			}
+		}
 				
 		//if the test set is equal to the original deck of cards, then all the cards were dealt
 		System.out.println(testCardsDealt.size());
