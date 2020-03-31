@@ -120,16 +120,19 @@ public class gameSetupTests {
 			//this test assures each player has roughly the same amount of cards
 			assert(player.getMyCards().size() <= avgCardsPerPlayer +1 &&
 					player.getMyCards().size() >= avgCardsPerPlayer -1);
-			//System.out.println("Testing getMyCards(): " + player.getMyCards());
 			//gets each player's set of cards
 			for(Card card: player.getMyCards()) {
+				//System.out.println("Testing getMyCards(): " + player.getMyCards());
 				//tests if a card already exists, then adds to test set
 				if (testCardsDealt.contains(card)) {
 					dealtTwice = true;
 				}
+				//System.out.println("Card being added to test deck: " + card);
 				testCardsDealt.add(card);
 			}
 		}
+		//ensures that no card was dealt twice
+		assertFalse(dealtTwice);
 		
 		//Tests dealt cards
 		for(Card c : testCardsDealt){
@@ -150,16 +153,7 @@ public class gameSetupTests {
 		}
 				
 		//if the test set is equal to the original deck of cards, then all the cards were dealt
-//		System.out.println(testCardsDealt.size());
-//		System.out.println(board.getDeck().size());
-//		System.out.println("Deck: " + board.deck.toString());
-//		System.out.println("Test Deck: " + testCardsDealt.toString());
-		int testCardSize = testCardsDealt.size();
-		int deckSize = board.getDeck().size();
-		//assert(testCardSize.equals(deckSize));
-		assert(board.testCardsDealt.equals(board.getDeck()));
-		//No card should be dealt twice
-		assertFalse(dealtTwice);
+		assert(testCardsDealt.equals(board.getDeck()));
 	}
 
 

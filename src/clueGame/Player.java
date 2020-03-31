@@ -81,7 +81,7 @@ public class Player {
 	}
 
 	public void giveCard(Card card) {
-		//System.out.println("Given to player: " + card);
+		System.out.println("Given to player: " + card);
 		myCards.add(card);
 		seeCard(card);
 	}

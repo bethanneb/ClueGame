@@ -37,8 +37,7 @@ public class Board {
 	private BoardCell cell;
 	private Map<Character, String> legend;
 	private ArrayList<Character> legendKeys;
-	public Set<Card> deck; //CHANGE TO PRIVATE
-	public Set<Card> testCardsDealt;
+	private Set<Card> deck;
 	private ArrayList<String> weapons;
 	private ArrayList<Player> playersList;
 	private String playersConfigFile;
@@ -415,7 +414,6 @@ public class Board {
 
 	private void loadCards() throws FileNotFoundException {
 		deck = new HashSet<>();
-		testCardsDealt = new HashSet<>();
 		cards = new Card[DECK_SIZE];
 		FileReader fin = new FileReader(cardsConfigFile);
 		Scanner in = new Scanner(fin);
@@ -426,28 +424,17 @@ public class Board {
 			temp = in.nextLine();
 			currentCard = new Card(CardType.PERSON, temp);
 			cards[i] = new Card(CardType.PERSON, temp);
-			//System.out.println(currentCard);
-			deck.add(currentCard);
-			testCardsDealt.add(currentCard);
 		}
 		for(int i = 0; i < NUM_WEAPONS; i++){
 			temp = in.nextLine();
 			currentCard = new Card(CardType.WEAPON, temp);
 			cards[i+NUM_PEOPLE] = new Card(CardType.WEAPON, temp);
-			//System.out.println(currentCard);
-			deck.add(currentCard);
-			testCardsDealt.add(currentCard);
 		}
 		for(int i = 0; i < NUM_ROOMS; i++){
 			temp = in.nextLine();
 			currentCard = new Card(CardType.ROOM, temp);
 			cards[i+(NUM_PEOPLE+NUM_WEAPONS)] = new Card(CardType.ROOM, temp);
-			//System.out.println(currentCard);
-			deck.add(currentCard);
-			testCardsDealt.add(currentCard);
 		}
-		//ensures that deck has all 21 clue cards in it
-		//System.out.println(deck.toString());
 	}
 	
 	public Color convertColor(String strColor) {
@@ -477,18 +464,6 @@ public class Board {
 		solution = new Solution(cards[solutionPlayer].getCardName(), cards[solutionWeapon].getCardName(), cards[solutionRoom].getCardName());
 		//System.out.println("Before: "+ getDeck().size());
 		Card remove = getCard(solution.getPerson(), CardType.PERSON);
-		//System.out.println("Card object: " + remove);
-		deck.remove(remove);
-		testCardsDealt.remove(remove);
-		remove = getCard(solution.getWeapon(), CardType.WEAPON);
-		//System.out.println("Card object: " + remove);
-		deck.remove(remove);
-		testCardsDealt.remove(remove);
-		remove = getCard(solution.getRoom(), CardType.ROOM);
-		//System.out.println("Card object: " + remove);
-		deck.remove(remove);
-		testCardsDealt.remove(remove);
-		//System.out.println("After: "+ getDeck().size());
 		
 		cards[solutionPlayer] = null;
 		cards[solutionWeapon] = null;
@@ -508,6 +483,7 @@ public class Board {
 					i--;
 				}else {
 					playersList.get(i).giveCard(cards[cardIndex]);
+					deck.add(cards[cardIndex]);
 					cards[cardIndex] = null;
 				}
 				cardsRemaining --;
