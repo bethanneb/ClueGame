@@ -15,8 +15,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import clueGame.Board;
+import clueGame.BoardCell;
 import clueGame.Card;
 import clueGame.CardType;
+import clueGame.ComputerPlayer;
 import clueGame.Player;
 import clueGame.Solution;
 

@@ -6,6 +6,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -23,6 +24,10 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 public class Board {
 	public static final int MAX_BOARD_SIZE = 50;
 	public static final int DECK_SIZE = 25;
@@ -30,9 +35,9 @@ public class Board {
 	public static final int NUM_PEOPLE = 8;
 	public static final int NUM_ROOMS = 9;
 	private int numRows, numColumns;
-	private BoardCell[][] board;
+	private static BoardCell[][] board;
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
-	private Set<BoardCell> targets, visited;
+	private static Set<BoardCell> targets, visited;
 	private String boardConfigFile, roomConfigFile;
 	private BoardCell cell;
 	private Map<Character, String> legend;
@@ -46,7 +51,47 @@ public class Board {
 	public Solution solution;
 	private Player[] players;
 	
-
+	private Solution answerKey;
+	// Set that would hold the computer player
+	private Set<ComputerPlayer> computerPlayers;
+	// Set that would hold the human player
+	private Set<HumanPlayer> humanPlayer; 
+	private Set<String> rooms;
+	private Set<Card> key; 
+	private Set<Card> roomPile;
+	private Set<Card> peoplePile;
+	private Set<Card> weaponsPile;
+	private String peopleConfigFile;
+	private String weaponsConfigFile; 
+	ArrayList<Card> possibleCards = new ArrayList<Card>();
+	public ArrayList<Card> possiblePeople = new ArrayList<Card>();  
+	public ArrayList<Card> possibleWeapons = new ArrayList<Card>(); 
+	public ArrayList<Card> possibleRooms = new ArrayList<Card>();
+	ArrayList<Player> player = new ArrayList<Player>();
+	ArrayList<Point> roomNames = new ArrayList<Point>();
+	private JPanel panel;
+	static JFrame suggestAccuseFrame; 
+	JFrame myFrame; 
+	boolean gameFinished = false; 
+	
+	// NOTE: Game logic variables 
+	public boolean doneWithHuman = true;
+	public boolean targetSelected = true;
+	private boolean doneWithComputer = false;
+	private Player currentPlayerInGame;
+	public int currentPlayerInGameCount = -1;
+	private BoardCell selectedBox;
+	private ArrayList<Player> gamePlayers = new ArrayList<Player>();
+	private int dieRollValue = -1;
+	private boolean compReadyMakeAccusation = false;
+	private boolean compSuggestionDisproved = true;
+	private String currentGuess = "";
+	private String currentResults = "no new clue";
+	public boolean inWindow = false; 
+	public boolean isFirstTurn = true; 
+	//public Suggestion suggest; //CREATE CLASS LATER
+	// Functions:
+	//NOTE: Singleton pattern 
 	//used for tests
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
@@ -55,13 +100,27 @@ public class Board {
 		return theInstance;
 	}
 
-	//default constructor
-	public Board() { 
+//	//default constructor
+//	public Board() { 
+//		super();
+//		visited = new HashSet<BoardCell>(); //should we set these up here? might be inefficient.
+//		targets = new HashSet<BoardCell>();
+//		this.boardConfigFile = "OurClueLayout.csv";
+//		this.roomConfigFile = "OurClueLegend.txt";
+//	}
+	
+	private Board() {
 		super();
 		visited = new HashSet<BoardCell>(); //should we set these up here? might be inefficient.
 		targets = new HashSet<BoardCell>();
 		this.boardConfigFile = "OurClueLayout.csv";
 		this.roomConfigFile = "OurClueLegend.txt";
+		Player emptyPlayer = new Player();
+		this.currentPlayerInGame = emptyPlayer;
+//		this.panel = new JPanel();
+//		JLabel name = new JLabel("Clue Game Board");
+//		panel.add(name);
+
 	}
 
 	//constructor with board and room files passed in for testing with other files
@@ -88,6 +147,12 @@ public class Board {
 		this.cardsConfigFile = cards;
 
 	}
+	
+	//NEW
+	public BoardCell[][] getBoard()
+	{
+		return board;
+	}
 
 	public int getNumRows() {
 		return numRows;
@@ -98,7 +163,7 @@ public class Board {
 	}
 
 	//returns the targets (where the player can go)
-	public Set<BoardCell> getTargets() {
+	public static Set<BoardCell> getTargets() {
 		return targets;
 	}
 
@@ -158,14 +223,31 @@ public class Board {
 			loadBoardConfig();
 			loadConfigFiles();
 			loadCards();
+			//deal the deck of cards
 			dealCards();
+			
+			legend = new HashMap<Character, String>();
+			targets = new HashSet<BoardCell>();
+			board = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
+			visited = new HashSet<BoardCell>();
+			adjMatrix = new HashMap<BoardCell, Set<BoardCell>>();
+			answerKey = new Solution();
+			computerPlayers = new HashSet<ComputerPlayer>();
+			humanPlayer = new HashSet<HumanPlayer>();
+			deck = new HashSet<Card>();
+			key = new HashSet<Card>();
+			roomPile = new HashSet<Card>();
+			peoplePile = new HashSet<Card>();
+			weaponsPile = new HashSet<Card>();
+			rooms = new HashSet<String>();
+			//find adjacencies (ADD THIS IN?)
+			//calcAdjacencies();
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found. " + e.getMessage());
 		} catch (BadConfigFormatException e) {
 			System.out.println(e.getMessage());
 		}
 	}
-
 
 	//reads in the room using BufferedReader (did this because of some special characters issues we were having from our file)
 	//several exceptions to indicate certain, more common errors
@@ -320,6 +402,51 @@ public class Board {
 		targets.clear(); //clear the targets set
 		visited.add(board[row][column]);
 		targets = findAllTargets(board[row][column], pathLength);
+		
+		//NEW
+		find(row, column, pathLength);
+	}
+	
+	//NEW
+	public void find (int row, int col, int pathLength)
+	{
+		Set<BoardCell> adjCell = new HashSet<BoardCell>();
+		if (adjMatrix.containsKey(board[row][col]))
+		{
+			adjCell = adjMatrix.get(board[row][col]);
+			for (BoardCell test: adjCell)
+			{
+
+				if (test.isDoorway() && !visited.contains(test))
+				{
+					targets.add(test);
+				}
+
+				if (visited.contains(test))
+				{
+					continue; 
+				}
+				else 
+				{
+					visited.add(test);
+				}
+				if (pathLength == 1)
+				{
+					targets.add(test);
+				}
+				else
+				{
+					find(test.getCol(), test.getRow(), pathLength - 1);
+				}
+				visited.remove(test);
+
+			}
+
+		}
+		else 
+		{
+			System.out.println("This key does not exist in the adjMatrix");
+		}
 	}
 
 	//this recursive function adds all of the cells that are targets for where the player currently is, based on whether a player can't love there based on the rules:
@@ -347,6 +474,16 @@ public class Board {
 	public Set<BoardCell> getAdjList(int i, int j) {
 		return adjMatrix.get(board[i][j]);
 	}
+	
+	//OTHER (MIGHT NEED?)
+//	public Set<BoardCell> getAdjList( int row, int col)
+//	{
+//		BoardCell cell = new BoardCell();
+//		cell = getCellAt(row, col);
+//		Set<BoardCell> found = new HashSet<BoardCell>();
+//		found = adjMatrix.get(cell);
+//		return found;
+//	}
 
 	//load players in (I think)
 	//I think it could be to load in players and cards because they are both .txt files
@@ -449,7 +586,7 @@ public class Board {
 		return color;
 	}
 	
-	//not sure if this is working correctly
+	//not sure if this is working correctly, OTHER IS DIFFERENT
 	private void dealCards() {
 		Card[] backup = new Card[cards.length];
 		for(int i = 0; i < DECK_SIZE; i++){
@@ -500,7 +637,7 @@ public class Board {
 	public Card getCard(String name, CardType type) {
 
 		for (Card card : deck) {
-			if (card.getCardName().contentEquals(name) && card.getType().equals(type)) {
+			if (card.getCardName().contentEquals(name) && card.getCardType().equals(type)) {
 				return card;
 			}
 
@@ -547,18 +684,104 @@ public class Board {
 	 * 
 	 * }
 	 */
-
-	//checks if accusation is correct
+	
+	//NEW
 	public boolean checkAccusation(Solution accusation) {
-		if (accusation.person == Solution.person && accusation.room == Solution.room && accusation.weapon == Solution.weapon) {
-			return true;
 
+		String p, w, r;   
+		p = accusation.getPerson(); 
+		w = accusation.getWeapon(); 
+		r = accusation.getRoom(); 
+
+		// check person 
+		if (!answerKey.getPerson().equals(p)) {
+			return false; 
 		}
-		return false;
+		// check weapon 
+		if (!answerKey.getWeapon().equals(w)) {
+			return false; 
+		}
+		// check room 
+		if (!answerKey.getRoom().equals(r)) {
+			return false; 
+		}
+
+		gameFinished = true; 
+
+		// If no differences exist then returns true 
+		return true;
 	}
+
+//	//checks if accusation is correct
+//	public boolean checkAccusation(Solution accusation) {
+//		if (accusation.person == Solution.person && accusation.room == Solution.room && accusation.weapon == Solution.weapon) {
+//			return true;
+//
+//		}
+//		return false;
+//	}
 
 	public Solution getSolution() {
 		return solution;
+	}
+	
+	public void clearTargets() {
+		targets = new HashSet<BoardCell>();
+		visited = new HashSet<BoardCell>();
+	}
+	
+	public Card handleSuggestion(ComputerPlayer computerPlayer) {
+
+		int row = computerPlayer.getCurrentRow(); 
+		int col = computerPlayer.getCurrentColumn();
+
+		// createSuggestions saves the generated suggestion in ComputerPlayer's creadSoln (which is of type Solution)
+		computerPlayer.createSuggestion(board[col][row], possiblePeople, possibleWeapons, rooms, computerPlayer); 
+		this.currentGuess = (computerPlayer.getPlayerName() + ": " + computerPlayer.getCreatedSoln().getPerson() + ", " + computerPlayer.getCreatedSoln().getRoom() + ", " + computerPlayer.getCreatedSoln().getWeapon()) ;
+		ArrayList<Card> foundCards = new ArrayList<Card>(); 
+
+		for(ComputerPlayer tempPlayer: computerPlayers) {
+			if (tempPlayer == computerPlayer) {
+				continue;  
+			}
+			else { 
+				// if a card is found by another player, the card is added to the ArrayList of cards
+				Card temp = tempPlayer.disproveSuggestion(computerPlayer.createdSoln); 
+				if ( temp == null) {}
+				else { foundCards.add(temp); }
+				
+			}
+		}
+
+		// selecting a random number for selecting a found Card
+		Random rand = new Random(); 
+		int location = rand.nextInt(foundCards.size()); 
+
+		if (foundCards.size() == 0) { /* if the size of FoundCards = 0, that means not cards were found to disprove the suggestion */
+			// store the suggestion that was found to be the next accusation. 
+			computerPlayer.setAccusation(computerPlayer.getCreatedSoln());
+			this.compSuggestionDisproved = false;
+			this.currentResults = "no new clue";
+			return null;
+		}
+		else { 
+			computerPlayer.addSeen(foundCards.get(location));
+			this.compSuggestionDisproved = true;
+			//System.out.println("Found other cards that disprove the suggestion. ArrayList size: " + foundCards.size() );
+			if (foundCards.get(location) != null)
+			{
+				this.currentResults = foundCards.get(location).getCardName();
+				return foundCards.get(location); 
+			}
+			else
+			{
+				// if null, need to choose another location to go to
+				this.compSuggestionDisproved = true;
+				this.currentResults = "no new clue";
+				return null; 
+			}
+		}
+
 	}
 
 

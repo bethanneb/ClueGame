@@ -7,13 +7,22 @@ package clueGame;
 
 public class Solution {
 
-	public static String person, room, weapon;
-
-	//constructor
-	public Solution(String person, String weapon, String room) {
+	private String person, room, weapon;
+	
+	//constructors
+	
+	public Solution() {
+		super();
+		this.person = "";
+		this.room = "";
+		this.weapon = "";
+	}
+	
+	public Solution(String person, String room, String weapon) {
+		super();
 		this.person = person;
+		this.room = room;
 		this.weapon = weapon;
-		this.room= room;
 	}
 
 	public String getPerson() {
@@ -26,6 +35,19 @@ public class Solution {
 
 	public String getWeapon() {
 		return weapon;
+	}
+	
+	//NEW
+	public void setAnswerKeyPerson (String answerPerson) {
+		this.person = answerPerson;
+	}
+	
+	public void setAnswerKeyRoom ( String answerRoom ) {
+		this.room = answerRoom;
+	}
+	
+	public void setAnswerKeyWeapon ( String answerWeapon ) {
+		this.weapon = answerWeapon;
 	}
 
 	
