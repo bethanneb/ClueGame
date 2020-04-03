@@ -51,7 +51,7 @@ public class Board {
 	public Solution solution;
 	private Player[] players;
 	
-	private Solution answerKey;
+	private Solution answerKey = new Solution();
 	// Set that would hold the computer player
 	private Set<ComputerPlayer> computerPlayers;
 	// Set that would hold the human player
