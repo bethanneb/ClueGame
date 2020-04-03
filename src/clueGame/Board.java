@@ -623,14 +623,11 @@ public class Board {
 		
 		return answer;
 	}
-	/*I'm not sure what this does and we dont know what it takes yet so I'm gonna comment it out for now
-	 * public Card handleSolution(TBD) {
-	 * 
-	 * }
-	 */
+
 	
 	//NEW
-	public boolean checkAccusation(Solution accusation) {
+	//made it pass in answer key too, otherwise would need to fill in answer key elsewhere
+	public boolean checkAccusation(Solution accusation, Solution answerKey) {
 
 		String p, w, r;   
 		p = accusation.getPerson(); 

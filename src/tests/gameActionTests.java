@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -39,43 +40,59 @@ public class gameActionTests {
 		board.initialize();
 		playersList = board.getPlayerList();
 	}
-
-
-	//I'm a little bit confused about this test
-	//I tried picking a cell and giving it a path length, and then checking targets but it's failing and I'm not sure why
+	
+	//If a player is not in a room, and a room is possible target, it goes into that room
 	@Test
-	public void testSelectingATarget() {
-		board.calcTargets(8, 18, 2);
-
-		Set<BoardCell> targets= board.getTargets();
-		// testing the calculated targets
-		assertTrue(targets.contains(board.getCellAt(8, 20)));
-		assertTrue(targets.contains(board.getCellAt(6, 18)));
-		// Last target tested is doorway 
-		assertTrue(targets.contains(board.getCellAt(7, 19)));
-
-		// need to call ComputerPlayer with the pickLocation function and return the selected position
-		ComputerPlayer computer = new ComputerPlayer();
-		BoardCell selected = computer.pickLocation(targets);
-		assertEquals(board.getCellAt(13, 19), selected);
-
+	public void testGoesIntoRoom() {
+		//Computer is in place where it can go into room
+		ComputerPlayer player = new ComputerPlayer("Jim Halbert", 2,9, Color.blue);
+		
+		//calculate targets
+		board.calcTargets(2, 9, 1);
+		
+		//test that it actually goes into room
+		boolean loc_2_8 = false;
+		BoardCell selected = player.pickLocation(board.getTargets());
+		//if it selects the room
+		if (selected == board.getCellAt(2, 8)) {
+			loc_2_8 = true;
+		}
+		else {
+			fail("Did not go into room");
+		}
+		
+		//went into the room
+		assertTrue(loc_2_8);
 	}
-
+	
+	//If a player is not in a room and does not have the option of a room, all spots are equally likely through random pick
 	@Test
 	public void testTargetRandomSelection() {
-		ComputerPlayer player = new ComputerPlayer();
+		//Computer player is in walkway 
+		ComputerPlayer player = new ComputerPlayer("Jim Halbert", 9,1, Color.blue);
+		
 		// Pick a location with no rooms in target, just three targets
-		board.calcTargets(21, 14, 2);
-		boolean loc_19_14 = false;
-		boolean loc_20_15 = false;
+		board.calcTargets(9, 1, 1);
+		
+		boolean loc_9_0 = false;
+		boolean loc_8_1 = false;
+		boolean loc_10_1 = false;
+		boolean loc_9_2 = false;
+		
 		// Run the test a large number of times
 		for (int i=0; i<100; i++) {
 			BoardCell selected = player.pickLocation(board.getTargets());
-			if (selected == board.getCellAt(19, 14)) {
-				loc_19_14 = true;
+			if (selected == board.getCellAt(9, 0)) {
+				loc_9_0 = true;
 			}
-			else if (selected == board.getCellAt(20, 15)) {
-				loc_20_15 = true;
+			else if (selected == board.getCellAt(8, 1)) {
+				loc_8_1 = true;
+			}
+			else if (selected == board.getCellAt(10, 1)) {
+				loc_10_1 = true;
+			}
+			else if (selected == board.getCellAt(9, 2)) {
+				loc_9_2 = true;
 			}
 			else {
 				//Not sure why it it accessing an invalid target, because I chose the cell I did so we only had to check 2 targets
@@ -84,10 +101,54 @@ public class gameActionTests {
 			}
 		}
 		// Ensure each target was selected at least once
-		assertTrue(loc_19_14);
-		assertTrue(loc_20_15);
+		assertTrue(loc_9_0);
+		assertTrue(loc_8_1);
+		assertTrue(loc_10_1);
+		assertTrue(loc_9_2);
 	}
-
+	
+	//If a player is in a room, all spots are equally likely through random pick
+		@Test
+		public void testTargetRandomSelectionInRoom() {
+			//Computer player is in walkway 
+			ComputerPlayer player = new ComputerPlayer("Jim Halbert", 1,5, Color.blue);
+			
+			// Pick a location with four equally likely targets
+			board.calcTargets(1, 5, 1);
+			
+			boolean loc_0_5 = false;
+			boolean loc_1_4 = false;
+			boolean loc_2_5 = false;
+			boolean loc_1_6 = false;
+			
+			// Run the test a large number of times
+			for (int i=0; i<100; i++) {
+				BoardCell selected = player.pickLocation(board.getTargets());
+				if (selected == board.getCellAt(0, 5)) {
+					loc_0_5 = true;
+				}
+				else if (selected == board.getCellAt(1, 4)) {
+					loc_1_4 = true;
+				}
+				else if (selected == board.getCellAt(2, 5)) {
+					loc_2_5 = true;
+				}
+				else if (selected == board.getCellAt(1, 6)) {
+					loc_1_6 = true;
+				}
+				else {
+					//Not sure why it it accessing an invalid target, because I chose the cell I did so we only had to check 2 targets
+					//Look at Clue Player pdf and see if I'm missing something
+					fail("Invalid target selected");
+				}
+			}
+			// Ensure each target was selected at least once
+			assertTrue(loc_0_5);
+			assertTrue(loc_1_4);
+			assertTrue(loc_2_5);
+			assertTrue(loc_1_6);
+		}
+		
 	@Test 
 	public void testAccusation() {
 		Solution answerKey = new Solution(); 
@@ -101,25 +162,26 @@ public class gameActionTests {
 		accusation.setAnswerKeyPerson(ansP);
 		accusation.setAnswerKeyWeapon(ansW); 
 		accusation.setAnswerKeyRoom(ansR); 
+		
 
-		assertTrue(board.checkAccusation(accusation));
+		assertTrue(board.checkAccusation(accusation, answerKey));
 
 		// Solution with wrong person 
 		accusation.setAnswerKeyPerson("wrong");
 
-		assertFalse(board.checkAccusation(accusation));
+		assertFalse(board.checkAccusation(accusation, answerKey));
 
 		// Solution with wrong weapon 
 		accusation.setAnswerKeyPerson(ansP);
 		accusation.setAnswerKeyWeapon("wrong");
 
-		assertFalse(board.checkAccusation(accusation)); 
+		assertFalse(board.checkAccusation(accusation, answerKey)); 
 
 		// Solution with wrong room 
 		accusation.setAnswerKeyWeapon(ansW);
 		accusation.setAnswerKeyRoom("wrong");
 
-		assertFalse(board.checkAccusation(accusation)); 
+		assertFalse(board.checkAccusation(accusation, answerKey)); 
 
 	}
 
