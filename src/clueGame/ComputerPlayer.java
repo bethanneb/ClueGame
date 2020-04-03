@@ -44,7 +44,7 @@ public class ComputerPlayer extends Player {
 			{
 				availableDoorways.add(cell);
 			}
-			if (cell.isWalkway() || cell.isRoom())
+			else
 			{
 				availablePaths.add(cell);
 			}
