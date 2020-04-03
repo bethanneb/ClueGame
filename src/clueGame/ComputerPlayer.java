@@ -8,6 +8,7 @@ package clueGame;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -65,22 +66,22 @@ public class ComputerPlayer extends Player {
 		}
 	} 
 
-	public void createSuggestion(BoardCell cell, ArrayList<Card> peopleArray, ArrayList<Card> weaponsArray, Set<String> rooms, ComputerPlayer player) {
+	public void createSuggestion(BoardCell cell, ArrayList<Card> peopleArray, ArrayList<Card> weaponsArray, Map<Character, String> legend, ComputerPlayer player) {
 		//selecting the room suggestion based on the current location of the player
 		ArrayList<Card> people = new ArrayList<Card>();
 		ArrayList<Card> weapons = new ArrayList<Card>();
 		people = peopleArray;
 		weapons = weaponsArray;
 		char roomInitial = cell.getInitial();
-		String room = "";
+		String room = legend.get(roomInitial);
 		//System.out.println("room size" + rooms.size());
-		for (String r : rooms)
-		{
-			if (roomInitial == r.charAt(0))
-			{
-				room = r;
-			} 
-		}
+		//for (String r : rooms)
+		//{
+			//if (roomInitial == r.charAt(0))
+			//{
+				//room = r;
+			//} 
+		//}
 		Card person = new Card("", CardType.PERSON);
 		Card weapon = new Card("", CardType.PERSON);
 		Set<Card> seen = new HashSet<Card>();

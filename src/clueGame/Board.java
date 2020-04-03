@@ -680,7 +680,7 @@ public class Board {
 		int col = computerPlayer.getCurrentColumn();
 
 		// createSuggestions saves the generated suggestion in ComputerPlayer's creadSoln (which is of type Solution)
-		computerPlayer.createSuggestion(board[col][row], possiblePeople, possibleWeapons, rooms, computerPlayer); 
+		computerPlayer.createSuggestion(board[col][row], possiblePeople, possibleWeapons, legend, computerPlayer); 
 		this.currentGuess = (computerPlayer.getPlayerName() + ": " + computerPlayer.getCreatedSoln().getPerson() + ", " + computerPlayer.getCreatedSoln().getRoom() + ", " + computerPlayer.getCreatedSoln().getWeapon()) ;
 		ArrayList<Card> foundCards = new ArrayList<Card>(); 
 

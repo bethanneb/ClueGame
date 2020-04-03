@@ -207,7 +207,7 @@ public class gameActionTests {
 
 		System.out.println("Rooms size before: " + board.getRooms().size());
 		ComputerPlayer computerPlayer = new ComputerPlayer ("Michael Scott","black", 19, 18);
-		computerPlayer.createSuggestion(board.getCellAt(19, 18), board.possiblePeople, board.possibleWeapons, board.getRooms(), computerPlayer);
+		computerPlayer.createSuggestion(board.getCellAt(19, 18), board.possiblePeople, board.possibleWeapons, board.getLegend(), computerPlayer);
 		Solution sol = computerPlayer.getCreatedSoln();
 		String solutionRoom = sol.getRoom();
 		System.out.println("Sol: " + solutionRoom);
@@ -238,7 +238,7 @@ public class gameActionTests {
 		{
 			computerPlayer.addSeen(seen);
 		}
-		computerPlayer.createSuggestion(board.getCellAt(19, 18), people0, weapons0, board.getRooms(), computerPlayer);
+		computerPlayer.createSuggestion(board.getCellAt(19, 18), people0, weapons0, board.getLegend(), computerPlayer);
 		sol = computerPlayer.getCreatedSoln();
 		String solution = sol.getPerson();
 		assertNull(solution);
@@ -273,7 +273,7 @@ public class gameActionTests {
 		people.add(card11);
 		people.add(card12);
 		System.out.println("Seen cards: " + computerPlayer.getSeenCards().size());
-		computerPlayer.createSuggestion(board.getCellAt(19, 18), people, weapons, board.getRooms(), computerPlayer);
+		computerPlayer.createSuggestion(board.getCellAt(19, 18), people, weapons, board.getLegend(), computerPlayer);
 		sol = computerPlayer.getCreatedSoln();
 		solution = sol.getPerson();
 		System.out.println(card12.getCardName() + " " + solution);
@@ -309,7 +309,7 @@ public class gameActionTests {
 		people2.add(card11);
 		people2.add(card12);
 		System.out.println("Seen cards: " + computerPlayer.getSeenCards().size());
-		computerPlayer.createSuggestion(board.getCellAt(19, 18), people2, weapons2, board.getRooms(), computerPlayer);
+		computerPlayer.createSuggestion(board.getCellAt(19, 18), people2, weapons2, board.getLegend(), computerPlayer);
 		sol = computerPlayer.getCreatedSoln();
 		solution = sol.getWeapon();
 		System.out.println(card.getCardName() + " " + solution);
@@ -343,7 +343,7 @@ public class gameActionTests {
 		people3.add(card11);
 		people3.add(card12);
 		System.out.println("Seen cards: " + computerPlayer.getSeenCards().size());
-		computerPlayer.createSuggestion(board.getCellAt(19, 18), people3, weapons3, board.getRooms(), computerPlayer);
+		computerPlayer.createSuggestion(board.getCellAt(19, 18), people3, weapons3, board.getLegend(), computerPlayer);
 		sol = computerPlayer.getCreatedSoln();
 		solution = sol.getPerson();
 		System.out.println(solution);
@@ -377,7 +377,7 @@ public class gameActionTests {
 		people4.add(card11);
 		people4.add(card12);
 		System.out.println("Seen cards: " + computerPlayer.getSeenCards().size());
-		computerPlayer.createSuggestion(board.getCellAt(19, 18), people4, weapons4, board.getRooms(), computerPlayer);
+		computerPlayer.createSuggestion(board.getCellAt(19, 18), people4, weapons4, board.getLegend(), computerPlayer);
 		sol = computerPlayer.getCreatedSoln();
 		solution = sol.getWeapon();
 		System.out.println(solution);
