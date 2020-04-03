@@ -45,7 +45,7 @@ public class gameActionTests {
 	@Test
 	public void testGoesIntoRoom() {
 		//Computer is in place where it can go into room
-		ComputerPlayer player = new ComputerPlayer("Jim Halbert", 2,9, Color.blue);
+		ComputerPlayer player = new ComputerPlayer("Jim Halpert", 2,9, Color.blue);
 		
 		//calculate targets
 		board.calcTargets(2, 9, 1);
@@ -69,7 +69,7 @@ public class gameActionTests {
 	@Test
 	public void testTargetRandomSelection() {
 		//Computer player is in walkway 
-		ComputerPlayer player = new ComputerPlayer("Jim Halbert", 9,1, Color.blue);
+		ComputerPlayer player = new ComputerPlayer("Jim Halpert", 9,1, Color.blue);
 		
 		// Pick a location with no rooms in target, just three targets
 		board.calcTargets(9, 1, 1);
@@ -149,41 +149,40 @@ public class gameActionTests {
 			assertTrue(loc_1_6);
 		}
 		
-	@Test 
-	public void testAccusation() {
-		Solution answerKey = new Solution(); 
-		String ansP = answerKey.getPerson(); 
-		String ansW = answerKey.getWeapon(); 
-		String ansR = answerKey.getRoom(); 
+		@Test 
+		public void testAccusation() {
+			Solution answerKey = board.getAnswerKey(); 
+			String ansP = answerKey.getPerson(); 
+			String ansW = answerKey.getWeapon(); 
+			String ansR = answerKey.getRoom(); 
 
-		Solution accusation = new Solution();
+			Solution accusation = new Solution();
 
-		// Solution that is correct 
-		accusation.setAnswerKeyPerson(ansP);
-		accusation.setAnswerKeyWeapon(ansW); 
-		accusation.setAnswerKeyRoom(ansR); 
-		
+			// Solution that is correct 
+			accusation.setAnswerKeyPerson(ansP);
+			accusation.setAnswerKeyWeapon(ansW); 
+			accusation.setAnswerKeyRoom(ansR); 
 
-		assertTrue(board.checkAccusation(accusation, answerKey));
+			assertTrue(board.checkAccusation(accusation));
 
-		// Solution with wrong person 
-		accusation.setAnswerKeyPerson("wrong");
+			// Solution with wrong person 
+			accusation.setAnswerKeyPerson("wrong");
 
-		assertFalse(board.checkAccusation(accusation, answerKey));
+			assertFalse(board.checkAccusation(accusation));
 
-		// Solution with wrong weapon 
-		accusation.setAnswerKeyPerson(ansP);
-		accusation.setAnswerKeyWeapon("wrong");
+			// Solution with wrong weapon 
+			accusation.setAnswerKeyPerson(ansP);
+			accusation.setAnswerKeyWeapon("wrong");
 
-		assertFalse(board.checkAccusation(accusation, answerKey)); 
+			assertFalse(board.checkAccusation(accusation)); 
 
-		// Solution with wrong room 
-		accusation.setAnswerKeyWeapon(ansW);
-		accusation.setAnswerKeyRoom("wrong");
+			// Solution with wrong room 
+			accusation.setAnswerKeyWeapon(ansW);
+			accusation.setAnswerKeyRoom("wrong");
 
-		assertFalse(board.checkAccusation(accusation, answerKey)); 
+			assertFalse(board.checkAccusation(accusation)); 
 
-	}
+		}
 
 	@Test
 	public void testCreateSuggestion()

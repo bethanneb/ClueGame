@@ -225,7 +225,6 @@ public class Board {
 			loadCards();
 			//deal the deck of cards
 			dealCards();
-			answerKey = new Solution();
 			//find adjacencies (ADD THIS IN?)
 			//calcAdjacencies();
 		} catch (FileNotFoundException e) {
@@ -532,6 +531,7 @@ public class Board {
 	
 	//not sure if this is working correctly
 	private void dealCards() {
+		//answerKey = new Solution();
 		Card[] backup = new Card[cards.length];
 		for(int i = 0; i < DECK_SIZE; i++){
 			backup[i] = cards[i];
@@ -543,10 +543,10 @@ public class Board {
 		int solutionRoom = rand.nextInt(NUM_ROOMS) + (NUM_PEOPLE+NUM_WEAPONS);
 		
 		solution = new Solution(cards[solutionPlayer].getCardName(), cards[solutionWeapon].getCardName(), cards[solutionRoom].getCardName());
-		//Card remove = getCard(solution.getPerson(), CardType.PERSON);
-		answerKey.setAnswerKeyPerson(possiblePeople.get(solutionPlayer).getCardName());
-		answerKey.setAnswerKeyWeapon(possibleWeapons.get(solutionWeapon).getCardName());
-		answerKey.setAnswerKeyRoom(possiblePeople.get(solutionRoom).getCardName());
+		Card remove = getCard(solution.getPerson(), CardType.PERSON);
+//		answerKey.setAnswerKeyPerson(possiblePeople.get(solutionPlayer).getCardName());
+//		answerKey.setAnswerKeyWeapon(possibleWeapons.get(solutionWeapon).getCardName());
+//		answerKey.setAnswerKeyRoom(possibleRooms.get(solutionRoom).getCardName());
 		cards[solutionPlayer] = null;
 		cards[solutionWeapon] = null;
 		cards[solutionRoom] = null;
@@ -623,11 +623,14 @@ public class Board {
 		
 		return answer;
 	}
-
+	/*I'm not sure what this does and we dont know what it takes yet so I'm gonna comment it out for now
+	 * public Card handleSolution(TBD) {
+	 * 
+	 * }
+	 */
 	
 	//NEW
-	//made it pass in answer key too, otherwise would need to fill in answer key elsewhere
-	public boolean checkAccusation(Solution accusation, Solution answerKey) {
+	public boolean checkAccusation(Solution accusation) {
 
 		String p, w, r;   
 		p = accusation.getPerson(); 
