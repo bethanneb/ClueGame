@@ -273,7 +273,7 @@ public class gameActionTests {
 		people.add(card11);
 		people.add(card12);
 		System.out.println("Seen cards: " + computerPlayer.getSeenCards().size());
-		computerPlayer.createSuggestion(board.getCellAt(14, 15), people, weapons, board.getRooms(), computerPlayer);
+		computerPlayer.createSuggestion(board.getCellAt(19, 18), people, weapons, board.getRooms(), computerPlayer);
 		sol = computerPlayer.getCreatedSoln();
 		solution = sol.getPerson();
 		System.out.println(card12.getCardName() + " " + solution);
@@ -309,7 +309,7 @@ public class gameActionTests {
 		people2.add(card11);
 		people2.add(card12);
 		System.out.println("Seen cards: " + computerPlayer.getSeenCards().size());
-		computerPlayer.createSuggestion(board.getCellAt(14, 15), people2, weapons2, board.getRooms(), computerPlayer);
+		computerPlayer.createSuggestion(board.getCellAt(19, 18), people2, weapons2, board.getRooms(), computerPlayer);
 		sol = computerPlayer.getCreatedSoln();
 		solution = sol.getWeapon();
 		System.out.println(card.getCardName() + " " + solution);
@@ -343,7 +343,7 @@ public class gameActionTests {
 		people3.add(card11);
 		people3.add(card12);
 		System.out.println("Seen cards: " + computerPlayer.getSeenCards().size());
-		computerPlayer.createSuggestion(board.getCellAt(14, 15), people3, weapons3, board.getRooms(), computerPlayer);
+		computerPlayer.createSuggestion(board.getCellAt(19, 18), people3, weapons3, board.getRooms(), computerPlayer);
 		sol = computerPlayer.getCreatedSoln();
 		solution = sol.getPerson();
 		System.out.println(solution);
@@ -377,7 +377,7 @@ public class gameActionTests {
 		people4.add(card11);
 		people4.add(card12);
 		System.out.println("Seen cards: " + computerPlayer.getSeenCards().size());
-		computerPlayer.createSuggestion(board.getCellAt(14, 15), people4, weapons4, board.getRooms(), computerPlayer);
+		computerPlayer.createSuggestion(board.getCellAt(19, 18), people4, weapons4, board.getRooms(), computerPlayer);
 		sol = computerPlayer.getCreatedSoln();
 		solution = sol.getWeapon();
 		System.out.println(solution);
