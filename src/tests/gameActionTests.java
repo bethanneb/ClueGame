@@ -9,6 +9,7 @@ import static org.junit.Assert.fail;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.BeforeClass;
@@ -223,12 +224,17 @@ public class gameActionTests {
 		weapons0.add(card4);
 		weapons0.add(card5);
 		weapons0.add(card6);
-		people0.add(card7);
-		people0.add(card8);
+		weapons0.add(card7);
+		weapons0.add(card8);
+
 		people0.add(card9);
 		people0.add(card10);
 		people0.add(card11);
 		people0.add(card12);
+		people0.add(card13);
+		people0.add(card14);
+		people0.add(card15);
+		people0.add(card16);
 		computerPlayer.clearSeenCards();
 		for ( Card seen : people0)
 		{
@@ -259,26 +265,35 @@ public class gameActionTests {
 		computerPlayer.addSeen(card9);
 		computerPlayer.addSeen(card10);
 		computerPlayer.addSeen(card11);
-		//computerPlayer.addSeen(card12);
+		computerPlayer.addSeen(card12);
+		computerPlayer.addSeen(card13);
+		computerPlayer.addSeen(card14);
+		computerPlayer.addSeen(card15);
+		
 		weapons.add(card);
 		weapons.add(card2);
 		weapons.add(card3);
 		weapons.add(card4);
 		weapons.add(card5);
 		weapons.add(card6);
-		people.add(card7);
-		people.add(card8);
+		weapons.add(card7);
+		weapons.add(card8);
+		
 		people.add(card9);
 		people.add(card10);
 		people.add(card11);
 		people.add(card12);
+		people.add(card13);
+		people.add(card14);
+		people.add(card15);
+		people.add(card16);
 		System.out.println("Seen cards: " + computerPlayer.getSeenCards().size());
 		computerPlayer.createSuggestion(board.getCellAt(19, 18), people, weapons, board.getLegend(), computerPlayer);
 		sol = computerPlayer.getCreatedSoln();
 		solution = sol.getPerson();
-		System.out.println(card12.getCardName() + " " + solution);
+		System.out.println(card16.getCardName() + " " + solution);
 
-		assertEquals(card12.getCardName(), solution);
+		assertEquals(card16.getCardName(), solution);
 
 		//If only one weapon not seen, it's selected
 		computerPlayer.clearSeenCards();
@@ -296,18 +311,28 @@ public class gameActionTests {
 		computerPlayer.addSeen(card10);
 		computerPlayer.addSeen(card11);
 		computerPlayer.addSeen(card12);
+		computerPlayer.addSeen(card13);
+		computerPlayer.addSeen(card14);
+		computerPlayer.addSeen(card15);
+		computerPlayer.addSeen(card16);
+		
 		weapons2.add(card);
 		weapons2.add(card2);
 		weapons2.add(card3);
 		weapons2.add(card4);
 		weapons2.add(card5);
 		weapons2.add(card6);
-		people2.add(card7);
-		people2.add(card8);
+		weapons2.add(card7);
+		weapons2.add(card8);
+
 		people2.add(card9);
 		people2.add(card10);
 		people2.add(card11);
 		people2.add(card12);
+		people2.add(card13);
+		people2.add(card14);
+		people2.add(card15);
+		people2.add(card16);
 		System.out.println("Seen cards: " + computerPlayer.getSeenCards().size());
 		computerPlayer.createSuggestion(board.getCellAt(19, 18), people2, weapons2, board.getLegend(), computerPlayer);
 		sol = computerPlayer.getCreatedSoln();
@@ -329,6 +354,10 @@ public class gameActionTests {
 		computerPlayer.addSeen(card7);
 		computerPlayer.addSeen(card8);
 		computerPlayer.addSeen(card9);
+		computerPlayer.addSeen(card10);
+		computerPlayer.addSeen(card11);
+		computerPlayer.addSeen(card12);
+		computerPlayer.addSeen(card13);
 
 		weapons3.add(card);
 		weapons3.add(card2);
@@ -336,23 +365,27 @@ public class gameActionTests {
 		weapons3.add(card4);
 		weapons3.add(card5);
 		weapons3.add(card6);
-		people3.add(card7);
-		people3.add(card8);
+		weapons3.add(card7);
+		weapons3.add(card8);
 		people3.add(card9);
 		people3.add(card10);
 		people3.add(card11);
 		people3.add(card12);
+		people3.add(card13);
+		people3.add(card14);
+		people3.add(card15);
+		people3.add(card16);
 		System.out.println("Seen cards: " + computerPlayer.getSeenCards().size());
 		computerPlayer.createSuggestion(board.getCellAt(19, 18), people3, weapons3, board.getLegend(), computerPlayer);
 		sol = computerPlayer.getCreatedSoln();
 		solution = sol.getPerson();
-		System.out.println(solution);
+		//System.out.println(solution);
 
 		assertNotNull(solution);
 
 		//multiple choices, weapon
 		computerPlayer.clearSeenCards();
-		System.out.println("Seen cards: " + computerPlayer.getSeenCards().size());
+		//System.out.println("Seen cards: " + computerPlayer.getSeenCards().size());
 		ArrayList<Card> weapons4 = new ArrayList<Card>();
 		ArrayList<Card> people4 = new ArrayList<Card>();
 
@@ -364,18 +397,28 @@ public class gameActionTests {
 		computerPlayer.addSeen(card10);
 		computerPlayer.addSeen(card11);
 		computerPlayer.addSeen(card12);
+		computerPlayer.addSeen(card13);
+		computerPlayer.addSeen(card14);
+		computerPlayer.addSeen(card15);
+		computerPlayer.addSeen(card16);
+		
 		weapons4.add(card);
 		weapons4.add(card2);
 		weapons4.add(card3);
 		weapons4.add(card4);
 		weapons4.add(card5);
 		weapons4.add(card6);
-		people4.add(card7);
-		people4.add(card8);
+		weapons4.add(card7);
+		weapons4.add(card8);
+		
 		people4.add(card9);
 		people4.add(card10);
 		people4.add(card11);
 		people4.add(card12);
+		people4.add(card13);
+		people4.add(card14);
+		people4.add(card15);
+		people4.add(card16);
 		System.out.println("Seen cards: " + computerPlayer.getSeenCards().size());
 		computerPlayer.createSuggestion(board.getCellAt(19, 18), people4, weapons4, board.getLegend(), computerPlayer);
 		sol = computerPlayer.getCreatedSoln();
@@ -383,6 +426,96 @@ public class gameActionTests {
 		System.out.println(solution);
 
 		assertNotNull(solution);
+	}
+	
+	@Test 
+	public void testDisproveSuggestion() { 
+
+		//BoardCell testCell = new BoardCell(5, 3, 't', DoorDirection.RIGHT); 
+		Set<ComputerPlayer> computerPlayers = new HashSet<ComputerPlayer>();  
+		computerPlayers = board.getComputerPlayers(); 
+
+		ComputerPlayer computerPlayer = new ComputerPlayer(); 
+		ComputerPlayer testPlayer = new ComputerPlayer();
+
+		int counter = 0; 
+		for (ComputerPlayer temp: computerPlayers) {
+			if (counter == 0) {
+				computerPlayer = temp; 
+			}
+			else if (counter == 1) {
+				testPlayer = temp; 
+			}
+			else {
+				break;
+			} 
+			counter ++; 
+		}
+
+
+		computerPlayer.createSuggestion(board.getCellAt(4, 0), board.possiblePeople, board.possibleWeapons, board.getRooms(), computerPlayer); 
+
+		testPlayer.clearCards();
+
+		Solution s1 = computerPlayer.getCreatedSoln(); 
+		String p1 = s1.getPerson(); 
+		Card cp1 = new Card(p1, CardType.PERSON); 
+		String w1 = s1.getWeapon(); 
+		Card cw1 = new Card(w1, CardType.WEAPON);
+		String r1 = s1.getRoom(); 
+		Card cr1 = new Card(r1, CardType.ROOM);
+
+		testPlayer.addCard(cp1);
+		testPlayer.addCard(cw1);
+		testPlayer.addCard(cr1);
+
+		String p2 = "wrong"; 
+		String w2 = w1; 
+		String r2 = "wrong"; 
+
+		Solution s2 = new Solution(p2, w2, r2); 
+
+
+		Card returnedCard = testPlayer.disproveSuggestion(s2); 
+		Card test = new Card(w1, CardType.WEAPON);
+
+		String a = test.getCardName(); 
+		String b = returnedCard.getCardName(); 
+
+		//System.out.println("A: " + a);
+		//System.out.println("B: " + b);
+
+
+		// One matching card
+		assertTrue(a.equals(b)); 
+
+		p2 = p1; 
+		r2 = r1; 
+
+		Solution s3 = new Solution(p2, w2, r2); 
+
+		returnedCard = testPlayer.disproveSuggestion(s3);
+		Card testP = new Card(p2, CardType.PERSON); 
+		Card testW = new Card(w2, CardType.WEAPON); 
+		Card testR = new Card(r2, CardType.ROOM); 
+
+		b = returnedCard.getCardName(); 
+		String c = testP.getCardName(); 
+		String d = testW.getCardName(); 
+		String e = testR.getCardName(); 
+		//System.out.println(b + " " + c + " " + d + " " + e);
+
+		// More than one matching card 
+		assertTrue(b.equals(c) || b.equals(d) || b.equals(e));
+
+
+		p2 = "wrong"; 
+		w2 = "wrong";  
+		r2 = "wrong"; 
+
+		Solution s4 = new Solution(p2, w2, r2); 
+
+		assertNull(testPlayer.disproveSuggestion(s4));
 
 
 	}

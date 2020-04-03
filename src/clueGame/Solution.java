@@ -37,6 +37,18 @@ public class Solution {
 		return weapon;
 	}
 	
+	public void setPerson(String person) {
+		this.person = person;
+	}
+
+	public void setRoom(String room) {
+		this.room = room;
+	}
+
+	public void setWeapon(String weapon) {
+		this.weapon = weapon;
+	}
+
 	//NEW
 	public void setAnswerKeyPerson (String answerPerson) {
 		this.person = answerPerson;
