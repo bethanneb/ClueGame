@@ -36,29 +36,27 @@ public class ComputerPlayer extends Player {
 
 		ArrayList<BoardCell> availablePaths = new ArrayList<BoardCell>();
 		ArrayList<BoardCell> availableDoorways = new ArrayList<BoardCell>();
+		
 		for (BoardCell cell : targets)
 		{
 			if (cell.isDoorway())
 			{
 				availableDoorways.add(cell);
 			}
-			if (cell.isWalkway())
+			if (cell.isWalkway() || cell.isRoom())
 			{
 				availablePaths.add(cell);
 			}
 		}
 
-		if (!availableDoorways.isEmpty())
-		{
+		if (!availableDoorways.isEmpty()){
 			int options = availableDoorways.size();
 			Random rand = new Random(); 
 			int selected = rand.nextInt(options); 
 			//System.out.println( options + " doorways exist");
-
 			return availableDoorways.get(selected);
-		}
-		else
-		{
+			
+		}else{
 			int options = availablePaths.size();
 			Random rand = new Random();
 			int selected = rand.nextInt(options);
