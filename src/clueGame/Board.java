@@ -225,6 +225,7 @@ public class Board {
 			loadCards();
 			//deal the deck of cards
 			dealCards();
+			answerKey = new Solution();
 			//find adjacencies (ADD THIS IN?)
 			//calcAdjacencies();
 		} catch (FileNotFoundException e) {
@@ -238,6 +239,7 @@ public class Board {
 	//several exceptions to indicate certain, more common errors
 	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
 		legend = new HashMap<>();
+		rooms = new HashSet<String>();
 		BufferedReader reader = null;
 		try {
 			//read entire file and put into standard characters (we had some issues with special characters so we used BufferedReader)
@@ -260,7 +262,9 @@ public class Board {
 					//get only the initial we want
 					key = keyScan.charAt(keyScan.length()-1);
 				}
-				legend.put(key, splits[1].trim());
+				String split = splits[1].trim();
+				legend.put(key, split);
+				rooms.add(split);
 				// read next line
 				line = reader.readLine();
 			}
@@ -526,7 +530,7 @@ public class Board {
 		return color;
 	}
 	
-	//not sure if this is working correctly, OTHER IS DIFFERENT
+	//not sure if this is working correctly
 	private void dealCards() {
 		Card[] backup = new Card[cards.length];
 		for(int i = 0; i < DECK_SIZE; i++){
@@ -539,13 +543,13 @@ public class Board {
 		int solutionRoom = rand.nextInt(NUM_ROOMS) + (NUM_PEOPLE+NUM_WEAPONS);
 		
 		solution = new Solution(cards[solutionPlayer].getCardName(), cards[solutionWeapon].getCardName(), cards[solutionRoom].getCardName());
-		//System.out.println("Before: "+ getDeck().size());
-		Card remove = getCard(solution.getPerson(), CardType.PERSON);
-		
+		//Card remove = getCard(solution.getPerson(), CardType.PERSON);
+		answerKey.setAnswerKeyPerson(possiblePeople.get(solutionPlayer).getCardName());
+		answerKey.setAnswerKeyWeapon(possibleWeapons.get(solutionWeapon).getCardName());
+		answerKey.setAnswerKeyRoom(possiblePeople.get(solutionRoom).getCardName());
 		cards[solutionPlayer] = null;
 		cards[solutionWeapon] = null;
 		cards[solutionRoom] = null;
-		//System.out.println(deck.contains(solutionPlayer));
 		
 		int cardsRemaining = DECK_SIZE;
 		int cardIndex = 0;
@@ -730,6 +734,11 @@ public class Board {
 		public Set<String> getRooms() {
 			return rooms;
 		}
+		
+		public Set<ComputerPlayer> getComputerPlayers() {
+			return computerPlayers;
+		}
+
 
 
 
