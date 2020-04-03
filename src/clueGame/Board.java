@@ -626,7 +626,7 @@ public class Board {
 	 */
 	
 	//NEW
-	public boolean checkAccusation(Solution accusation) {
+	public boolean checkAccusation(Solution accusation, Solution answerKey) {
 
 		String p, w, r;   
 		p = accusation.getPerson(); 
