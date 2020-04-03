@@ -87,10 +87,10 @@ public class Player {
 		return column;
 	}
 
-	//OLD
-//	public Color getColor() {
-//		return color;
-//	}
+	
+	public Color getColor() {
+		return color;
+	}
 
 	public boolean isHuman() {
 		return false;
@@ -215,12 +215,6 @@ public class Player {
 	}
 	public int getCurrentColumn() {
 		return currentColumn; 
-	}
-	//NEW
-	public Color getColor()
-	{
-		//System.out.println(colorMain);
-		return this.colorMain;
 	}
 	
 	public String getColorString()

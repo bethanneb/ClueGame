@@ -225,21 +225,6 @@ public class Board {
 			loadCards();
 			//deal the deck of cards
 			dealCards();
-			
-			legend = new HashMap<Character, String>();
-			targets = new HashSet<BoardCell>();
-			board = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
-			visited = new HashSet<BoardCell>();
-			adjMatrix = new HashMap<BoardCell, Set<BoardCell>>();
-			answerKey = new Solution();
-			computerPlayers = new HashSet<ComputerPlayer>();
-			humanPlayer = new HashSet<HumanPlayer>();
-			deck = new HashSet<Card>();
-			key = new HashSet<Card>();
-			roomPile = new HashSet<Card>();
-			peoplePile = new HashSet<Card>();
-			weaponsPile = new HashSet<Card>();
-			rooms = new HashSet<String>();
 			//find adjacencies (ADD THIS IN?)
 			//calcAdjacencies();
 		} catch (FileNotFoundException e) {
@@ -402,51 +387,6 @@ public class Board {
 		targets.clear(); //clear the targets set
 		visited.add(board[row][column]);
 		targets = findAllTargets(board[row][column], pathLength);
-		
-		//NEW
-		find(row, column, pathLength);
-	}
-	
-	//NEW
-	public void find (int row, int col, int pathLength)
-	{
-		Set<BoardCell> adjCell = new HashSet<BoardCell>();
-		if (adjMatrix.containsKey(board[row][col]))
-		{
-			adjCell = adjMatrix.get(board[row][col]);
-			for (BoardCell test: adjCell)
-			{
-
-				if (test.isDoorway() && !visited.contains(test))
-				{
-					targets.add(test);
-				}
-
-				if (visited.contains(test))
-				{
-					continue; 
-				}
-				else 
-				{
-					visited.add(test);
-				}
-				if (pathLength == 1)
-				{
-					targets.add(test);
-				}
-				else
-				{
-					find(test.getCol(), test.getRow(), pathLength - 1);
-				}
-				visited.remove(test);
-
-			}
-
-		}
-		else 
-		{
-			System.out.println("This key does not exist in the adjMatrix");
-		}
 	}
 
 	//this recursive function adds all of the cells that are targets for where the player currently is, based on whether a player can't love there based on the rules:
@@ -781,8 +721,16 @@ public class Board {
 				return null; 
 			}
 		}
-
 	}
+		
+		public Solution getAnswerKey() {
+			return answerKey; 
+		}
+		
+		public Set<String> getRooms() {
+			return rooms;
+		}
+
 
 
 
