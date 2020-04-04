@@ -100,14 +100,6 @@ public class Board {
 		return theInstance;
 	} 
 
-	//	//default constructor
-	//	public Board() { 
-	//		super();
-	//		visited = new HashSet<BoardCell>(); //should we set these up here? might be inefficient.
-	//		targets = new HashSet<BoardCell>();
-	//		this.boardConfigFile = "OurClueLayout.csv";
-	//		this.roomConfigFile = "OurClueLegend.txt";
-	//	}
 
 	private Board() {
 		super();
@@ -418,15 +410,6 @@ public class Board {
 		return adjMatrix.get(board[i][j]);
 	}
 
-	//OTHER (MIGHT NEED?)
-	//	public Set<BoardCell> getAdjList( int row, int col)
-	//	{
-	//		BoardCell cell = new BoardCell();
-	//		cell = getCellAt(row, col);
-	//		Set<BoardCell> found = new HashSet<BoardCell>();
-	//		found = adjMatrix.get(cell);
-	//		return found;
-	//	}
 
 	//load players in (I think)
 	//I think it could be to load in players and cards because they are both .txt files
@@ -547,18 +530,6 @@ public class Board {
 			backup[i] = cards[i];
 		}
 
-		//		for (Card temp: peoplePile) {
-		//			deck.add(temp); 
-		//			possiblePeople.add(temp); 
-		//		}
-		//		for (Card temp: weaponsPile) { 
-		//			deck.add(temp); 
-		//			possibleWeapons.add(temp); 
-		//		}
-		//		for(Card temp: roomPile) {
-		//			deck.add(temp); 
-		//			possibleRooms.add(temp);
-		//		}
 
 		Random rand = new Random();
 		int solutionPlayer = rand.nextInt(NUM_PEOPLE);
@@ -596,10 +567,6 @@ public class Board {
 		for(int i = 0; i < cards.length ; i++){
 			cards[i] = backup[i];
 		}
-
-		//		answerKey.setAnswerKeyPerson(possiblePeople.get(solutionPlayer).getCardName());
-		//		answerKey.setAnswerKeyWeapon(possibleWeapons.get(solutionWeapon).getCardName());
-		//		answerKey.setAnswerKeyRoom(possibleRooms.get(solutionRoom).getCardName());
 	}
 
 	
@@ -648,11 +615,7 @@ public class Board {
 		}
 		return answer;
 	}
-	/*I'm not sure what this does and we dont know what it takes yet so I'm gonna comment it out for now
-	 * public Card handleSolution(TBD) {
-	 * 
-	 * }
-	 */
+
 
 	//NEW
 	public boolean checkAccusation(Solution accusation) {
@@ -681,14 +644,6 @@ public class Board {
 		return true;
 	}
 
-	//	//checks if accusation is correct
-	//	public boolean checkAccusation(Solution accusation) {
-	//		if (accusation.person == Solution.person && accusation.room == Solution.room && accusation.weapon == Solution.weapon) {
-	//			return true;
-	//
-	//		}
-	//		return false;
-	//	}
 
 	public Solution getSolution() {
 		return solution;
@@ -699,58 +654,6 @@ public class Board {
 		visited = new HashSet<BoardCell>();
 	}
 
-	public Card handleSuggestion(ComputerPlayer computerPlayer) {
-
-		int row = computerPlayer.getCurrentRow(); 
-		int col = computerPlayer.getCurrentColumn();
-
-		// createSuggestions saves the generated suggestion in ComputerPlayer's creadSoln (which is of type Solution)
-		computerPlayer.createSuggestion(board[col][row], possiblePeople, possibleWeapons, legend, computerPlayer); 
-		this.currentGuess = (computerPlayer.getPlayerName() + ": " + computerPlayer.getCreatedSoln().getPerson() + ", " + computerPlayer.getCreatedSoln().getRoom() + ", " + computerPlayer.getCreatedSoln().getWeapon()) ;
-		ArrayList<Card> foundCards = new ArrayList<Card>(); 
-
-		for(ComputerPlayer tempPlayer: computerPlayers) {
-			if (tempPlayer == computerPlayer) {
-				continue;  
-			}
-			else { 
-				// if a card is found by another player, the card is added to the ArrayList of cards
-				Card temp = tempPlayer.disproveSuggestion(computerPlayer.createdSoln); 
-				if ( temp == null) {}
-				else { foundCards.add(temp); }
-
-			}
-		}
-
-		// selecting a random number for selecting a found Card
-		Random rand = new Random(); 
-		int location = rand.nextInt(foundCards.size()); 
-
-		if (foundCards.size() == 0) { /* if the size of FoundCards = 0, that means not cards were found to disprove the suggestion */
-			// store the suggestion that was found to be the next accusation. 
-			computerPlayer.setAccusation(computerPlayer.getCreatedSoln());
-			this.compSuggestionDisproved = false;
-			this.currentResults = "no new clue";
-			return null;
-		}
-		else { 
-			computerPlayer.addSeen(foundCards.get(location));
-			this.compSuggestionDisproved = true;
-			//System.out.println("Found other cards that disprove the suggestion. ArrayList size: " + foundCards.size() );
-			if (foundCards.get(location) != null)
-			{
-				this.currentResults = foundCards.get(location).getCardName();
-				return foundCards.get(location); 
-			}
-			else
-			{
-				// if null, need to choose another location to go to
-				this.compSuggestionDisproved = true;
-				this.currentResults = "no new clue";
-				return null; 
-			}
-		}
-	}
 	
 	//NEW FOR TESTS
 
@@ -771,11 +674,15 @@ public class Board {
 		this.playersList = p;
 	}
 	
-	public Card querySuggestions(ArrayList<Player> players, Solution suggestion) {
+	public Card handleSuggestion(ArrayList<Player> players, Solution suggestion, Player accuser) {
+		
 		Card disproved = new Card();
 
-		
 		for (Player p: getPlayerList()) {
+			// will never disprove yourself
+			if(p == accuser) {
+				continue;
+			}
 		
 			disproved = p.disproveSuggestion(suggestion);
 			if (disproved != null) {
