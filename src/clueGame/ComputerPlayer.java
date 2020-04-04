@@ -144,6 +144,7 @@ public class ComputerPlayer extends Player {
 		String done = " done";
 		//System.out.println(done);
 	}
+	
 	@Override
 	public Card disproveSuggestion(Solution soln) {
 

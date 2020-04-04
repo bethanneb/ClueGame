@@ -559,28 +559,29 @@ public class gameActionTests {
 		board.setPlayers(List);
 
 		//Tests the disprove function for each player to check for null when no one has a solution
-		Card tempCard = board.querySuggestions(List, solution);
+		Card tempCard = board.handleSuggestion(List, solution, kevin);
 		assertEquals(tempCard,null);
 
 
 		//Add matching cards for the accuser and then test for null
 		Card match = new Card("Oscar Martinez", CardType.PERSON);
 		nardDog.addCard(match);
-		tempCard = board.querySuggestions(List, solution);
+		tempCard = board.handleSuggestion(List, nardDog.getSuggestion(), nardDog);
 		//System.out.println(tempCard);
 		assertEquals(tempCard,null);
 
 		//Tests that the human player will return a card when they are the only one with a match
+		Solution humanHasMatch = new Solution("Michael Scott", "Pepper Spray", "Boomerang");
 		Card humanMatch = new Card("Pepper Spray", CardType.WEAPON);
 		jim.addCard(humanMatch);
-		tempCard = board.querySuggestions(List, nardDog.getSuggestion());
+		tempCard = board.handleSuggestion(List, humanHasMatch, nardDog);
 		assertEquals(tempCard, humanMatch);
 
 		//Tests that when human is the accuser and is the only one that can disprove
-		jim.setSuggestion(solution);
+		jim.setSuggestion(humanHasMatch);
 		nardDog.setCards(new ArrayList<Card>());
 		nardDog.setSuggestion(new Solution());
-		assertEquals(board.querySuggestions(List, jim.getSuggestion()), null);
+		assertEquals(board.handleSuggestion(List, jim.getSuggestion(), jim), null);
 
 		//Tests when next two players have a match to see if the next one in line is the one to return
 		//Human player is next to have their turn in the array so it should always return the humanMatch card that the human has in their deck
@@ -588,17 +589,13 @@ public class gameActionTests {
 		nardDog.setSuggestion(solution);
 		Card humanMatch2 = new Card("Break Room", CardType.ROOM);
 		pam.addCard(humanMatch2);
-
-
-		assertEquals(board.querySuggestions(List, nardDog.getSuggestion()), humanMatch);
+		assertEquals(board.handleSuggestion(List, nardDog.getSuggestion(), nardDog), humanMatch);
 
 
 		//Tests the same as before except the computer player before the human player has the match instead. 
 		//Checks to see if the computer is chosen first
-
 		pam.setCards(new ArrayList<Card>());
 		kevin.addCard(humanMatch2);
-
-		assertEquals(board.querySuggestions(List, nardDog.getSuggestion()), humanMatch2);	
+		assertEquals(board.handleSuggestion(List, nardDog.getSuggestion(), nardDog), humanMatch2);	
 	}
 }
