@@ -37,7 +37,7 @@ public class Board {
 	private int numRows, numColumns;
 	private static BoardCell[][] board;
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
-	private static Set<BoardCell> targets, visited;
+	private static Set<BoardCell> targets, visited = new HashSet<BoardCell>();
 	private String boardConfigFile, roomConfigFile;
 	private BoardCell cell;
 	private Map<Character, String> legend;
@@ -50,7 +50,7 @@ public class Board {
 	private Card[] cards;
 	public Solution solution;
 	private Player[] players;
-	
+
 	private Solution answerKey = new Solution();
 	// Set that would hold the computer player
 	private Set<ComputerPlayer> computerPlayers = new HashSet<ComputerPlayer>();
@@ -73,7 +73,7 @@ public class Board {
 	static JFrame suggestAccuseFrame; 
 	JFrame myFrame; 
 	boolean gameFinished = false; 
-	
+
 	// NOTE: Game logic variables 
 	public boolean doneWithHuman = true;
 	public boolean targetSelected = true;
@@ -100,15 +100,15 @@ public class Board {
 		return theInstance;
 	}
 
-//	//default constructor
-//	public Board() { 
-//		super();
-//		visited = new HashSet<BoardCell>(); //should we set these up here? might be inefficient.
-//		targets = new HashSet<BoardCell>();
-//		this.boardConfigFile = "OurClueLayout.csv";
-//		this.roomConfigFile = "OurClueLegend.txt";
-//	}
-	
+	//	//default constructor
+	//	public Board() { 
+	//		super();
+	//		visited = new HashSet<BoardCell>(); //should we set these up here? might be inefficient.
+	//		targets = new HashSet<BoardCell>();
+	//		this.boardConfigFile = "OurClueLayout.csv";
+	//		this.roomConfigFile = "OurClueLegend.txt";
+	//	}
+
 	private Board() {
 		super();
 		visited = new HashSet<BoardCell>(); //should we set these up here? might be inefficient.
@@ -117,9 +117,9 @@ public class Board {
 		this.roomConfigFile = "OurClueLegend.txt";
 		Player emptyPlayer = new Player();
 		this.currentPlayerInGame = emptyPlayer;
-//		this.panel = new JPanel();
-//		JLabel name = new JLabel("Clue Game Board");
-//		panel.add(name);
+		//		this.panel = new JPanel();
+		//		JLabel name = new JLabel("Clue Game Board");
+		//		panel.add(name);
 
 	}
 
@@ -147,7 +147,7 @@ public class Board {
 		this.cardsConfigFile = cards;
 
 	}
-	
+
 	//NEW
 	public BoardCell[][] getBoard()
 	{
@@ -376,6 +376,11 @@ public class Board {
 		}
 
 		// If you are in the room part of the room (not the doorway), you stay in the room
+		else if (board[i][j].isRoom() && board[nextI][nextJ].isRoom()) {
+			return true;
+		}
+
+		// If you are in the room part of the room (not the doorway), you stay in the room
 		else if (board[i][j].isRoom() && !board[i][j].isDoorway()) {
 			return false;
 		}
@@ -417,16 +422,16 @@ public class Board {
 	public Set<BoardCell> getAdjList(int i, int j) {
 		return adjMatrix.get(board[i][j]);
 	}
-	
+
 	//OTHER (MIGHT NEED?)
-//	public Set<BoardCell> getAdjList( int row, int col)
-//	{
-//		BoardCell cell = new BoardCell();
-//		cell = getCellAt(row, col);
-//		Set<BoardCell> found = new HashSet<BoardCell>();
-//		found = adjMatrix.get(cell);
-//		return found;
-//	}
+	//	public Set<BoardCell> getAdjList( int row, int col)
+	//	{
+	//		BoardCell cell = new BoardCell();
+	//		cell = getCellAt(row, col);
+	//		Set<BoardCell> found = new HashSet<BoardCell>();
+	//		found = adjMatrix.get(cell);
+	//		return found;
+	//	}
 
 	//load players in (I think)
 	//I think it could be to load in players and cards because they are both .txt files
@@ -473,7 +478,7 @@ public class Board {
 				else {
 					playersList.add(new Player(name, row, column, color));
 				}
-				
+
 				//NEW
 				Card people = new Card (splits[0], CardType.PERSON);
 				peoplePile.add(people);
@@ -504,7 +509,7 @@ public class Board {
 		Scanner in = new Scanner(fin);
 		String temp;
 		Card currentCard;
-		
+
 		for(int i = 0; i < NUM_PEOPLE; i++){
 			temp = in.nextLine();
 			currentCard = new Card(CardType.PERSON, temp);
@@ -526,7 +531,7 @@ public class Board {
 			cards[i+(NUM_PEOPLE+NUM_WEAPONS)] = new Card(CardType.ROOM, temp);
 		}
 	}
-	
+
 	public Color convertColor(String strColor) {
 		Color color; 
 		try {     
@@ -538,29 +543,28 @@ public class Board {
 		}
 		return color;
 	}
-	
-//	//not sure if this is working correctly
+
+	//	//not sure if this is working correctly
 	private void dealCards() {
 		//answerKey = new Solution(); 		
 		Card[] backup = new Card[cards.length];
 		for(int i = 0; i < DECK_SIZE; i++){
 			backup[i] = cards[i];
 		}
-		
 		Random rand = new Random();
 		int solutionPlayer = rand.nextInt(NUM_PEOPLE);
 		int solutionWeapon = rand.nextInt(NUM_WEAPONS) + NUM_PEOPLE;
 		int solutionRoom = rand.nextInt(NUM_ROOMS) + (NUM_PEOPLE+NUM_WEAPONS);
-		
+
 		solution = new Solution(cards[solutionPlayer].getCardName(), cards[solutionWeapon].getCardName(), cards[solutionRoom].getCardName());
 		Card remove = getCard(solution.getPerson(), CardType.PERSON);
 		cards[solutionPlayer] = null;
 		cards[solutionWeapon] = null;
 		cards[solutionRoom] = null;
-		
+
 		int cardsRemaining = DECK_SIZE;
 		int cardIndex = 0;
-		
+
 		//gives cards that are not in the solution to the players
 		while(cardsRemaining != 0) {
 			for(int i=0; i<playersList.size(); i++) {
@@ -579,84 +583,84 @@ public class Board {
 			}
 		}
 
-		
+
 		for(int i = 0; i < cards.length ; i++){
 			cards[i] = backup[i];
 		}
-		
-//		answerKey.setAnswerKeyPerson(possiblePeople.get(solutionPlayer).getCardName());
-//		answerKey.setAnswerKeyWeapon(possibleWeapons.get(solutionWeapon).getCardName());
-//		answerKey.setAnswerKeyRoom(possibleRooms.get(solutionRoom).getCardName());
+
+		//		answerKey.setAnswerKeyPerson(possiblePeople.get(solutionPlayer).getCardName());
+		//		answerKey.setAnswerKeyWeapon(possibleWeapons.get(solutionWeapon).getCardName());
+		//		answerKey.setAnswerKeyRoom(possibleRooms.get(solutionRoom).getCardName());
 	}
-	
-//	public void dealCards() { 
-//
-//
-//		possibleCards.clear(); 
-//		possiblePeople.clear();
-//		possibleWeapons.clear(); 
-//		possibleRooms.clear(); 		
-//
-//		// Loads the deck and temporary ArrayLists with every card read into program 
-//		for (Card temp: peoplePile) {
-//			deck.add(temp); 
-//			possiblePeople.add(temp); 
-//		}
-//		for (Card temp: weaponsPile) { 
-//			deck.add(temp); 
-//			possibleWeapons.add(temp); 
-//		}
-//		for(Card temp: roomPile) {
-//			deck.add(temp); 
-//			possibleRooms.add(temp);
-//		}
-//
-//
-//		Random rand = new Random(); 
-//		// Get random person for murderer 
-//		int r = rand.nextInt(possiblePeople.size()); 
-//		key.add(possiblePeople.get(r)); 
-//		deck.remove(possiblePeople.get(r)); 
-//		answerKey.setAnswerKeyPerson(possiblePeople.get(r).getCardName());
-//		// Get random weapon for murder weapon 
-//		r = rand.nextInt(possibleWeapons.size()); 
-//		key.add(possibleWeapons.get(r)); 
-//		deck.remove(possibleWeapons.get(r));
-//		answerKey.setAnswerKeyWeapon(possibleWeapons.get(r).getCardName());
-//		// Get random room for crime scene 
-//		key.add(possibleRooms.get(r)); 
-//		deck.remove(possibleRooms.get(r)); 
-//		answerKey.setAnswerKeyRoom(possiblePeople.get(r).getCardName());
-//		// Loads remaining deck values into the temp ArrayList 
-//		for (Card temp: deck) {
-//			possibleCards.add(temp);  
-//		}
-//		//System.out.println(possibleCards.size());
-//
-//
-//		for(HumanPlayer person: humanPlayer) {
-//			for (int j = 0; j < 3; j++) { 
-//				r = rand.nextInt(possibleCards.size());
-//				person.addCard(possibleCards.get(r));
-//				deck.remove(possibleCards.get(r)); 
-//				possibleCards.remove(r); 	
-//			}
-//		}
-//
-//		for(ComputerPlayer person: computerPlayers) {
-//			for (int j = 0; j < 3; j++) { 
-//				r = rand.nextInt(possibleCards.size());
-//				person.addCard(possibleCards.get(r));
-//				deck.remove(possibleCards.get(r)); 
-//				possibleCards.remove(r); 	
-//			}
-//		}
-//
-//
-//
-//
-//	}
-	
+
+	//	public void dealCards() { 
+	//
+	//
+	//		possibleCards.clear(); 
+	//		possiblePeople.clear();
+	//		possibleWeapons.clear(); 
+	//		possibleRooms.clear(); 		
+	//
+	//		// Loads the deck and temporary ArrayLists with every card read into program 
+	//		for (Card temp: peoplePile) {
+	//			deck.add(temp); 
+	//			possiblePeople.add(temp); 
+	//		}
+	//		for (Card temp: weaponsPile) { 
+	//			deck.add(temp); 
+	//			possibleWeapons.add(temp); 
+	//		}
+	//		for(Card temp: roomPile) {
+	//			deck.add(temp); 
+	//			possibleRooms.add(temp);
+	//		}
+	//
+	//
+	//		Random rand = new Random(); 
+	//		// Get random person for murderer 
+	//		int r = rand.nextInt(possiblePeople.size()); 
+	//		key.add(possiblePeople.get(r)); 
+	//		deck.remove(possiblePeople.get(r)); 
+	//		answerKey.setAnswerKeyPerson(possiblePeople.get(r).getCardName());
+	//		// Get random weapon for murder weapon 
+	//		r = rand.nextInt(possibleWeapons.size()); 
+	//		key.add(possibleWeapons.get(r)); 
+	//		deck.remove(possibleWeapons.get(r));
+	//		answerKey.setAnswerKeyWeapon(possibleWeapons.get(r).getCardName());
+	//		// Get random room for crime scene 
+	//		key.add(possibleRooms.get(r)); 
+	//		deck.remove(possibleRooms.get(r)); 
+	//		answerKey.setAnswerKeyRoom(possiblePeople.get(r).getCardName());
+	//		// Loads remaining deck values into the temp ArrayList 
+	//		for (Card temp: deck) {
+	//			possibleCards.add(temp);  
+	//		}
+	//		//System.out.println(possibleCards.size());
+	//
+	//
+	//		for(HumanPlayer person: humanPlayer) {
+	//			for (int j = 0; j < 3; j++) { 
+	//				r = rand.nextInt(possibleCards.size());
+	//				person.addCard(possibleCards.get(r));
+	//				deck.remove(possibleCards.get(r)); 
+	//				possibleCards.remove(r); 	
+	//			}
+	//		}
+	//
+	//		for(ComputerPlayer person: computerPlayers) {
+	//			for (int j = 0; j < 3; j++) { 
+	//				r = rand.nextInt(possibleCards.size());
+	//				person.addCard(possibleCards.get(r));
+	//				deck.remove(possibleCards.get(r)); 
+	//				possibleCards.remove(r); 	
+	//			}
+	//		}
+	//
+	//
+	//
+	//
+	//	}
+
 	public Card getCard(String name, CardType type) {
 
 		for (Card card : deck) {
@@ -693,13 +697,13 @@ public class Board {
 				break;
 			}
 		}
-		
+
 		Card answer = null;
 		for(int i = (startIndex+1)%(players.length); i != startIndex; i = (i+1)%(players.length)){
 			answer = players[i].disproveSuggestion(suggestion);
 			if (answer != null) return answer;
 		}
-		
+
 		return answer;
 	}
 	/*I'm not sure what this does and we dont know what it takes yet so I'm gonna comment it out for now
@@ -707,7 +711,7 @@ public class Board {
 	 * 
 	 * }
 	 */
-	
+
 	//NEW
 	public boolean checkAccusation(Solution accusation) {
 
@@ -735,24 +739,24 @@ public class Board {
 		return true;
 	}
 
-//	//checks if accusation is correct
-//	public boolean checkAccusation(Solution accusation) {
-//		if (accusation.person == Solution.person && accusation.room == Solution.room && accusation.weapon == Solution.weapon) {
-//			return true;
-//
-//		}
-//		return false;
-//	}
+	//	//checks if accusation is correct
+	//	public boolean checkAccusation(Solution accusation) {
+	//		if (accusation.person == Solution.person && accusation.room == Solution.room && accusation.weapon == Solution.weapon) {
+	//			return true;
+	//
+	//		}
+	//		return false;
+	//	}
 
 	public Solution getSolution() {
 		return solution;
 	}
-	
+
 	public void clearTargets() {
 		targets = new HashSet<BoardCell>();
 		visited = new HashSet<BoardCell>();
 	}
-	
+
 	public Card handleSuggestion(ComputerPlayer computerPlayer) {
 
 		int row = computerPlayer.getCurrentRow(); 
@@ -772,7 +776,7 @@ public class Board {
 				Card temp = tempPlayer.disproveSuggestion(computerPlayer.createdSoln); 
 				if ( temp == null) {}
 				else { foundCards.add(temp); }
-				
+
 			}
 		}
 
@@ -855,6 +859,7 @@ public class Board {
 		public void setPossibleRooms(Set<String> rooms) { 
 			rooms = this.rooms; 
 		}
+
 
 
 
