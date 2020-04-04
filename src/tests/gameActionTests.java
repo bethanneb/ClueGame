@@ -142,7 +142,7 @@ public class gameActionTests {
 				else {
 					//Not sure why it it accessing an invalid target, because I chose the cell I did so we only had to check 2 targets
 					//Look at Clue Player pdf and see if I'm missing something
-					//fail("Invalid target selected");
+					fail("Invalid target selected");
 				}
 			}
 			// Ensure each target was selected at least once
@@ -455,7 +455,8 @@ public class gameActionTests {
 		}
 
 
-		computerPlayer.createSuggestion(board.getCellAt(4, 0), board.possiblePeople, board.possibleWeapons, board.getRooms(), computerPlayer); 
+		//changed board.getRooms() to bord.getLegend()
+		computerPlayer.createSuggestion(board.getCellAt(4, 0), board.possiblePeople, board.possibleWeapons, board.getLegend(), computerPlayer); 
 
 		testPlayer.clearCards();
 
