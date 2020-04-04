@@ -20,6 +20,7 @@ import clueGame.BoardCell;
 import clueGame.Card;
 import clueGame.CardType;
 import clueGame.ComputerPlayer;
+import clueGame.HumanPlayer;
 import clueGame.Player;
 import clueGame.Solution;
 
@@ -517,99 +518,95 @@ public class gameActionTests {
 		assertNull(testPlayer.disproveSuggestion(s4));
 	}
 	
-	@Test
-	public void testHandleSuggestions() { 	
-		//Suggestion no one can disprove returns null
-		
-		ArrayList<Card> possiblePeople = new ArrayList<Card>(); 
-		possiblePeople = board.possiblePeople; 
-		ArrayList<Card> possibleWeapons = new ArrayList<Card>(); 
-		possibleWeapons = board.possibleWeapons; 
-		Set<String> rooms = new HashSet<String>(); 
-		rooms = board.getRooms(); 
-		 
-		
-		ComputerPlayer player = new ComputerPlayer("Jim Halpert", 2,9, Color.blue);
-		
-		
-		Card person = new Card("Michael Scott", CardType.PERSON); 
-		board.addPossiblePeople(person);	
-		player.addCard(person);
-		
-		Card weapon = new Card("Poison Dart", CardType.WEAPON); 
-		board.addPossibleWeapons(weapon);
-		player.addCard(weapon);
-		
-		Card room = new Card("Conference Room", CardType.ROOM); 
-		String roomName = room.getCardName(); 
-		board.addPossibleRooms(roomName);
-		player.addCard(room);
-		
-		assertNotNull(board.handleSuggestion(player));
-		
-		//Suggestion only human can disprove returns answer (i.e., card that disproves suggestion)
-		  
-		board.clearPossiblePeople();
-		board.clearPossibleWeapons(); 
-		board.clearPossibleRooms();
+	//Tests for handling suggestions
+		@Test
+		public void handleSuggestion() {
+			
+			Card weapon1 = new Card("Taser", CardType.WEAPON);
+			Card weapon2 = new Card("Samurai Sword", CardType.WEAPON);
+			Card weapon3 = new Card("Nunchucks", CardType.WEAPON);
+			Card person1 = new Card("Dwight Schrute", CardType.PERSON);
+			Card person2 = new Card("Angela Martin", CardType.PERSON);
+			Card person3 = new Card("Pam Halpert", CardType.PERSON);
+			Card room1 = new Card("Front Desk", CardType.ROOM);
+			Card room2 = new Card("Dwight's Desk", CardType.ROOM);
+			Card room3 = new Card("Kitchen", CardType.ROOM);
+			
+			//Create a test solution
+			Solution solution = new Solution("Oscar Martinez", "Pepper Spray", "Break Room");
 
-		Card keyPerson = new Card ("wrong", CardType.PERSON); 
-		Card keyWeapon = new Card ("wrong", CardType.WEAPON); 
-		String keyRoom = "wrong"; 
-		board.addPossiblePeople(keyPerson);
-		board.addPossibleWeapons(keyWeapon);
-		board.addPossibleRooms(keyRoom);
+			//Setting up 3 players with 3 cards to put in an array similar to the boards player list
+			Player kevin = new ComputerPlayer();
+			kevin.setName("Kevin Malone");
+			Player jim = new HumanPlayer();
+			jim.setName("Jim Halpert");
+			Player pam = new ComputerPlayer();
+			pam.setName("Pam Halpert");
+			Player nardDog = new ComputerPlayer();
+			nardDog.setName("Andy Bernard");
+			
+			kevin.addCard(weapon1);
+			kevin.addCard(room1);
+			kevin.addCard(person1);
+			jim.addCard(weapon2);
+			jim.addCard(room2);
+			jim.addCard(person2);
+			pam.addCard(weapon3);
+			pam.addCard(room3);
+			pam.addCard(person3);
+			
+			ArrayList<Player> List = new ArrayList<>();
+			List.add(nardDog);
+			List.add(kevin);
+			List.add(jim);
+			List.add(pam);
+			board.setPlayers(List);
+			
+			//Tests the disprove function for each player to check for null when no one has a solution
+			Card tempCard = board.querySuggestions(List, solution);
+			assertEquals(tempCard,null);
+			
+			
+			//Add matching cards for the accuser and then test for null
+			Card match = new Card("Oscar Martinez", CardType.PERSON);
+			nardDog.addCard(match);
+			tempCard = board.querySuggestions(List, solution);
+			assertEquals(tempCard,null);
+			
+			//Tests that the human player will return a card when they are the only one with a match
+			Card humanMatch = new Card("Pepper Spray", CardType.WEAPON);
+			jim.addCard(humanMatch);
+			tempCard = board.querySuggestions(List, nardDog.getSuggestion());
+			assertEquals(tempCard, humanMatch);
+			
+			//Test when human is the accuser and is the only one that can disprove
+			jim.setSuggestion(solution);
+			nardDog.setCards(new ArrayList<Card>());
+			nardDog.setSuggestion(new Solution());
+			assertEquals(board.querySuggestions(List, jim.getSuggestion()), null);
+			
+			//Tests when next two players have a match to see if the next one in line is the one to return
+			//Human player is next to have their turn in the array so it should always return the humanMatch card that the human has in their deck
+			jim.setSuggestion(new Solution());
+			nardDog.setSuggestion(solution);
+			Card humanMatch2 = new Card("Break Room", CardType.ROOM);
+			pam.addCard(humanMatch2);
+			
+			
+			assertEquals(board.querySuggestions(List, nardDog.getSuggestion()), humanMatch);
+			
+			
+			//Tests the same as before except the computer player before the human player has the match instead. 
+			//Checks to see if the computer is chosen first
+			
+			pam.setCards(new ArrayList<Card>());
+			kevin.addCard(humanMatch2);
 		
-		assertNull(board.handleSuggestion(player));
-		
-		
-		
-		//Suggestion only human can disprove, but human is accuser, returns null
+			assertEquals(board.querySuggestions(List, nardDog.getSuggestion()), humanMatch2);
+				
+			
+			
 
-		
-		
-		board.clearPossiblePeople();
-		board.clearPossibleWeapons();
-		board.clearPossibleRooms();
-		
-		person = new Card("CompSci", CardType.PERSON); 
-		board.addPossiblePeople(person);	
-		player.addCard(person);
-		
-		weapon = new Card("Keyboard", CardType.WEAPON); 
-		board.addPossibleWeapons(weapon);
-		player.addCard(weapon);
-		
-		room = new Card("Berthod", CardType.ROOM); 
-		roomName = room.getCardName(); 
-		board.addPossibleRooms(roomName);
-		player.addCard(room);
-		
-		
-		assertNull(board.handleSuggestion(player));
-		
-		
-		
-		//Suggestion that two players can disprove, correct player (based on starting with next player in list) returns answer
-		//Suggestion that human and another player can disprove, other player is next in list, ensure other player returns answer
-		
-		//NOTE for reason this test is not here
-		// In class, Mark held a discussion on the methods of checking suggestions with other players.
-		// He said that we didn't have to check with the neighbor on the left.
-		// we were allowed to check with all players at once. 
-		
-		
-		
-	
-		board.clearPossiblePeople();
-		board.clearPossibleWeapons();
-		board.clearPossibleRooms();
-		
-		board.setPossiblePeople(possiblePeople);
-		board.setPossibleWeapons(possibleWeapons);
-		board.setPossibleRooms(rooms);
-		
-
-	
+			
 	}
 }

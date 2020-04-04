@@ -247,5 +247,24 @@ public class Player {
 	public void seeCard(Card card) {
 		seenCards.add(card);
 	}
+	
+	//NEW FOR TESTS
+	public void setName(String i) {
+		this.playerName = i;
+	}
+	
+	private Solution suggestion = new Solution();
+	
+	public Solution getSuggestion() {
+		return suggestion;
+	}
+	public void setSuggestion(Solution suggestion) {
+		this.suggestion = suggestion;
+	}
+	
+	public ArrayList<Card> cards;
+	public void setCards(ArrayList<Card> cards) {
+		this.cards = cards;
+	}
 
 }

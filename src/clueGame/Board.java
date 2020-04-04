@@ -607,73 +607,7 @@ public class Board {
 		//		answerKey.setAnswerKeyRoom(possibleRooms.get(solutionRoom).getCardName());
 	}
 
-	//	public void dealCards() { 
-	//
-	//
-	//		possibleCards.clear(); 
-	//		possiblePeople.clear();
-	//		possibleWeapons.clear(); 
-	//		possibleRooms.clear(); 		
-	//
-	//		// Loads the deck and temporary ArrayLists with every card read into program 
-	//		for (Card temp: peoplePile) {
-	//			deck.add(temp); 
-	//			possiblePeople.add(temp); 
-	//		}
-	//		for (Card temp: weaponsPile) { 
-	//			deck.add(temp); 
-	//			possibleWeapons.add(temp); 
-	//		}
-	//		for(Card temp: roomPile) {
-	//			deck.add(temp); 
-	//			possibleRooms.add(temp);
-	//		}
-	//
-	//
-	//		Random rand = new Random(); 
-	//		// Get random person for murderer 
-	//		int r = rand.nextInt(possiblePeople.size()); 
-	//		key.add(possiblePeople.get(r)); 
-	//		deck.remove(possiblePeople.get(r)); 
-	//		answerKey.setAnswerKeyPerson(possiblePeople.get(r).getCardName());
-	//		// Get random weapon for murder weapon 
-	//		r = rand.nextInt(possibleWeapons.size()); 
-	//		key.add(possibleWeapons.get(r)); 
-	//		deck.remove(possibleWeapons.get(r));
-	//		answerKey.setAnswerKeyWeapon(possibleWeapons.get(r).getCardName());
-	//		// Get random room for crime scene 
-	//		key.add(possibleRooms.get(r)); 
-	//		deck.remove(possibleRooms.get(r)); 
-	//		answerKey.setAnswerKeyRoom(possiblePeople.get(r).getCardName());
-	//		// Loads remaining deck values into the temp ArrayList 
-	//		for (Card temp: deck) {
-	//			possibleCards.add(temp);  
-	//		}
-	//		//System.out.println(possibleCards.size());
-	//
-	//
-	//		for(HumanPlayer person: humanPlayer) {
-	//			for (int j = 0; j < 3; j++) { 
-	//				r = rand.nextInt(possibleCards.size());
-	//				person.addCard(possibleCards.get(r));
-	//				deck.remove(possibleCards.get(r)); 
-	//				possibleCards.remove(r); 	
-	//			}
-	//		}
-	//
-	//		for(ComputerPlayer person: computerPlayers) {
-	//			for (int j = 0; j < 3; j++) { 
-	//				r = rand.nextInt(possibleCards.size());
-	//				person.addCard(possibleCards.get(r));
-	//				deck.remove(possibleCards.get(r)); 
-	//				possibleCards.remove(r); 	
-	//			}
-	//		}
-	//
-	//
-	//
-	//
-	//	}
+	
 
 	public Card getCard(String name, CardType type) {
 
@@ -823,6 +757,8 @@ public class Board {
 			}
 		}
 	}
+	
+	//NEW FOR TESTS
 
 	public Solution getAnswerKey() {
 		return answerKey; 
@@ -835,6 +771,27 @@ public class Board {
 	public Set<ComputerPlayer> getComputerPlayers() {
 		return computerPlayers;
 	}
+	
+	public void setPlayers(ArrayList<Player> p) {
+		this.playersList = new ArrayList<Player>();
+		this.playersList = p;
+	}
+	
+	public Card querySuggestions(ArrayList<Player> players, Solution suggestion) {
+		Card disproved = new Card();
+
+		
+		for (Player p: getPlayerList()) {
+		
+			disproved = p.disproveSuggestion(suggestion);
+			if (disproved != null) {
+				return disproved;
+			} 
+			
+		}
+		return null;
+	}
+	
 
 
 
