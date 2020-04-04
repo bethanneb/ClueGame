@@ -1,0 +1,669 @@
+commit 1879196861c0770b0a7654ebe6501972e67b689f
+Merge: c2d1461 fc57122
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 3 22:21:39 2020 -0600
+
+    Merge branch 'master' of https://github.com/bethanneb/ClueGame
+
+commit c2d14618aee539c566253cdf8eb2c325e9b48a20
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 3 22:21:31 2020 -0600
+
+    More attempts to figure out what was wrong with handling suggestions test
+
+commit fc57122ae334a08886b3cb8f2dfb0383f3be0ab6
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Apr 3 22:20:35 2020 -0600
+
+    all tests pass
+
+commit 0056bc02452b2c57d4669cd7e07a58acb4be4e42
+Merge: 7cd1485 d4941c8
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 3 21:41:54 2020 -0600
+
+    Merging issues in action tests file
+
+commit 7cd1485f1a418cd106f055189fd17a3b403676d9
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 3 21:41:04 2020 -0600
+
+    Added comments
+
+commit d4941c81ba8d097062de6a2adc5345227dc7fc99
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Apr 3 21:38:51 2020 -0600
+
+    misinterpretted a target test so I redid it. testRandomSelctionAfterRoom and all previous passing tests now pass.
+
+commit 6c696aa6d391bf8b6a3da7ff44cbf8e1b28e4556
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 3 21:15:55 2020 -0600
+
+    Fixed some mistakes in code and test
+
+commit 54196542857d307effed92dbafc50c0cef161756
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 3 20:41:08 2020 -0600
+
+    Wrote handling suggestions test; added functions to make it easier to test; test still FAILS
+
+commit 68e72111c5f309e1267e008303d70e0e636e0086
+Merge: 2941ce8 a8ff12b
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 3 20:06:01 2020 -0600
+
+    Fixed missed merging conflicts
+
+commit 2941ce890670b3a0675af0f82c0c722d5b064185
+Merge: 9af321e 7423b41
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 3 20:05:04 2020 -0600
+
+    Fixed merging conflicts in Board class
+
+commit a8ff12b52785ea3a1c2845146b4c234170342a0e
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Apr 3 20:03:42 2020 -0600
+
+    took out old unneccessary comments
+
+commit 9af321e1a952f668aeb5378931fbd7de0866c431
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 3 20:01:43 2020 -0600
+
+    Started writing handling suggestions test
+
+commit 7423b41e33d0b9876bc5dee328aab924f6b3fff4
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Apr 3 19:57:16 2020 -0600
+
+    testTargetRandomSelectionInRoom passes
+
+commit 602e6c061359a7ff92b5084ce78dabfabc01a8cb
+Merge: 6a82e4c 7eb1240
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 3 19:38:07 2020 -0600
+
+    Merge branch 'master' of https://github.com/bethanneb/ClueGame
+
+commit 6a82e4c2823055d02e715798dd43354901fba64b
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 3 19:38:02 2020 -0600
+
+    More attempts to get failing tests to pass, but random select in room and disprove suggestion are still failing
+
+commit 7eb12401fdaa1cd94b6e1bc864a71425ffd0adb8
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Apr 3 19:25:44 2020 -0600
+
+    testDisproveSuggestion passes
+
+commit 7d985b9b3b232847c783e9c78c0cd1c4b7eaa7dd
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 3 18:13:00 2020 -0600
+
+    Attempted to make disprove suggestion and targetRandomSelectionInRoom tests work
+
+commit 37424f29583215a004454b6a3d17e1695e3c7fe9
+Merge: ea5b3d9 f154c90
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 3 17:27:21 2020 -0600
+
+    Merge branch 'master' of https://github.com/bethanneb/ClueGame
+
+commit ea5b3d96ce596a5249ab89d870eba038e3768c9f
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 3 17:27:16 2020 -0600
+
+    Made some corrections to create suggestion test, still passes
+
+commit f154c90ae6630d7e735398233ce59a7e87353887
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Apr 3 17:24:43 2020 -0600
+
+    testTargetRandomSelection works
+
+commit 44470c3ba63fd5fadee308dccaf0af7b7ba85a55
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Apr 3 16:46:05 2020 -0600
+
+    testAccusation passes
+
+commit 80e8c3019be132a6782b022e9571cc5cb4d8d0e1
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Apr 3 16:40:21 2020 -0600
+
+    createSuggestion test passes
+
+commit 369fd6d3d8401eef8357fc67c74885605ff4e190
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 3 16:15:23 2020 -0600
+
+    Changed cell in test
+
+commit bc02b4d0d777ebfb98f2b41e39f7bad4cede4556
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 3 16:12:23 2020 -0600
+
+    Having issues with answer key in Board class; trying to figure out best way to make createSuggestion test pass
+
+commit 3af830e3ed828927551ab5f6329b843ac23e4c11
+Merge: fd84e94 50f8d8f
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 3 15:54:45 2020 -0600
+
+    Merged gameActionTests file
+
+commit fd84e943a1bc3fec9699a706d429a2b8ac8b24fd
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 3 15:51:15 2020 -0600
+
+    Wrote create suggestion test, but still not passing
+
+commit 50f8d8f4f28ea34da960ea4d10f61ebea3309208
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Apr 3 14:45:29 2020 -0600
+
+    All target tests have been made.Two target tests fail, one target test passes. Accusation test passes.
+
+commit 7f01996bff3a4a1892967f3f73639061626d3148
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Apr 3 13:04:44 2020 -0600
+
+    testAccusation passes
+
+commit 8b420bc8122d2fa07f0448eb199323f786d6f3f9
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 3 05:47:22 2020 -0600
+
+    Attempted to make testTargetRandomSelection and testAccusation tests pass; worried that tests are not correct. I tried to fill in any functions and variables I could think of
+
+commit 2a6a9318101bb1e4ba25a0b635a9d928fb1a7d18
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 3 04:05:02 2020 -0600
+
+    Changed first test name from testComputerPlayerLocation to testSelectingATarget
+
+commit 4506dc691bd5bf6910881b23575fa1bb7d4afffa
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Thu Apr 2 12:19:22 2020 -0600
+
+    added new test class
+
+commit 45321c60b92b45c68c86a32db384aeadd5158901
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Mar 30 21:41:45 2020 -0600
+
+    Made sure all tests pass including previous ones and updated git log
+
+commit b30c40ac1f16966aed2c6740e7264fa8a16f5b87
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Mar 30 21:32:25 2020 -0600
+
+    Deleted commented code; all tests pass
+
+commit 091d80d663ac695715f15d711ee795e646a3878d
+Merge: a04cd12 595aed5
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Mar 30 21:10:18 2020 -0600
+
+    Merge branch 'master' of https://github.com/bethanneb/ClueGame
+
+commit a04cd123f909b2cd6f68d874b0f90a32d40b5eff
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Mar 30 21:09:42 2020 -0600
+
+    Added comments
+
+commit e32368638bb4a1be55fd3d52796eb4e9e095ff45
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Mar 30 21:02:04 2020 -0600
+
+    Commented out print out statements for dealing cards test
+
+commit 595aed5e1b1b01238519cbf5f559807d2cd9774d
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Mon Mar 30 20:39:15 2020 -0600
+
+    added our names
+
+commit 6bf333709c8161cba0521fdd2e60c6ad16ec247b
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Mar 30 20:19:44 2020 -0600
+
+    Now the dealing cards test passes; all tests pass
+
+commit c6a28fb742d172ba26137870d979520785b9a4fc
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Mar 30 19:59:29 2020 -0600
+
+    Changed loading deck test to have more people and weapons; test still passes
+
+commit 2f015718b0ad62e298f185718efbfd88511c2f59
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Mar 30 19:31:02 2020 -0600
+
+    Figured out that the cards were not being removed correctly from the deck; the test still fails even though decks are same size (18); still figuring it out
+
+commit 4763cdc5f4f004bd66486087103319e6a693056f
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Mon Mar 30 13:29:43 2020 -0600
+
+    fixed method in which we deal cards, commented out second loadPlayer function
+
+commit cf1f357777bde7caa6d0d639027f0703992c6e8b
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Mar 30 09:25:40 2020 -0600
+
+    Dealing cards test still fails; for some reason when I try to call function dealCards() in initliaze() in Board class the tests won't even run
+
+commit cd8b4473bb89fe1fabd6fb7cde662f380be0f333
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Mar 30 08:57:44 2020 -0600
+
+    The test loading the deck now passes
+
+commit 7198e31b564a5edb50bff11f20347a718ddf01ac
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Mar 30 08:07:22 2020 -0600
+
+    Loading the deck and dealing cards tests still fail, but not due to compiler errors. Added necessary functions to make the compile
+
+commit 57376775ffd03338199f8f0e2cc31181ebc59897
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Mar 30 06:55:36 2020 -0600
+
+    Added tests to test loading the deck and dealing cards
+
+commit 4770cfc6746bb5cc3132573cf3a29fd175287b90
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Mar 30 06:33:23 2020 -0600
+
+    Moved players arraylist from test to @beforeclass
+
+commit d9144b11112032737c4168c101d71cdc98690248
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Mon Mar 30 00:03:30 2020 -0600
+
+    All tests pass, including 'testLoadingPeople'
+
+commit 23cfac9f2a69eb8aa01a5a4b9700e2e00c9963ca
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Sun Mar 29 22:48:32 2020 -0600
+
+    first test 'testLoadingPeople' fails
+
+commit cddf8b8028a41ef50fb6cb8700053ec8326ce4bc
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Sun Mar 29 20:30:10 2020 -0600
+
+    fixed player class
+
+commit 6f33a65d25c99362f39f10dec9ba82dfd95f2710
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Sun Mar 29 20:27:46 2020 -0600
+
+    finished failing testLoadingPeople. Defined an ArrayList called player and skeleton for functions that are needed for the test
+
+commit 8007eef90cd134b244b20a0b53641c5b02c6dc33
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Sun Mar 29 16:57:17 2020 -0600
+
+    added constructor to player and started creating test
+
+commit b1cd641adc321625b6d5742925d1f92db81cbc6b
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Mar 29 08:36:45 2020 -0600
+
+    Made .txt files for players and for deck of cards, and added function to set those files for testing
+
+commit 2c95f1c9b330b7aa56124f6c0de6b85175d1a405
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Mar 29 07:30:22 2020 -0600
+
+    Added tests file, and starting to fill in some functions from UML
+
+commit 312b6f0e318a5a6516c4b66eb17a45e55c74c392
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Mar 29 07:12:31 2020 -0600
+
+    Added all classes, methods, and variables from UML diagram to project
+
+commit 89d7373380b84cefc2f5ffba11fa498dd904f08e
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Mar 27 16:26:51 2020 -0600
+
+    Made all the classes as shown on the UML diagram from Clue Game - Players
+
+commit 77c3f6fc1d32fa884edd8a79c3243dcaa967300f
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Mar 12 19:54:04 2020 -0600
+
+    Updated .txt file with git log and most significant change to code
+
+commit 0235f218c14a4853baf4de0f83fe0e397533cf52
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Mar 12 19:51:29 2020 -0600
+
+    Refactored the two functions getBoardConfigRows() and getBoardConfigColumns() into one function: determineNumRowsAndColumns(); looked cleaner, and only had to call one function to determine number of rows and columns in file
+
+commit 0ea60ef684f8a7aea9e9c61098c6f5709894f4de
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Mar 12 19:27:24 2020 -0600
+
+    Realized we were returning numRows and numColumns, and then assignning them again when we called those functions that determine the number of rows and columns, which wasn't necessary; also added some comments; and deleted an unnecessary constructor in BoardCell
+
+commit bdc139c5e088201007755a648b9e08a22bec68d2
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Thu Mar 12 15:26:41 2020 -0600
+
+    Split up tests in TestsPart3 in order to make it more readable
+
+commit 7041ca394f4a3ac6b9965dde8bd753321c917782
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Mar 12 13:43:03 2020 -0600
+
+    Broke up tests in testsPart1 so that they were more readable, and it was clearer what each test was testing
+
+commit 19d3bfad876f36be242614d9e7102eef40a7cbb0
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Mar 12 13:32:00 2020 -0600
+
+    removed empty constructor/unnecessary code that had been commented out previously
+
+commit c72d5cb02185dcf6273c0c7f76acd6a1190c48a1
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Mar 12 13:28:30 2020 -0600
+
+    moved some allocations of memory to the constructor to improve efficiency
+
+commit 89c159f615dff22d41688ca6cefed6db6466ba2e
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Mar 12 13:11:57 2020 -0600
+
+    Changed some of the exception messages so they are more clear; compressed class variables (ex. private int rows, columns; vs. declaring them on two separate lines; added more comments
+
+commit 157d61ed5d537a5ed3d2bde45713aef2a7ba1b2d
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Mar 12 00:45:15 2020 -0600
+
+    Added comments to all class files about how they could be refactored and improved, didn't change any ccode, all of the tests still work
+
+commit 15470790d1a3203055407e4320de9b8440e29b9e
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Mar 12 00:32:07 2020 -0600
+
+    Added comments to functions that were easy to read, and if I struggled to remember how it worked, or it looked confusing, I put a REFACTOR comment above the function
+
+commit bce3afc7b9eb6bdce9b9c2c54dd7469bd1f042b6
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Mar 12 00:08:00 2020 -0600
+
+    Had to fix test that I broke
+
+commit 1a911f300db11fea9c9ce763a4c1030487ee1e74
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Wed Mar 11 23:56:01 2020 -0600
+
+    Deleted some comments
+
+commit a9aca8a7f35996e8cd1efdd266ed2e8b2d5a9497
+Merge: da0d120 7a13350
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Mar 2 16:33:31 2020 -0700
+
+    Merge branch 'master' of https://github.com/bethanneb/ClueGame
+
+commit da0d120eef281ec3a1d52351eafcb538c4466f40
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Mar 2 16:33:22 2020 -0700
+
+    Added spreadsheet file to git
+
+commit 5cd11bb5c8f1aa92abf85fa84d709e3e2fc8a608
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Mar 2 16:32:59 2020 -0700
+
+    Added spreadsheet, corrected out testspart3 file
+
+commit 7a133504701a1446f5718b5641d80d23f1cfd526
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Mon Mar 2 14:42:33 2020 -0700
+
+    fixed tests - pt 4 done
+
+commit 4a281c92bfc7e6901bab9e92c22e118550ddd28e
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Mon Mar 2 13:44:57 2020 -0700
+
+    Made helper functions to calculate adjacencies then redid calcAdjacencies so it now passes all the CTest_BoardAdjTargetTests. Also simplified findAllTarget (just combined 2 if statements with ||).
+
+commit 343c31234f8de51e8956d225ed13acc9e3710738
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Mon Mar 2 09:47:56 2020 -0700
+
+    fixed so that 8/11 pt3 test work
+
+commit 6d40f9a8ff2e5068560a4e4d6080187cb190be46
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Mar 1 19:31:51 2020 -0700
+
+    Fixed other unseen merging issues, and added comments; some tests fail as they should
+
+commit c22498fb44c55f5f52881b7d21396f002ead33c2
+Merge: 5f31fc7 93aaf94
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Mar 1 19:28:54 2020 -0700
+
+    Fixed conflicts between testing files
+
+commit 5f31fc7d21c7e5586f19d4eb8c496815df13ad16
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Mar 1 19:26:37 2020 -0700
+
+    Added test files
+
+commit 93aaf9479ecc078e29f013a0db349c8f423981f2
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Sun Mar 1 16:02:05 2020 -0700
+
+    added new test classes
+
+commit 6e260f25cfe74d1a4e2985b8ed1c165ba88c41ec
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Feb 28 20:08:13 2020 -0700
+
+    All tests passing for Clue Board 2 assignmentgit status
+
+commit e41e404d08f7b0b117b65486a875054e75dd7d5e
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Feb 28 20:03:14 2020 -0700
+
+    4 out of 5 tests pass for BethAnne
+
+commit d8f55d19214818d52d8b9580623bb0edd3f0355a
+Merge: 867d26b d83a2c7
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Feb 28 19:59:03 2020 -0700
+
+    trying to fix .csv stuff
+
+commit d83a2c7b58b59adb07ba07838fbcc19504ca43e0
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Feb 28 19:58:00 2020 -0700
+
+    added comments
+
+commit 71a6a27116c25eea32d8b1861b3da80c9e658a57
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Feb 28 19:47:14 2020 -0700
+
+    5/5 pt 1 tests pass
+
+commit 867d26b59d7977ebe01e739dfbf580068bfbd41d
+Merge: 584f2ac 154d4a6
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Feb 28 19:39:01 2020 -0700
+
+    Merge branch 'master' of https://github.com/bethanneb/ClueGame
+
+commit 584f2ac4127fff069cb2ea9c2dae6c9aa0f5ab93
+Merge: 5c73490 ebf52d8
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Feb 28 19:38:46 2020 -0700
+
+    modified tests part 1
+
+commit 5c7349083de23af40891ea37c1ddfef53b98c2b0
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Feb 28 19:34:46 2020 -0700
+
+    Debugging/print statements
+
+commit 154d4a66078d7966b799fb31078273f8122b3140
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Feb 28 19:34:41 2020 -0700
+
+    4/5 tests pass
+
+commit ebf52d846de38ca0851f620993cc82e3d7fc1388
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Feb 28 19:23:18 2020 -0700
+
+    1/5 pt 1 test works
+
+commit 056a585ece9074802f6a01b1a78f85f75b4b6433
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Feb 28 14:55:04 2020 -0700
+
+    CTest_ExceptionTest and CTest_FileInitTest now pass, but our TestsPart1 does not fully pass
+
+commit 6863d313519b75bbdadc08410540826d7af1054d
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Feb 28 14:29:47 2020 -0700
+
+    Changed board layout to correct csv format
+
+commit 4c8acfae8a52c222ce2aaba9ce070d0570a2f7f2
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Feb 27 23:57:58 2020 -0700
+
+    Test files given to us pass
+
+commit 1c3b8decbf60b5a0e83fc175bfc5070b4b0816fc
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Feb 27 20:10:45 2020 -0700
+
+    Added authors to top of all of the files
+
+commit b4bdc68c8a0ebb43eefe7dc2641f8562e3cde5be
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Feb 27 19:59:40 2020 -0700
+
+    Created our java test file, and OurTests.txt file to explain our tests; imported our board layout as a .csv file and our legend .txt file; Part 1 should be done
+
+commit 167a387656b61a028cd17dd1428cc36f31a419c2
+Merge: 17fb334 8883470
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Feb 27 17:43:17 2020 -0700
+
+    trying to fix BoardCell class in experiments package merging issue
+
+commit 17fb3345ece79e744869dadddd3e2702058ffe9a
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Feb 27 17:38:44 2020 -0700
+
+    Added all new files
+
+commit 27f94c2aadafdace75183d1e59c305bf12fe3e8d
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Feb 27 17:36:42 2020 -0700
+
+    Added all of the skeleton classes with methods, getters, setters, etc. Test file that was given to us now runs with no errors, but all tests fail as expected
+
+commit 888347003306e7470bf8dd766c1aabce2b3c1c14
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Thu Feb 27 14:28:50 2020 -0700
+
+    added/imported the stuff for part 1
+
+commit ba5cf529506589faea3fda24888f786858576375
+Merge: 63a514e 9fa3411
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Feb 24 15:00:04 2020 -0700
+
+    Part 2 finishes, all tests pass, and comments added
+
+commit 63a514ecdee858462911f5c16ff3e84329a077d0
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Feb 24 13:42:20 2020 -0700
+
+    comments/imported libraries
+
+commit 488a803a72806c07bf726bfab9f978984d183874
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Feb 24 13:26:43 2020 -0700
+
+    comments/imported some libraries
+
+commit 9fa3411abb2cd222efa9640dcecc9ac2c1864157
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Mon Feb 24 11:57:56 2020 -0700
+
+    Tried fixing getter for getAdjList
+
+commit 6739d51ad248f54d494ae2f2cb4cd9aa31a00082
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Mon Feb 24 10:05:43 2020 -0700
+
+    super rough draft of calcTargets
+
+commit 40ea59c159e912194db3eed3abe92e1da86dafab
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Feb 23 13:36:32 2020 -0700
+
+    Added return statements to IntBoard
+
+commit 2d22d0ad7ae1fd3b7130b3796036d04b8cbecf8d
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Sun Feb 23 13:11:49 2020 -0700
+
+    finished creating tests
+
+commit 7776841729c830df813b880e4f8253bf29799c20
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Feb 23 12:24:31 2020 -0700
+
+    Added some comments toIntBoardTests file
+
+commit 422c1fb4c16016dfd8ebf6197056c3c0ca2f79a8
+Merge: 4321220 5708a07
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Feb 23 12:18:44 2020 -0700
+
+    Merge branch 'master' of https://github.com/bethanneb/ClueGame
+
+commit 432122051ee314f7e4e65ec98760cb05bbf720e9
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Feb 23 12:02:00 2020 -0700
+
+    Changed coordinates to 4x4 square in tests, and started to add testTarget methods
+
+commit 5708a07e9b1967752c3fc5af4329787eff4f5bfc
+Author: bethanneb <60114224+bethanneb@users.noreply.github.com>
+Date:   Thu Feb 20 16:13:53 2020 -0700
+
+    Create README.md
+
+commit 4d592925d81913cde90505cfae113223874a52b7
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Feb 20 16:13:05 2020 -0700
+
+    added .gitignore
+
+commit ca3f24d9a6d85c72d63d4b5077479619f3e78e04
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Feb 20 15:52:16 2020 -0700
+
+    Initial commit: Started part 1 of the failing tests, but still unfinished. Created BoardCell, IntBoard, and IntBoardTests classes, but nothing has been tested yet
