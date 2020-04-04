@@ -98,7 +98,7 @@ public class Board {
 	// this method returns the only Board
 	public static Board getInstance() {
 		return theInstance;
-	}
+	} 
 
 	//	//default constructor
 	//	public Board() { 

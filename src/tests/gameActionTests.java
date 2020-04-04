@@ -515,93 +515,6 @@ public class gameActionTests {
 	}
 
 	//Tests for handling suggestions
-<<<<<<< HEAD
-		@Test
-		public void handleSuggestion() {
-			
-			Card weapon1 = new Card("Taser", CardType.WEAPON);
-			Card weapon2 = new Card("Samurai Sword", CardType.WEAPON);
-			Card weapon3 = new Card("Nunchucks", CardType.WEAPON);
-			Card person1 = new Card("Dwight Schrute", CardType.PERSON);
-			Card person2 = new Card("Angela Martin", CardType.PERSON);
-			Card person3 = new Card("Pam Halpert", CardType.PERSON);
-			Card room1 = new Card("Front Desk", CardType.ROOM);
-			Card room2 = new Card("Dwight's Desk", CardType.ROOM);
-			Card room3 = new Card("Kitchen", CardType.ROOM);
-			
-			//Create a test solution
-			Solution solution = new Solution("Oscar Martinez", "Pepper Spray", "Break Room");
-
-			//Setting up 3 players with 3 cards to put in an array similar to the boards player list
-			Player kevin = new ComputerPlayer();
-			kevin.setName("Kevin Malone");
-			Player jim = new HumanPlayer();
-			jim.setName("Jim Halpert");
-			Player pam = new ComputerPlayer();
-			pam.setName("Pam Halpert");
-			Player nardDog = new ComputerPlayer();
-			nardDog.setName("Andy Bernard");
-			
-			kevin.addCard(weapon1);
-			kevin.addCard(room1);
-			kevin.addCard(person1);
-			jim.addCard(weapon2);
-			jim.addCard(room2);
-			jim.addCard(person2);
-			pam.addCard(weapon3);
-			pam.addCard(room3);
-			pam.addCard(person3);
-			
-			ArrayList<Player> List = new ArrayList<>();
-			List.add(nardDog);
-			List.add(kevin);
-			List.add(jim);
-			List.add(pam);
-			board.setPlayers(List);
-			
-			//Tests the disprove function for each player to check for null when no one has a solution
-			Card tempCard = board.querySuggestions(List, solution);
-			assertEquals(tempCard,null);
-			
-			
-			//Add matching cards for the accuser and then test for null
-			Card match = new Card("Oscar Martinez", CardType.PERSON);
-			nardDog.addCard(match);
-			tempCard = board.querySuggestions(List, solution);
-			System.out.println(tempCard);
-			assertEquals(tempCard,null);
-			
-			//Tests that the human player will return a card when they are the only one with a match
-			Card humanMatch = new Card("Pepper Spray", CardType.WEAPON);
-			jim.addCard(humanMatch);
-			tempCard = board.querySuggestions(List, nardDog.getSuggestion());
-			assertEquals(tempCard, humanMatch);
-			
-			//Tests that when human is the accuser and is the only one that can disprove
-			jim.setSuggestion(solution);
-			nardDog.setCards(new ArrayList<Card>());
-			nardDog.setSuggestion(new Solution());
-			assertEquals(board.querySuggestions(List, jim.getSuggestion()), null);
-			
-			//Tests when next two players have a match to see if the next one in line is the one to return
-			//Human player is next to have their turn in the array so it should always return the humanMatch card that the human has in their deck
-			jim.setSuggestion(new Solution());
-			nardDog.setSuggestion(solution);
-			Card humanMatch2 = new Card("Break Room", CardType.ROOM);
-			pam.addCard(humanMatch2);
-			
-			
-			assertEquals(board.querySuggestions(List, nardDog.getSuggestion()), humanMatch);
-			
-			
-			//Tests the same as before except the computer player before the human player has the match instead. 
-			//Checks to see if the computer is chosen first
-			
-			pam.setCards(new ArrayList<Card>());
-			kevin.addCard(humanMatch2);
-		
-			assertEquals(board.querySuggestions(List, nardDog.getSuggestion()), humanMatch2);	
-=======
 	@Test
 	public void handleSuggestion() {
 
@@ -687,6 +600,5 @@ public class gameActionTests {
 		kevin.addCard(humanMatch2);
 
 		assertEquals(board.querySuggestions(List, nardDog.getSuggestion()), humanMatch2);	
->>>>>>> d4941c81ba8d097062de6a2adc5345227dc7fc99
 	}
 }
