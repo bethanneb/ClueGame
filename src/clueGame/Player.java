@@ -101,7 +101,6 @@ public class Player {
 	}
 
 	public Card disproveSuggestion(Solution suggestion){
-
 		ArrayList<Card> possibilities = new ArrayList<Card>();
 
 		for(Card c : myCards){

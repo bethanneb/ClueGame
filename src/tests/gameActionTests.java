@@ -43,7 +43,7 @@ public class gameActionTests {
 		playersList = board.getPlayerList();
 	}
 	
-	//If a player is not in a room, and a room is possible target, it goes into that room
+	//If a player is not in a room, and a room is a possible target, it goes into that room
 	@Test
 	public void testGoesIntoRoom() {
 		//Computer is in place where it can go into room
@@ -571,7 +571,7 @@ public class gameActionTests {
 			Card match = new Card("Oscar Martinez", CardType.PERSON);
 			nardDog.addCard(match);
 			tempCard = board.querySuggestions(List, solution);
-			//System.out.println(tempCard);
+			System.out.println(tempCard);
 			assertEquals(tempCard,null);
 			
 			//Tests that the human player will return a card when they are the only one with a match
