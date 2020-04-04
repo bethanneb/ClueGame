@@ -375,7 +375,7 @@ public class Board {
 			return true;
 		}
 
-		// If you are in the room part of the room (not the doorway), you stay in the room
+		// If you are in a room, you can move in the room
 		else if (board[i][j].isRoom() && board[nextI][nextJ].isRoom()) {
 			return true;
 		}
@@ -541,7 +541,7 @@ public class Board {
 		return color;
 	}
 
-	//	//not sure if this is working correctly
+	
 	private void dealCards() {
 		//answerKey = new Solution();
 		possiblePeople.clear();
@@ -551,19 +551,6 @@ public class Board {
 		for(int i = 0; i < DECK_SIZE; i++){
 			backup[i] = cards[i];
 		}
-
-		//		for (Card temp: peoplePile) {
-		//			deck.add(temp); 
-		//			possiblePeople.add(temp); 
-		//		}
-		//		for (Card temp: weaponsPile) { 
-		//			deck.add(temp); 
-		//			possibleWeapons.add(temp); 
-		//		}
-		//		for(Card temp: roomPile) {
-		//			deck.add(temp); 
-		//			possibleRooms.add(temp);
-		//		}
 
 		Random rand = new Random();
 		int solutionPlayer = rand.nextInt(NUM_PEOPLE);
@@ -602,78 +589,9 @@ public class Board {
 			cards[i] = backup[i];
 		}
 
-		//		answerKey.setAnswerKeyPerson(possiblePeople.get(solutionPlayer).getCardName());
-		//		answerKey.setAnswerKeyWeapon(possibleWeapons.get(solutionWeapon).getCardName());
-		//		answerKey.setAnswerKeyRoom(possibleRooms.get(solutionRoom).getCardName());
 	}
 
-	//	public void dealCards() { 
-	//
-	//
-	//		possibleCards.clear(); 
-	//		possiblePeople.clear();
-	//		possibleWeapons.clear(); 
-	//		possibleRooms.clear(); 		
-	//
-	//		// Loads the deck and temporary ArrayLists with every card read into program 
-	//		for (Card temp: peoplePile) {
-	//			deck.add(temp); 
-	//			possiblePeople.add(temp); 
-	//		}
-	//		for (Card temp: weaponsPile) { 
-	//			deck.add(temp); 
-	//			possibleWeapons.add(temp); 
-	//		}
-	//		for(Card temp: roomPile) {
-	//			deck.add(temp); 
-	//			possibleRooms.add(temp);
-	//		}
-	//
-	//
-	//		Random rand = new Random(); 
-	//		// Get random person for murderer 
-	//		int r = rand.nextInt(possiblePeople.size()); 
-	//		key.add(possiblePeople.get(r)); 
-	//		deck.remove(possiblePeople.get(r)); 
-	//		answerKey.setAnswerKeyPerson(possiblePeople.get(r).getCardName());
-	//		// Get random weapon for murder weapon 
-	//		r = rand.nextInt(possibleWeapons.size()); 
-	//		key.add(possibleWeapons.get(r)); 
-	//		deck.remove(possibleWeapons.get(r));
-	//		answerKey.setAnswerKeyWeapon(possibleWeapons.get(r).getCardName());
-	//		// Get random room for crime scene 
-	//		key.add(possibleRooms.get(r)); 
-	//		deck.remove(possibleRooms.get(r)); 
-	//		answerKey.setAnswerKeyRoom(possiblePeople.get(r).getCardName());
-	//		// Loads remaining deck values into the temp ArrayList 
-	//		for (Card temp: deck) {
-	//			possibleCards.add(temp);  
-	//		}
-	//		//System.out.println(possibleCards.size());
-	//
-	//
-	//		for(HumanPlayer person: humanPlayer) {
-	//			for (int j = 0; j < 3; j++) { 
-	//				r = rand.nextInt(possibleCards.size());
-	//				person.addCard(possibleCards.get(r));
-	//				deck.remove(possibleCards.get(r)); 
-	//				possibleCards.remove(r); 	
-	//			}
-	//		}
-	//
-	//		for(ComputerPlayer person: computerPlayers) {
-	//			for (int j = 0; j < 3; j++) { 
-	//				r = rand.nextInt(possibleCards.size());
-	//				person.addCard(possibleCards.get(r));
-	//				deck.remove(possibleCards.get(r)); 
-	//				possibleCards.remove(r); 	
-	//			}
-	//		}
-	//
-	//
-	//
-	//
-	//	}
+
 
 	public Card getCard(String name, CardType type) {
 
@@ -720,11 +638,7 @@ public class Board {
 
 		return answer;
 	}
-	/*I'm not sure what this does and we dont know what it takes yet so I'm gonna comment it out for now
-	 * public Card handleSolution(TBD) {
-	 * 
-	 * }
-	 */
+
 
 	//NEW
 	public boolean checkAccusation(Solution accusation) {
@@ -753,14 +667,6 @@ public class Board {
 		return true;
 	}
 
-	//	//checks if accusation is correct
-	//	public boolean checkAccusation(Solution accusation) {
-	//		if (accusation.person == Solution.person && accusation.room == Solution.room && accusation.weapon == Solution.weapon) {
-	//			return true;
-	//
-	//		}
-	//		return false;
-	//	}
 
 	public Solution getSolution() {
 		return solution;

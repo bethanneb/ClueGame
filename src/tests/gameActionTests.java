@@ -96,8 +96,6 @@ public class gameActionTests {
 				loc_10_4 = true;
 			}
 			else {
-				//Not sure why it it accessing an invalid target, because I chose the cell I did so we only had to check 2 targets
-				//Look at Clue Player pdf and see if I'm missing something
 				fail("Invalid target selected");
 			}
 		}
@@ -123,8 +121,6 @@ public class gameActionTests {
 			boolean loc_1_8 = false;
 			
 			// Run the test a large number of times
-
-			
 			for (int i=0; i<100; i++) {
 				BoardCell selected = player.pickLocation(board.getTargets());
 				if (selected == board.getCellAt(0, 7)) {
@@ -140,11 +136,10 @@ public class gameActionTests {
 					loc_1_8 = true;
 				}
 				else {
-					//Not sure why it it accessing an invalid target, because I chose the cell I did so we only had to check 2 targets
-					//Look at Clue Player pdf and see if I'm missing something
 					fail("Invalid target selected");
 				}
 			}
+			
 			// Ensure each target was selected at least once
 			assertTrue(loc_0_7);
 			assertTrue(loc_1_6);
@@ -208,12 +203,11 @@ public class gameActionTests {
 		Card card15 = new Card ("Oscar Martinez", CardType.PERSON);
 		Card card16 = new Card ("Angela Martin", CardType.PERSON);
 
-		System.out.println("Rooms size before: " + board.getRooms().size());
+		
 		ComputerPlayer computerPlayer = new ComputerPlayer ("Michael Scott","black", 19, 18);
 		computerPlayer.createSuggestion(board.getCellAt(19, 18), board.possiblePeople, board.possibleWeapons, board.getLegend(), computerPlayer);
 		Solution sol = computerPlayer.getCreatedSoln();
 		String solutionRoom = sol.getRoom();
-		System.out.println("Sol: " + solutionRoom);
 		// room matches current location
 		assertEquals("Warehouse", solutionRoom);
 
@@ -253,7 +247,7 @@ public class gameActionTests {
 
 		// If only one person is not seen, it's selected; 
 		computerPlayer.clearSeenCards();
-		System.out.println("Seen cards: " + computerPlayer.getSeenCards().size());
+
 		ArrayList<Card> weapons = new ArrayList<Card>();
 		ArrayList<Card> people = new ArrayList<Card>();
 		computerPlayer.addSeen(card);
@@ -289,17 +283,16 @@ public class gameActionTests {
 		people.add(card14);
 		people.add(card15);
 		people.add(card16);
-		System.out.println("Seen cards: " + computerPlayer.getSeenCards().size());
+
 		computerPlayer.createSuggestion(board.getCellAt(19, 18), people, weapons, board.getLegend(), computerPlayer);
 		sol = computerPlayer.getCreatedSoln();
 		solution = sol.getPerson();
-		System.out.println(card16.getCardName() + " " + solution);
 
 		assertEquals(card16.getCardName(), solution);
 
 		//If only one weapon not seen, it's selected
 		computerPlayer.clearSeenCards();
-		System.out.println("Seen cards: " + computerPlayer.getSeenCards().size());
+
 		ArrayList<Card> weapons2 = new ArrayList<Card>();
 		ArrayList<Card> people2 = new ArrayList<Card>();
 		computerPlayer.addSeen(card2);
@@ -335,17 +328,17 @@ public class gameActionTests {
 		people2.add(card14);
 		people2.add(card15);
 		people2.add(card16);
-		System.out.println("Seen cards: " + computerPlayer.getSeenCards().size());
+
 		computerPlayer.createSuggestion(board.getCellAt(19, 18), people2, weapons2, board.getLegend(), computerPlayer);
 		sol = computerPlayer.getCreatedSoln();
 		solution = sol.getWeapon();
-		System.out.println(card.getCardName() + " " + solution);
+
 
 		assertEquals(card.getCardName(), solution);
 
 		// mutiple choices, people
 		computerPlayer.clearSeenCards();
-		System.out.println("Seen cards: " + computerPlayer.getSeenCards().size());
+
 		ArrayList<Card> weapons3 = new ArrayList<Card>();
 		ArrayList<Card> people3 = new ArrayList<Card>();
 		computerPlayer.addSeen(card2);
@@ -377,7 +370,7 @@ public class gameActionTests {
 		people3.add(card14);
 		people3.add(card15);
 		people3.add(card16);
-		System.out.println("Seen cards: " + computerPlayer.getSeenCards().size());
+
 		computerPlayer.createSuggestion(board.getCellAt(19, 18), people3, weapons3, board.getLegend(), computerPlayer);
 		sol = computerPlayer.getCreatedSoln();
 		solution = sol.getPerson();
@@ -421,11 +414,11 @@ public class gameActionTests {
 		people4.add(card14);
 		people4.add(card15);
 		people4.add(card16);
-		System.out.println("Seen cards: " + computerPlayer.getSeenCards().size());
+
 		computerPlayer.createSuggestion(board.getCellAt(19, 18), people4, weapons4, board.getLegend(), computerPlayer);
 		sol = computerPlayer.getCreatedSoln();
 		solution = sol.getWeapon();
-		System.out.println(solution);
+
 
 		assertNotNull(solution);
 	}
@@ -484,10 +477,6 @@ public class gameActionTests {
 
 		String a = test.getCardName(); 
 		String b = returnedCard.getCardName(); 
-		
-		//System.out.println("A: " + a);
-		//System.out.println("B: " + b);
-
 
 		// One matching card
 		assertEquals(a,b); 
@@ -506,14 +495,13 @@ public class gameActionTests {
 		String c = testP.getCardName(); 
 		String d = testW.getCardName(); 
 		String e = testR.getCardName(); 
-		//System.out.println(b + " " + c + " " + d + " " + e);
 
 		// More than one matching card 
-		//assertTrue(b.equals(c) || b.equals(d) || b.equals(e));
 		boolean matchingCard = false;
 		if(b==c || b==d || b== e) {
 			matchingCard = true;
 		}
+		
 		assertTrue(matchingCard);
 
 
