@@ -163,7 +163,7 @@ public class Board {
 	}
 
 	//returns the targets (where the player can go)
-	public Set<BoardCell> getTargets() {
+	public static Set<BoardCell> getTargets() {
 		return targets;
 	}
 
@@ -393,7 +393,7 @@ public class Board {
 	public void calcTargets(int row, int column, int pathLength){
 		visited.clear(); //clear the visited set
 		targets.clear(); //clear the targets set
-		visited.add(board[row][column]); //add start location to the visited list
+		visited.add(board[row][column]);
 		targets = findAllTargets(board[row][column], pathLength);
 	}
 
@@ -482,7 +482,6 @@ public class Board {
 				//NEW
 				Card people = new Card (splits[0], CardType.PERSON);
 				peoplePile.add(people);
-				possiblePeople.add(people);
 
 				// read next line
 				line = reader.readLine();
@@ -520,14 +519,12 @@ public class Board {
 			//NEW
 			Card weapon = new Card (temp, CardType.WEAPON);
 			weaponsPile.add(weapon);
-			possibleWeapons.add(weapon);
 			currentCard = new Card(CardType.WEAPON, temp);
 			cards[i+NUM_PEOPLE] = new Card(CardType.WEAPON, temp);
 		}
 		for(int i = 0; i < NUM_ROOMS; i++){
 			temp = in.nextLine();
 			currentCard = new Card(CardType.ROOM, temp);
-			possibleRooms.add(currentCard);
 			cards[i+(NUM_PEOPLE+NUM_WEAPONS)] = new Card(CardType.ROOM, temp);
 		}
 	}
@@ -546,11 +543,28 @@ public class Board {
 
 	//	//not sure if this is working correctly
 	private void dealCards() {
-		//answerKey = new Solution(); 		
+		//answerKey = new Solution();
+		possiblePeople.clear();
+		possibleWeapons.clear(); 
+		possibleRooms.clear(); 		
 		Card[] backup = new Card[cards.length];
 		for(int i = 0; i < DECK_SIZE; i++){
 			backup[i] = cards[i];
 		}
+
+		//		for (Card temp: peoplePile) {
+		//			deck.add(temp); 
+		//			possiblePeople.add(temp); 
+		//		}
+		//		for (Card temp: weaponsPile) { 
+		//			deck.add(temp); 
+		//			possibleWeapons.add(temp); 
+		//		}
+		//		for(Card temp: roomPile) {
+		//			deck.add(temp); 
+		//			possibleRooms.add(temp);
+		//		}
+
 		Random rand = new Random();
 		int solutionPlayer = rand.nextInt(NUM_PEOPLE);
 		int solutionWeapon = rand.nextInt(NUM_WEAPONS) + NUM_PEOPLE;
@@ -809,57 +823,18 @@ public class Board {
 			}
 		}
 	}
-		
-		public Solution getAnswerKey() {
-			return answerKey; 
-		}
-		
-		public Set<String> getRooms() {
-			return rooms;
-		}
-		
-		public Set<ComputerPlayer> getComputerPlayers() {
-			return computerPlayers;
-		}
-		
-		//NEW
-		
-		public void addPossiblePeople(Card card) { 
-			possiblePeople.add(card); 
-		}
-		
-		public void addPossibleWeapons(Card card) { 
-			possibleWeapons.add(card); 
-		}
-		
-		public void addPossibleRooms(String room) { 
-			rooms.add(room); 
-		}
-		
-		public void clearPossiblePeople() { 
-			possiblePeople.clear();
-		} 
-		
-		public void clearPossibleWeapons() { 
-			possibleWeapons.clear();
-		}
-		
-		public void clearPossibleRooms() { 
-			rooms.clear();
-		}
-		
-		public void setPossiblePeople(ArrayList<Card> possiblePeople) { 
-			possiblePeople = this.possiblePeople; 
-		}
 
-		public void setPossibleWeapons(ArrayList<Card> possibleWeapons) { 
-			possibleWeapons = this.possibleWeapons; 
-		}
+	public Solution getAnswerKey() {
+		return answerKey; 
+	}
 
-		public void setPossibleRooms(Set<String> rooms) { 
-			rooms = this.rooms; 
-		}
+	public Set<String> getRooms() {
+		return rooms;
+	}
 
+	public Set<ComputerPlayer> getComputerPlayers() {
+		return computerPlayers;
+	}
 
 
 

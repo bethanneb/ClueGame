@@ -56,14 +56,12 @@ public class ComputerPlayer extends Player {
 			int options = availableDoorways.size();
 			Random rand = new Random(); 
 			int selected = rand.nextInt(options); 
-			//System.out.println( options + " doorways exist");
 			return availableDoorways.get(selected);
 			
 		}else{
 			int options = availablePaths.size();
 			Random rand = new Random();
 			int selected = rand.nextInt(options);
-			//System.out.println("A pathway is available");
 			return availablePaths.get(selected);
 		}
 	} 
@@ -76,14 +74,7 @@ public class ComputerPlayer extends Player {
 		weapons = weaponsArray;
 		char roomInitial = cell.getInitial();
 		String room = legend.get(roomInitial);
-		//System.out.println("room size" + rooms.size());
-		//for (String r : rooms)
-		//{
-			//if (roomInitial == r.charAt(0))
-			//{
-				//room = r;
-			//} 
-		//}
+
 		Card person = new Card("", CardType.PERSON);
 		Card weapon = new Card("", CardType.PERSON);
 		Set<Card> seen = new HashSet<Card>();
@@ -105,7 +96,6 @@ public class ComputerPlayer extends Player {
 				weapon = weapons.get(select);
 			}
 			else weapon = null;
-			//Hello
 
 			// handle looking at seenCards and making sure to not 
 			if ( seen.contains(person)) people.remove(person);
@@ -138,18 +128,15 @@ public class ComputerPlayer extends Player {
 		Set<Card> myCards = new HashSet<Card>(); 
 		myCards = getMyCards(); 
 		ArrayList<Card> cardsFound = new ArrayList<Card>();
-		//System.out.println(myCards.size());
+
 		for (Card found: myCards) {
 			if (soln.getPerson() == found.getCardName()) {
-				//System.out.println("1st");
 				cardsFound.add(found); 
 			}
 			if (soln.getWeapon() == found.getCardName()) {
-				//System.out.println("2nd");
 				cardsFound.add(found); 
 			}
 			if (soln.getRoom() == found.getCardName()) {
-				//System.out.println("3rd");
 				cardsFound.add(found); 
 			}
 
