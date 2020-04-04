@@ -100,69 +100,30 @@ public class Player {
 		return false;
 	}
 
-	//NEW
-	public Card disproveSuggestion(Solution soln) {
+	public Card disproveSuggestion(Solution suggestion){
 
-		String p1, p2, w1, w2, r1, r2;  
+		ArrayList<Card> possibilities = new ArrayList<Card>();
 
-		Set<Card> myCards = new HashSet<Card>(); 
-		myCards = getMyCards(); 
-		ArrayList<Card> cardsFound = new ArrayList<Card>();
-		//System.out.println(myCards.size());
-		for (Card found: myCards) {
-			if (soln.getPerson().equals(found.getCardName())) {
-				//System.out.println("1st");
-				cardsFound.add(found); 
-			}
-			if (soln.getWeapon().equals(found.getCardName())) {
-				//System.out.println("2nd");
-				cardsFound.add(found); 
-			}
-			if (soln.getRoom().equals(found.getCardName())) {
-				//System.out.println("3rd");
-				cardsFound.add(found); 
-			}
-			 
+		for(Card c : myCards){
+			if(suggestion.getPerson().equals(c.getCardName()))
+				System.out.println("Person");
+				possibilities.add(c);
+			if(suggestion.getWeapon().equals(c.getCardName()))
+				System.out.println("Weapon");
+				possibilities.add(c);
+			if(suggestion.getRoom().equals(c.getCardName()))
+				System.out.println("Room");
+				possibilities.add(c);
 		}
 
-		if (cardsFound.size() == 0) {
-			return null;
-		}
-		
-		else if (cardsFound.size() == 1) { 
-			return cardsFound.get(0); 
-		}
-		
-		else {
-			Random rand = new Random(); 
-			int possition = rand.nextInt(cardsFound.size());
-
-			return cardsFound.get(possition); 
+		if(possibilities.size() > 0){
+			Random rand = new Random();
+			int randCard = rand.nextInt(possibilities.size());
+			return possibilities.get(randCard);
 		}
 
+		return null;
 	}
-
-//	public Card disproveSuggestion(Solution suggestion){
-//
-//		ArrayList<Card> possibilities = new ArrayList<Card>();
-//
-//		for(Card c : myCards){
-//			if(suggestion.person.equals(c.getCardName()))
-//				possibilities.add(c);
-//			if(suggestion.weapon.equals(c.getCardName()))
-//				possibilities.add(c);
-//			if(suggestion.room.equals(c.getCardName()))
-//				possibilities.add(c);
-//		}
-//
-//		if(possibilities.size() > 0){
-//			Random rand = new Random();
-//			int randCard = rand.nextInt(possibilities.size());
-//			return possibilities.get(randCard);
-//		}
-//
-//		return null;
-//	}
 	
 	public int getMyCardSize()
 	{

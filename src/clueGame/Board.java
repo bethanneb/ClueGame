@@ -651,7 +651,6 @@ public class Board {
 			answer = players[i].disproveSuggestion(suggestion);
 			if (answer != null) return answer;
 		}
-
 		return answer;
 	}
 	/*I'm not sure what this does and we dont know what it takes yet so I'm gonna comment it out for now

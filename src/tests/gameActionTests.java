@@ -571,6 +571,7 @@ public class gameActionTests {
 			Card match = new Card("Oscar Martinez", CardType.PERSON);
 			nardDog.addCard(match);
 			tempCard = board.querySuggestions(List, solution);
+			//System.out.println(tempCard);
 			assertEquals(tempCard,null);
 			
 			//Tests that the human player will return a card when they are the only one with a match
@@ -579,7 +580,7 @@ public class gameActionTests {
 			tempCard = board.querySuggestions(List, nardDog.getSuggestion());
 			assertEquals(tempCard, humanMatch);
 			
-			//Test when human is the accuser and is the only one that can disprove
+			//Tests that when human is the accuser and is the only one that can disprove
 			jim.setSuggestion(solution);
 			nardDog.setCards(new ArrayList<Card>());
 			nardDog.setSuggestion(new Solution());
@@ -602,11 +603,6 @@ public class gameActionTests {
 			pam.setCards(new ArrayList<Card>());
 			kevin.addCard(humanMatch2);
 		
-			assertEquals(board.querySuggestions(List, nardDog.getSuggestion()), humanMatch2);
-				
-			
-			
-
-			
+			assertEquals(board.querySuggestions(List, nardDog.getSuggestion()), humanMatch2);	
 	}
 }
