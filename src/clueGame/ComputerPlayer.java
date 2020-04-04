@@ -38,8 +38,10 @@ public class ComputerPlayer extends Player {
 		ArrayList<BoardCell> availablePaths = new ArrayList<BoardCell>();
 		ArrayList<BoardCell> availableDoorways = new ArrayList<BoardCell>();
 		
+
 		for (BoardCell cell : targets)
 		{
+
 			if (cell.isDoorway())
 			{
 				availableDoorways.add(cell);

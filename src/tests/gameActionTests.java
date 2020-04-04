@@ -123,7 +123,7 @@ public class gameActionTests {
 			boolean loc_1_8 = false;
 			
 			// Run the test a large number of times
-			
+
 			
 			for (int i=0; i<100; i++) {
 				BoardCell selected = player.pickLocation(board.getTargets());
