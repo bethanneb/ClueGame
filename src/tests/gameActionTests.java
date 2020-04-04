@@ -527,7 +527,101 @@ public class gameActionTests {
 		Solution s4 = new Solution(p2, w2, r2); 
 
 		assertNull(testPlayer.disproveSuggestion(s4));
+	}
+	
+	@Test
+	public void testHandleSuggestions() { 	
+		//Suggestion no one can disprove returns null
+		
+		ArrayList<Card> possiblePeople = new ArrayList<Card>(); 
+		possiblePeople = board.possiblePeople; 
+		ArrayList<Card> possibleWeapons = new ArrayList<Card>(); 
+		possibleWeapons = board.possibleWeapons; 
+		Set<String> rooms = new HashSet<String>(); 
+		rooms = board.getRooms(); 
+		 
+		
+		ComputerPlayer player = new ComputerPlayer("Jim Halpert", 2,9, Color.blue);
+		
+		
+		Card person = new Card("Michael Scott", CardType.PERSON); 
+		board.addPossiblePeople(person);	
+		player.addCard(person);
+		
+		Card weapon = new Card("Poison Dart", CardType.WEAPON); 
+		board.addPossibleWeapons(weapon);
+		player.addCard(weapon);
+		
+		Card room = new Card("Conference Room", CardType.ROOM); 
+		String roomName = room.getCardName(); 
+		board.addPossibleRooms(roomName);
+		player.addCard(room);
+		
+		assertNotNull(board.handleSuggestion(player));
+		
+		//Suggestion only human can disprove returns answer (i.e., card that disproves suggestion)
+		  
+		board.clearPossiblePeople();
+		board.clearPossibleWeapons(); 
+		board.clearPossibleRooms();
 
+		Card keyPerson = new Card ("wrong", CardType.PERSON); 
+		Card keyWeapon = new Card ("wrong", CardType.WEAPON); 
+		String keyRoom = "wrong"; 
+		board.addPossiblePeople(keyPerson);
+		board.addPossibleWeapons(keyWeapon);
+		board.addPossibleRooms(keyRoom);
+		
+		assertNull(board.handleSuggestion(player));
+		
+		
+		
+		//Suggestion only human can disprove, but human is accuser, returns null
 
+		
+		
+		board.clearPossiblePeople();
+		board.clearPossibleWeapons();
+		board.clearPossibleRooms();
+		
+		person = new Card("CompSci", CardType.PERSON); 
+		board.addPossiblePeople(person);	
+		player.addCard(person);
+		
+		weapon = new Card("Keyboard", CardType.WEAPON); 
+		board.addPossibleWeapons(weapon);
+		player.addCard(weapon);
+		
+		room = new Card("Berthod", CardType.ROOM); 
+		roomName = room.getCardName(); 
+		board.addPossibleRooms(roomName);
+		player.addCard(room);
+		
+		
+		assertNull(board.handleSuggestion(player));
+		
+		
+		
+		//Suggestion that two players can disprove, correct player (based on starting with next player in list) returns answer
+		//Suggestion that human and another player can disprove, other player is next in list, ensure other player returns answer
+		
+		//NOTE for reason this test is not here
+		// In class, Mark held a discussion on the methods of checking suggestions with other players.
+		// He said that we didn't have to check with the neighbor on the left.
+		// we were allowed to check with all players at once. 
+		
+		
+		
+	
+		board.clearPossiblePeople();
+		board.clearPossibleWeapons();
+		board.clearPossibleRooms();
+		
+		board.setPossiblePeople(possiblePeople);
+		board.setPossibleWeapons(possibleWeapons);
+		board.setPossibleRooms(rooms);
+		
+
+	
 	}
 }
