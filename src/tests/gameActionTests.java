@@ -487,13 +487,13 @@ public class gameActionTests {
 
 		String a = test.getCardName(); 
 		String b = returnedCard.getCardName(); 
-
+		
 		//System.out.println("A: " + a);
 		//System.out.println("B: " + b);
 
 
 		// One matching card
-		assertTrue(a.equals(b)); 
+		assertEquals(a,b); 
 
 		p2 = p1; 
 		r2 = r1; 
@@ -512,7 +512,12 @@ public class gameActionTests {
 		//System.out.println(b + " " + c + " " + d + " " + e);
 
 		// More than one matching card 
-		assertTrue(b.equals(c) || b.equals(d) || b.equals(e));
+		//assertTrue(b.equals(c) || b.equals(d) || b.equals(e));
+		boolean matchingCard = false;
+		if(b==c || b==d || b== e) {
+			matchingCard = true;
+		}
+		assertTrue(matchingCard);
 
 
 		p2 = "wrong"; 
