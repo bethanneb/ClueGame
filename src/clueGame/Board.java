@@ -53,7 +53,7 @@ public class Board {
 	
 	private Solution answerKey = new Solution();
 	// Set that would hold the computer player
-	private Set<ComputerPlayer> computerPlayers;
+	private Set<ComputerPlayer> computerPlayers = new HashSet<ComputerPlayer>();
 	// Set that would hold the human player
 	private Set<HumanPlayer> humanPlayer; 
 	private Set<String> rooms;
