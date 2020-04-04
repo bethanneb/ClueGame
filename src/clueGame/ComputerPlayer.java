@@ -20,6 +20,7 @@ public class ComputerPlayer extends Player {
 	//NEW
 	Solution createdSoln = new Solution(); 
 	private Solution accusation = new Solution();
+	private char lastRoom;
 
 	public ComputerPlayer() {
 		super();
@@ -41,8 +42,12 @@ public class ComputerPlayer extends Player {
 
 		for (BoardCell cell : targets)
 		{
-
-			if (cell.isDoorway())
+			//if it is the room it was just in, will not go back in
+			if (cell.getInitial() == lastRoom) {
+				continue;
+			}
+			//if just getting to the door, will go into the room
+			else if (cell.isDoorway())
 			{
 				availableDoorways.add(cell);
 			}
@@ -67,6 +72,15 @@ public class ComputerPlayer extends Player {
 			return availablePaths.get(selected);
 		}
 	} 
+	
+
+	public void setLastRoom(BoardCell cell) {
+		lastRoom = cell.getInitial();
+	}
+	public char getLastRoom() {
+		return lastRoom;
+	}
+
 
 	public void createSuggestion(BoardCell cell, ArrayList<Card> peopleArray, ArrayList<Card> weaponsArray, Map<Character, String> legend, ComputerPlayer player) {
 		//selecting the room suggestion based on the current location of the player

@@ -376,11 +376,6 @@ public class Board {
 		}
 
 		// If you are in the room part of the room (not the doorway), you stay in the room
-		else if (board[i][j].isRoom() && board[nextI][nextJ].isRoom()) {
-			return true;
-		}
-
-		// If you are in the room part of the room (not the doorway), you stay in the room
 		else if (board[i][j].isRoom() && !board[i][j].isDoorway()) {
 			return false;
 		}

@@ -42,16 +42,16 @@ public class gameActionTests {
 		board.initialize();
 		playersList = board.getPlayerList();
 	}
-	
+
 	//If a player is not in a room, and a room is possible target, it goes into that room
 	@Test
 	public void testGoesIntoRoom() {
 		//Computer is in place where it can go into room
 		ComputerPlayer player = new ComputerPlayer("Jim Halpert", 2,9, Color.blue);
-		
+
 		//calculate targets
 		board.calcTargets(2, 9, 1);
-		
+
 		//test that it actually goes into room
 		boolean loc_2_8 = false;
 		BoardCell selected = player.pickLocation(board.getTargets());
@@ -62,25 +62,25 @@ public class gameActionTests {
 		else {
 			fail("Did not go into room");
 		}
-		
+
 		//went into the room
 		assertTrue(loc_2_8);
 	}
-	
+
 	//If a player is not in a room and does not have the option of a room, all spots are equally likely through random pick
 	@Test
 	public void testTargetRandomSelection() {
 		//Computer player is in walkway 
 		ComputerPlayer player = new ComputerPlayer("Jim Halpert", 9,4, Color.blue);
-		
+
 		// Pick a location with no rooms in target, just three targets
 		board.calcTargets(9, 4, 1);
-		
+
 		boolean loc_9_3 = false;
 		boolean loc_9_5 = false;
 		boolean loc_8_4 = false;
 		boolean loc_10_4 = false;
-		
+
 		// Run the test a large number of times
 		for (int i=0; i<100; i++) {
 			BoardCell selected = player.pickLocation(board.getTargets());
@@ -106,85 +106,81 @@ public class gameActionTests {
 		assertTrue(loc_8_4);
 		assertTrue(loc_10_4);
 	}
-	
-	//If a player is in a room, all spots are equally likely through random pick
-		@Test
-		public void testTargetRandomSelectionInRoom() {
-			//Computer player is in walkway 
-			ComputerPlayer player = new ComputerPlayer("Jim Halpert", 1,7, Color.blue);
-//			Player player = new ComputerPlayer();
-//			player.setColumn(1);
-//			player.setRow(7);
-			board.clearTargets();
-			// Pick a location with four equally likely targets
-			board.calcTargets(1, 7, 1);
-			
-			boolean loc_0_7 = false;
-			boolean loc_1_6 = false;
-			boolean loc_2_7 = false;
-			boolean loc_1_8 = false;
-			
-			// Run the test a large number of times
-			for (int i=0; i<100; i++) {
-				BoardCell selected = player.pickLocation(board.getTargets());
-				if (selected == board.getCellAt(0, 7)) {
-					loc_0_7 = true;
-				}
-				else if (selected == board.getCellAt(1, 6)) {
-					loc_1_6 = true;
-				}
-				else if (selected == board.getCellAt(2, 7)) {
-					loc_2_7 = true;
-				}
-				else if (selected == board.getCellAt(1, 8)) {
-					loc_1_8 = true;
-				}
-				else {
-					fail("Invalid target selected");
-				}
+
+	//If a player just exited the room, they will not go back into it and all other spaces are equally as likely
+	@Test
+	public void testTargetRandomSelectionAfterRoom() {
+		//Computer player is in walkway 
+		ComputerPlayer player = new ComputerPlayer("Jim Halbert", 2,9, Color.blue);
+
+		// Pick a location right outside of door
+		board.calcTargets(2, 9, 1);
+		// just left this room
+		player.setLastRoom(board.getCellAt(2, 8));
+
+		boolean loc_1_9 = false;
+		boolean loc_2_10 = false;
+		boolean loc_3_9 = false;
+
+		// Run the test a large number of times
+		for (int i=0; i<100; i++) {
+			BoardCell selected = player.pickLocation(board.getTargets());
+			if (selected == board.getCellAt(1, 9)) {
+				loc_1_9 = true;
 			}
-			
-			// Ensure each target was selected at least once
-			assertTrue(loc_0_7);
-			assertTrue(loc_1_6);
-			assertTrue(loc_2_7);
-			assertTrue(loc_1_8);
+			else if (selected == board.getCellAt(2, 10)) {
+				loc_2_10 = true;
+			}
+			else if (selected == board.getCellAt(3, 9)) {
+				loc_3_9 = true;
+			}
+			else {
+				fail("Invalid target selected");
+			}
 		}
-		
-		@Test 
-		public void testAccusation() {
-			Solution answerKey = board.getAnswerKey(); 
-			String ansP = answerKey.getPerson(); 
-			String ansW = answerKey.getWeapon(); 
-			String ansR = answerKey.getRoom(); 
 
-			Solution accusation = new Solution();
+		// Ensure each target was selected at least once
+		assertTrue(loc_1_9);
+		assertTrue(loc_2_10);
+		assertTrue(loc_3_9);
 
-			// Solution that is correct 
-			accusation.setAnswerKeyPerson(ansP);
-			accusation.setAnswerKeyWeapon(ansW); 
-			accusation.setAnswerKeyRoom(ansR); 
+	}
 
-			assertTrue(board.checkAccusation(accusation));
 
-			// Solution with wrong person 
-			accusation.setAnswerKeyPerson("wrong");
+	@Test 
+	public void testAccusation() {
+		Solution answerKey = board.getAnswerKey(); 
+		String ansP = answerKey.getPerson(); 
+		String ansW = answerKey.getWeapon(); 
+		String ansR = answerKey.getRoom(); 
 
-			assertFalse(board.checkAccusation(accusation));
+		Solution accusation = new Solution();
 
-			// Solution with wrong weapon 
-			accusation.setAnswerKeyPerson(ansP);
-			accusation.setAnswerKeyWeapon("wrong");
+		// Solution that is correct 
+		accusation.setAnswerKeyPerson(ansP);
+		accusation.setAnswerKeyWeapon(ansW); 
+		accusation.setAnswerKeyRoom(ansR); 
 
-			assertFalse(board.checkAccusation(accusation)); 
+		assertTrue(board.checkAccusation(accusation));
 
-			// Solution with wrong room 
-			accusation.setAnswerKeyWeapon(ansW);
-			accusation.setAnswerKeyRoom("wrong");
+		// Solution with wrong person 
+		accusation.setAnswerKeyPerson("wrong");
 
-			assertFalse(board.checkAccusation(accusation)); 
+		assertFalse(board.checkAccusation(accusation));
 
-		}
+		// Solution with wrong weapon 
+		accusation.setAnswerKeyPerson(ansP);
+		accusation.setAnswerKeyWeapon("wrong");
+
+		assertFalse(board.checkAccusation(accusation)); 
+
+		// Solution with wrong room 
+		accusation.setAnswerKeyWeapon(ansW);
+		accusation.setAnswerKeyRoom("wrong");
+
+		assertFalse(board.checkAccusation(accusation)); 
+
+	}
 
 	@Test
 	public void testCreateSuggestion()
@@ -207,7 +203,7 @@ public class gameActionTests {
 		Card card15 = new Card ("Oscar Martinez", CardType.PERSON);
 		Card card16 = new Card ("Angela Martin", CardType.PERSON);
 
-		
+
 		ComputerPlayer computerPlayer = new ComputerPlayer ("Michael Scott","black", 19, 18);
 		computerPlayer.createSuggestion(board.getCellAt(19, 18), board.possiblePeople, board.possibleWeapons, board.getLegend(), computerPlayer);
 		Solution sol = computerPlayer.getCreatedSoln();
@@ -269,7 +265,7 @@ public class gameActionTests {
 		computerPlayer.addSeen(card13);
 		computerPlayer.addSeen(card14);
 		computerPlayer.addSeen(card15);
-		
+
 		weapons.add(card);
 		weapons.add(card2);
 		weapons.add(card3);
@@ -278,7 +274,7 @@ public class gameActionTests {
 		weapons.add(card6);
 		weapons.add(card7);
 		weapons.add(card8);
-		
+
 		people.add(card9);
 		people.add(card10);
 		people.add(card11);
@@ -314,7 +310,7 @@ public class gameActionTests {
 		computerPlayer.addSeen(card14);
 		computerPlayer.addSeen(card15);
 		computerPlayer.addSeen(card16);
-		
+
 		weapons2.add(card);
 		weapons2.add(card2);
 		weapons2.add(card3);
@@ -400,7 +396,7 @@ public class gameActionTests {
 		computerPlayer.addSeen(card14);
 		computerPlayer.addSeen(card15);
 		computerPlayer.addSeen(card16);
-		
+
 		weapons4.add(card);
 		weapons4.add(card2);
 		weapons4.add(card3);
@@ -409,7 +405,7 @@ public class gameActionTests {
 		weapons4.add(card6);
 		weapons4.add(card7);
 		weapons4.add(card8);
-		
+
 		people4.add(card9);
 		people4.add(card10);
 		people4.add(card11);
@@ -426,7 +422,7 @@ public class gameActionTests {
 
 		assertNotNull(solution);
 	}
-	
+
 	@Test 
 	public void testDisproveSuggestion() { 
 
@@ -505,7 +501,7 @@ public class gameActionTests {
 		if(b==c || b==d || b== e) {
 			matchingCard = true;
 		}
-		
+
 		assertTrue(matchingCard);
 
 
@@ -517,92 +513,92 @@ public class gameActionTests {
 
 		assertNull(testPlayer.disproveSuggestion(s4));
 	}
-	
-	//Tests for handling suggestions
-		@Test
-		public void handleSuggestion() {
-			
-			Card weapon1 = new Card("Taser", CardType.WEAPON);
-			Card weapon2 = new Card("Samurai Sword", CardType.WEAPON);
-			Card weapon3 = new Card("Nunchucks", CardType.WEAPON);
-			Card person1 = new Card("Dwight Schrute", CardType.PERSON);
-			Card person2 = new Card("Angela Martin", CardType.PERSON);
-			Card person3 = new Card("Pam Halpert", CardType.PERSON);
-			Card room1 = new Card("Front Desk", CardType.ROOM);
-			Card room2 = new Card("Dwight's Desk", CardType.ROOM);
-			Card room3 = new Card("Kitchen", CardType.ROOM);
-			
-			//Create a test solution
-			Solution solution = new Solution("Oscar Martinez", "Pepper Spray", "Break Room");
 
-			//Setting up 3 players with 3 cards to put in an array similar to the boards player list
-			Player kevin = new ComputerPlayer();
-			kevin.setName("Kevin Malone");
-			Player jim = new HumanPlayer();
-			jim.setName("Jim Halpert");
-			Player pam = new ComputerPlayer();
-			pam.setName("Pam Halpert");
-			Player nardDog = new ComputerPlayer();
-			nardDog.setName("Andy Bernard");
-			
-			kevin.addCard(weapon1);
-			kevin.addCard(room1);
-			kevin.addCard(person1);
-			jim.addCard(weapon2);
-			jim.addCard(room2);
-			jim.addCard(person2);
-			pam.addCard(weapon3);
-			pam.addCard(room3);
-			pam.addCard(person3);
-			
-			ArrayList<Player> List = new ArrayList<>();
-			List.add(nardDog);
-			List.add(kevin);
-			List.add(jim);
-			List.add(pam);
-			board.setPlayers(List);
-			
-			//Tests the disprove function for each player to check for null when no one has a solution
-			Card tempCard = board.querySuggestions(List, solution);
-			assertEquals(tempCard,null);
-			
-			
-			//Add matching cards for the accuser and then test for null
-			Card match = new Card("Oscar Martinez", CardType.PERSON);
-			nardDog.addCard(match);
-			tempCard = board.querySuggestions(List, solution);
-			//System.out.println(tempCard);
-			assertEquals(tempCard,null);
-			
-			//Tests that the human player will return a card when they are the only one with a match
-			Card humanMatch = new Card("Pepper Spray", CardType.WEAPON);
-			jim.addCard(humanMatch);
-			tempCard = board.querySuggestions(List, nardDog.getSuggestion());
-			assertEquals(tempCard, humanMatch);
-			
-			//Tests that when human is the accuser and is the only one that can disprove
-			jim.setSuggestion(solution);
-			nardDog.setCards(new ArrayList<Card>());
-			nardDog.setSuggestion(new Solution());
-			assertEquals(board.querySuggestions(List, jim.getSuggestion()), null);
-			
-			//Tests when next two players have a match to see if the next one in line is the one to return
-			//Human player is next to have their turn in the array so it should always return the humanMatch card that the human has in their deck
-			jim.setSuggestion(new Solution());
-			nardDog.setSuggestion(solution);
-			Card humanMatch2 = new Card("Break Room", CardType.ROOM);
-			pam.addCard(humanMatch2);
-			
-			
-			assertEquals(board.querySuggestions(List, nardDog.getSuggestion()), humanMatch);
-			
-			
-			//Tests the same as before except the computer player before the human player has the match instead. 
-			//Checks to see if the computer is chosen first
-			
-			pam.setCards(new ArrayList<Card>());
-			kevin.addCard(humanMatch2);
-		
-			assertEquals(board.querySuggestions(List, nardDog.getSuggestion()), humanMatch2);	
+	//Tests for handling suggestions
+	@Test
+	public void handleSuggestion() {
+
+		Card weapon1 = new Card("Taser", CardType.WEAPON);
+		Card weapon2 = new Card("Samurai Sword", CardType.WEAPON);
+		Card weapon3 = new Card("Nunchucks", CardType.WEAPON);
+		Card person1 = new Card("Dwight Schrute", CardType.PERSON);
+		Card person2 = new Card("Angela Martin", CardType.PERSON);
+		Card person3 = new Card("Pam Halpert", CardType.PERSON);
+		Card room1 = new Card("Front Desk", CardType.ROOM);
+		Card room2 = new Card("Dwight's Desk", CardType.ROOM);
+		Card room3 = new Card("Kitchen", CardType.ROOM);
+
+		//Create a test solution
+		Solution solution = new Solution("Oscar Martinez", "Pepper Spray", "Break Room");
+
+		//Setting up 3 players with 3 cards to put in an array similar to the boards player list
+		Player kevin = new ComputerPlayer();
+		kevin.setName("Kevin Malone");
+		Player jim = new HumanPlayer();
+		jim.setName("Jim Halpert");
+		Player pam = new ComputerPlayer();
+		pam.setName("Pam Halpert");
+		Player nardDog = new ComputerPlayer();
+		nardDog.setName("Andy Bernard");
+
+		kevin.addCard(weapon1);
+		kevin.addCard(room1);
+		kevin.addCard(person1);
+		jim.addCard(weapon2);
+		jim.addCard(room2);
+		jim.addCard(person2);
+		pam.addCard(weapon3);
+		pam.addCard(room3);
+		pam.addCard(person3);
+
+		ArrayList<Player> List = new ArrayList<>();
+		List.add(nardDog);
+		List.add(kevin);
+		List.add(jim);
+		List.add(pam);
+		board.setPlayers(List);
+
+		//Tests the disprove function for each player to check for null when no one has a solution
+		Card tempCard = board.querySuggestions(List, solution);
+		assertEquals(tempCard,null);
+
+
+		//Add matching cards for the accuser and then test for null
+		Card match = new Card("Oscar Martinez", CardType.PERSON);
+		nardDog.addCard(match);
+		tempCard = board.querySuggestions(List, solution);
+		//System.out.println(tempCard);
+		assertEquals(tempCard,null);
+
+		//Tests that the human player will return a card when they are the only one with a match
+		Card humanMatch = new Card("Pepper Spray", CardType.WEAPON);
+		jim.addCard(humanMatch);
+		tempCard = board.querySuggestions(List, nardDog.getSuggestion());
+		assertEquals(tempCard, humanMatch);
+
+		//Tests that when human is the accuser and is the only one that can disprove
+		jim.setSuggestion(solution);
+		nardDog.setCards(new ArrayList<Card>());
+		nardDog.setSuggestion(new Solution());
+		assertEquals(board.querySuggestions(List, jim.getSuggestion()), null);
+
+		//Tests when next two players have a match to see if the next one in line is the one to return
+		//Human player is next to have their turn in the array so it should always return the humanMatch card that the human has in their deck
+		jim.setSuggestion(new Solution());
+		nardDog.setSuggestion(solution);
+		Card humanMatch2 = new Card("Break Room", CardType.ROOM);
+		pam.addCard(humanMatch2);
+
+
+		assertEquals(board.querySuggestions(List, nardDog.getSuggestion()), humanMatch);
+
+
+		//Tests the same as before except the computer player before the human player has the match instead. 
+		//Checks to see if the computer is chosen first
+
+		pam.setCards(new ArrayList<Card>());
+		kevin.addCard(humanMatch2);
+
+		assertEquals(board.querySuggestions(List, nardDog.getSuggestion()), humanMatch2);	
 	}
 }
