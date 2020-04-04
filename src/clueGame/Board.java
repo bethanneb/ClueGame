@@ -163,7 +163,7 @@ public class Board {
 	}
 
 	//returns the targets (where the player can go)
-	public static Set<BoardCell> getTargets() {
+	public Set<BoardCell> getTargets() {
 		return targets;
 	}
 
@@ -388,7 +388,7 @@ public class Board {
 	public void calcTargets(int row, int column, int pathLength){
 		visited.clear(); //clear the visited set
 		targets.clear(); //clear the targets set
-		visited.add(board[row][column]);
+		visited.add(board[row][column]); //add start location to the visited list
 		targets = findAllTargets(board[row][column], pathLength);
 	}
 

@@ -112,8 +112,11 @@ public class gameActionTests {
 		@Test
 		public void testTargetRandomSelectionInRoom() {
 			//Computer player is in walkway 
-			ComputerPlayer player = new ComputerPlayer("Jim Halbert", 1,7, Color.blue);
-			
+			ComputerPlayer player = new ComputerPlayer("Jim Halpert", 1,7, Color.blue);
+//			Player player = new ComputerPlayer();
+//			player.setColumn(1);
+//			player.setRow(7);
+			board.clearTargets();
 			// Pick a location with four equally likely targets
 			board.calcTargets(1, 7, 1);
 			

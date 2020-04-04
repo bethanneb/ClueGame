@@ -226,6 +226,13 @@ public class Player {
 	{
 		this.playerName = playerName;
 	}
+	
+	public void setRow(int row) {
+		this.row = row;
+	}
+	public void setColumn(int column) {
+		this.column = column;
+	}
 
 	//OLD
 	public Set<Card> getMyCards() {
