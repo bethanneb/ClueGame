@@ -693,6 +693,11 @@ public class Board {
 		return null;
 	}
 	
+	public Player whoIsTheCurrentPLayer() { 
+		return this.currentPlayerInGame; /* NOTE: Empty player was made to return when game first starts */  
+	}
+
+	
 
 
 
