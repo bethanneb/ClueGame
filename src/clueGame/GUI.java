@@ -12,171 +12,116 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 public class GUI extends JPanel {
-//	private JTextField name;
-//	
-//	public GUI(){
-//		// Create a layout with 2 rows
-//		setLayout(new GridLayout(2,0));
-//		JPanel panel = createNamePanel();
-//		add(panel);
-//		panel = createButtonPanel();
-//		add(panel);
-//	} 
-//	private JPanel createNamePanel() {      
-//		JPanel panel = new JPanel();      
-//		// Use a grid layout, 1 row, 2 elements (label, text)
-//		panel.setLayout(new GridLayout(1,2));      
-//		JLabel nameLabel = new JLabel("Name");
-//		name = new JTextField(20);panel.add(nameLabel);
-//		panel.add(name);
-//		panel.setBorder(new TitledBorder (new EtchedBorder(), "Who are you?"));
-//		return panel;
-//	}
-//
-//	private JPanel createButtonPanel() {
-//		// no layout specified, so this is flow
-//		JButton agree = new JButton("I agree");
-//		JButton disagree = new JButton("I disagree");
-//		JPanel panel = new JPanel();
-//		panel.add(agree);panel.add(disagree);
-//		return panel;
-//	}
-//	public static void main(String[] args) {
-//		// Create a JFrame with all the normal functionality
-//		JFrame frame = new JFrame();
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		frame.setTitle("GUI Example");frame.setSize(250, 150);
-//		// Create the JPanel and add it to the JFrame
-//		GUI gui = new GUI();
-//		frame.add(gui, BorderLayout.CENTER);// Now let's view it
-//	}
-	
-/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6673625869081227607L;
-	
-	//private JTextField name; 
-		public int dieRoll; 
-		// TODO need to be able call methods in Board class
-		private Board board;
-		private JPanel nextPlayerAndAccusation;
-		private JPanel currentPlayerAndDieRoll;
-		private JTextField currentName; 
-		private JTextField currentDie; 
-		private JTextField currentGuess;
-		private JTextField currentResult;
-		JFrame accusationWindow = new JFrame("Accusation");
-//		Accusation accusationClass = new Accusation();
-//		Suggestion suggestionHuman = new Suggestion("");
+
+	public GUI() {
 		
-		public GUI() {
-			// TODO need to call Board method for current dice roll value 
-			dieRoll = 0;
+		setLayout(new GridLayout(2,0));
+		JPanel panel1 = createNamePanel();
+		JPanel panel2 = createNextPlayerButtonPanel(); 
+		JPanel panel3 = createAccusationButtonPanel();
+		JPanel panel4 = createDiePanel(); 
+		JPanel panel5 = createGuessPanel(); 
+		JPanel panel6 = createGuessResultPanel(); 
 
-			//JTextField field = new JTextField(); 
-			setLayout(new GridLayout(2,0));
-			this.currentPlayerAndDieRoll = createNamePanel();
-			JPanel panel1 = createGuessPanel(); 
-			JPanel panel2 = createDiePanel(); 
-			JPanel panel3 = createGuessResultPanel(); 
+		add(panel1);
+		add(panel2); 
+		add(panel3);
+		add(panel4); 
+		add(panel5);
+		add(panel6);
+	}
 
-			this.nextPlayerAndAccusation = createButtonPanel(); 
-
-			add(this.currentPlayerAndDieRoll);
-			add(nextPlayerAndAccusation);
-			add(panel2); 
-			add(panel1);
-			add(panel3);
-		}
-	
+	//panel 1
 	public JPanel createNamePanel() {
-		JTextField name; 
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
 		panel.setLayout(new GridLayout(1,2));
-		JLabel nameLabel = new JLabel("Name");
-		 //TODO write a Board method to get the current player
-		name = new JTextField(board.whoIsTheCurrentPLayer().getPlayerName()); // FIXME
-		currentName.setEditable(false);
-		//panel.add(nameLabel);
-		//panel.add(name);
-		panel.add(currentName);
+		JTextField name = new JTextField(); 
+		// blank gray box aka nothing is in it yet
+		name.setEditable(false);
+		
+		panel.add(name);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Whose turn?"));
 		return panel;
 	}
 	
-	private JPanel createGuessPanel() {
-		JTextField name; 
+	//panel 2
+	private JPanel createNextPlayerButtonPanel() {
+		JButton nextPlayer = new JButton("Next player");
 		JPanel panel = new JPanel();
-		// Use a grid layout, 1 row, 2 elements (label, text)
-		panel.setLayout(new GridLayout(1,2));
-		JLabel nameLabel = new JLabel("Guess");   
-		name = new JTextField(20);
-		name.setEditable(false);
-		panel.add(nameLabel);
-		currentGuess.setEnabled(false);
-		//panel.add(name);
-		panel.add(currentGuess);
-		panel.setBorder(new TitledBorder (new EtchedBorder(), "Guess"));
+		panel.add(nextPlayer);
 		return panel;
 	}
-	
+
+	//panel 3
+	private JPanel createAccusationButtonPanel() {
+		JButton accusation = new JButton("Make an accusation");
+		JPanel panel = new JPanel();
+		panel.add(accusation); 
+		return panel;
+	}
+
+	//panel 4
 	private JPanel createDiePanel() {
-		JTextField name; 
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
 		panel.setLayout(new GridLayout(1,2));
+		
 		JLabel nameLabel = new JLabel("Roll"); 
-		String die = String.valueOf(dieRoll);
-		name = new JTextField(die);
-		this.currentDie.setEditable(false);
-		name.setEditable(false);
+		JTextField dieNumber = new JTextField(); 
+		dieNumber.setEditable(false);
+		
 		panel.add(nameLabel);
-		//panel.add(name);
-		panel.add(this.currentDie);
+		panel.add(dieNumber);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Die"));
 		return panel;
 	}
 	
-	private JPanel createGuessResultPanel() {
-		JTextField name; 
+	// panel 5
+	private JPanel createGuessPanel() {
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
 		panel.setLayout(new GridLayout(1,2));
-		JLabel nameLabel = new JLabel("Response");
-		name = new JTextField(20);
-		name.setEditable(false);
+		
+		JLabel nameLabel = new JLabel("Guess");
+		JTextField guess = new JTextField(); 
+		guess.setEditable(false);
+		
 		panel.add(nameLabel);
-		//panel.add(name);
-		currentResult.setEnabled(false);
-		panel.add(currentResult);
+		panel.add(guess);
+		panel.setBorder(new TitledBorder (new EtchedBorder(), "Guess"));
+		return panel;
+	}
+
+	// panel 6
+	private JPanel createGuessResultPanel() {
+		JPanel panel = new JPanel();
+		// Use a grid layout, 1 row, 2 elements (label, text)
+		panel.setLayout(new GridLayout(1,2));
+		
+		JLabel nameLabel = new JLabel("Response");
+		JTextField response = new JTextField();
+		response.setEditable(false);
+		
+		panel.add(nameLabel);
+		panel.add(response);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Guess Result"));
 		return panel;
 	}
+
+
 	
-		private JPanel createButtonPanel() {
-			JButton nextPlayer = new JButton("Next player");
-			// NOTE: nextPlayer needs to be a listener
-			// TODO accusation need to have an addActionListener
-			JButton accusation = new JButton("Make an accusation");
-			JPanel panel = new JPanel();
-			panel.add(nextPlayer);
-			panel.add(accusation); 
-			return panel;
-		}
-	
-		public static void main(String[] args) {
-			// Create a JFrame with all the normal functionality
-			JFrame frame = new JFrame();
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.setTitle("Control GUI");
-			frame.setSize(250, 150);	
-			// Create the JPanel and add it to the JFrame
-			GUI gui = new GUI();
-			frame.add(gui, BorderLayout.CENTER);
-			// Now let's view it
-			frame.setVisible(true);
-		}
-	
+	public static void main(String[] args) {
+		// Create a JFrame with all the normal functionality
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setTitle("Control GUI");
+		frame.setSize(600, 200);	
+		// Create the JPanel and add it to the JFrame
+		GUI gui = new GUI();
+		frame.add(gui, BorderLayout.CENTER);
+		// Now let's view it
+		frame.setVisible(true);
+	}
+
 }
