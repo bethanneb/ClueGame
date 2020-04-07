@@ -81,7 +81,7 @@ public class GUI extends JPanel {
 	private JPanel createGuessPanel() {
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
-		panel.setLayout(new GridLayout(1,2));
+		panel.setLayout(new GridLayout(2,6));
 		
 		JLabel nameLabel = new JLabel("Guess");
 		JTextField guess = new JTextField(); 
