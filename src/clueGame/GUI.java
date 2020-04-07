@@ -116,7 +116,7 @@ public class GUI extends JPanel {
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Control GUI");
-		frame.setSize(600, 200);	
+		frame.setSize(800, 200);	
 		// Create the JPanel and add it to the JFrame
 		GUI gui = new GUI();
 		frame.add(gui, BorderLayout.CENTER);
