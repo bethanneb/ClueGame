@@ -115,7 +115,7 @@ public class GUI extends JPanel {
 		// Create a JFrame with all the normal functionality
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("Control GUI");
+		frame.setTitle("Clue Game");
 		frame.setSize(800, 200);	
 		// Create the JPanel and add it to the JFrame
 		GUI gui = new GUI();
