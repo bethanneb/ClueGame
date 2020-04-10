@@ -6,6 +6,8 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -28,7 +30,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Board {
+public class Board extends JPanel {
 	public static final int MAX_BOARD_SIZE = 50;
 	public static final int DECK_SIZE = 25;
 	public static final int NUM_WEAPONS = 8;
@@ -415,6 +417,7 @@ public class Board {
 	//I think it could be to load in players and cards because they are both .txt files
 	public void loadConfigFiles() throws FileNotFoundException, BadConfigFormatException {
 		playersList = new ArrayList<Player>();
+		humanPlayer = new HashSet<HumanPlayer>();
 		BufferedReader reader = null;
 		try {
 			//read entire file and put into standard characters (we had some issues with special characters so we used BufferedReader)
@@ -448,13 +451,17 @@ public class Board {
 
 				// Michael is human player and Jim is computer player, otherwise just normal player
 				if(name.equals("Michael Scott")){
-					playersList.add(new HumanPlayer(name, row, column, color));
+					HumanPlayer player1 = new HumanPlayer(name, row, column, color);
+					playersList.add(player1);
+					humanPlayer.add(player1);
 				}
 				else if(name.equals("Jim Halpert")) {
-					playersList.add(new ComputerPlayer(name, row, column, color));
+					ComputerPlayer player2 = new ComputerPlayer(name, row, column, color);
+					playersList.add(player2);
 				}
 				else {
-					playersList.add(new Player(name, row, column, color));
+					Player player3 = new Player(name, row, column, color);
+					playersList.add(player3);
 				}
 
 				//NEW
@@ -695,6 +702,117 @@ public class Board {
 	
 	public Player whoIsTheCurrentPLayer() { 
 		return this.currentPlayerInGame; /* NOTE: Empty player was made to return when game first starts */  
+	}
+	
+	//C21A
+	public void paintComponent ( Graphics g)
+	{
+		// paintComponent method for drawing the board. It is drawn in an object-oriented manner
+		// use an object-oriented approach that has each BoardCell object draw itself.
+		super.paintComponent(g);
+		// NOTE: call each BoardCell object to draw itself.
+		// the draw method from BoardCell class will be called
+		for ( int i = 0; i < 21; i++)
+		{
+			for ( int j = 0; j < 21; j++)
+			{
+				getCellAt(i, j).draw(g);
+			}
+		}
+		//NOTE: drawing the computer players
+		for ( ComputerPlayer comp: computerPlayers)
+		{
+			int x = comp.getCurrentRow();
+			int y = comp.getCurrentColumn();
+			Color color = comp.getColor();
+			g.setColor(color);
+			Point pixel = new Point( x * 32 + 50, y * 32 + 50);
+			g.fillOval(pixel.x, pixel.y, 30, 30);
+		}
+		//NOTE: draw the human player
+		for ( HumanPlayer human: humanPlayer)
+		{
+			int x = human.getCurrentRow();
+			int y = human.getCurrentColumn();
+			Color color2 = human.getColor();
+			g.setColor(color2);
+			Point pixel = new Point( x * 32 + 50, y * 32 + 50);
+			g.fillOval(pixel.x, pixel.y, 30, 30);
+		}
+		//NOTE: drawing the rooms 
+		ArrayList<String> names = new ArrayList<String>();
+		names.add("Conference Room");
+		names.add("Warehouse");
+		names.add("Front Desk");
+		names.add("Vance Refrigeration");
+		names.add("Break Room");
+		names.add("Kitchen");
+		names.add("Jim's Desk");
+		names.add("Michael's Desk");
+		names.add("Dwight's Desk");
+
+		for ( int i = 0; i < names.size(); i++)
+		{
+			if ( i == 0) continue;
+			Point pixel = new Point();
+			pixel = roomNames.get(i);
+			String room = names.get(i);
+			g.setColor(Color.BLACK);
+			g.setFont(new Font("Calibri", Font.PLAIN, 18));
+			g.drawString(room, pixel.x, pixel.y);
+		}
+		// NOTE: drawing the targets found on the board. There are highlighted in CYAN
+		if ( this.currentPlayerInGame.getPlayerName().equals("CompSci") && targets.size() > 0)
+		{
+			for ( BoardCell cell: targets)
+			{
+				cell.drawTargets(g);
+			}
+		}
+		// NOTE: when the human player is done with selecting a location, repaint the targeted cells 
+		// back to path color
+		if (this.currentPlayerInGameCount != 0)
+		{
+			for ( BoardCell cell: targets)
+			{
+				cell.reDrawTargets(g);
+			}
+		}
+
+		if (this.currentPlayerInGame.getPlayerName().equals("CompSci"))
+		{
+			for ( HumanPlayer human: humanPlayer)
+			{
+				int x = human.getCurrentRow();
+				int y = human.getCurrentColumn();
+				Color color2 = human.getColor();
+				g.setColor(color2);
+				Point pixel = new Point( x * 32 + 50, y * 32 + 50);
+				g.fillOval(pixel.x, pixel.y, 30, 30);
+			}
+		}
+
+		if (( 	this.currentPlayerInGame.getPlayerName().equals("MechE")  	|| 
+				this.currentPlayerInGame.getPlayerName().equals("ChemE") 	|| 
+				this.currentPlayerInGame.getPlayerName().equals("Mining")	|| 
+				this.currentPlayerInGame.getPlayerName().equals("Geology")	||
+				this.currentPlayerInGame.getPlayerName().equals("Physics") ) && this.doneWithComputer)
+		{
+			for ( ComputerPlayer comp: computerPlayers)
+			{
+				int x = comp.getCurrentRow();
+				int y = comp.getCurrentColumn();
+				Color color = comp.getColor();
+				g.setColor(color);
+				Point pixel = new Point( x * 32 + 50, y * 32 + 50);
+				g.fillOval(pixel.x, pixel.y, 30, 30);
+			}
+		}
+
+	}
+	
+	public Set<HumanPlayer> getHumanPlayer() {
+		return humanPlayer;
 	}
 
 	
