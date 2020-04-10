@@ -18,8 +18,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ClueGame extends JFrame {
-	private final static int HEIGHT = 1000;
-	private final static int WIDTH = 1000;
+	private final static int HEIGHT = 675;
+	private final static int WIDTH = 800;
 	private static Board board;
 	JPanel panel;
 	int dieRoll = 0;
@@ -27,16 +27,16 @@ public class ClueGame extends JFrame {
 
 	public ClueGame()
 	{
+		setTitle("Clue Game");
+		setSize(WIDTH, HEIGHT);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBackground(Color.BLACK);
+		
 		board = Board.getInstance();
 		// set the file names to use my config files
 		board.setConfigFiles("OurClueLayout.csv", "OurClueLegend.txt");	
 		board.setCardFiles("Players.txt", "Cards.txt");
 		board.initialize();
-
-		setTitle("Clue Game");
-		setSize(WIDTH, HEIGHT);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBackground(Color.BLACK);
 
 		// paintComponent is automatically be called 1 time
 		panel = board;
@@ -47,17 +47,17 @@ public class ClueGame extends JFrame {
 		control = guiControl;
 		add(control, BorderLayout.SOUTH);
 
-		JPanel notes = new JPanel();
-		notes.setSize(50, 5);
-		DetectiveNotesGUI guiNotes = new DetectiveNotesGUI();
-		notes = guiNotes;
-		add(notes, BorderLayout.EAST);
+		//JPanel notes = new JPanel();
+		//notes.setSize(50, 5);
+		//DetectiveNotesGUI guiNotes = new DetectiveNotesGUI();
+		//notes = guiNotes;
+		//add(notes, BorderLayout.EAST);
 		
 		CardDisplayGUI guiCard = new CardDisplayGUI(board); 
 		JPanel cards = new JPanel(); 
 		cards = guiCard; 
 		cards.setSize(10,5);
-		add(cards, BorderLayout.WEST);
+		add(cards, BorderLayout.EAST);
 	}
 
 
@@ -74,10 +74,7 @@ public class ClueGame extends JFrame {
 		String humanName = "";
 		for (HumanPlayer human: humanPlayer)
 		{ humanName = human.getPlayerName(); }
-		
-		// NOTE: CompSci is the human player 
-		String message = "You are " + humanName + ", press Next Player to begin play";
-		JOptionPane.showMessageDialog(frame, message, "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
+
 		
 		 
 	}

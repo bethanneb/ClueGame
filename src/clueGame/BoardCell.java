@@ -18,17 +18,15 @@ public class BoardCell {
 	//NEW
 	private Point pixel;
 	private Color color; 
-	// 22 rows, 23 cols
-	public final int MARGIN = 50;
-	public final int SCALE = 32;
-	private final int WIDTH = 30;
-	private final int HEIGHT = 30;
+	public final int SCALE = 22;
+	private final int WIDTH = 20;
+	private final int HEIGHT = 20;
 
 	// default constructor
 	public BoardCell() {
 		this.row = 0;
 		this.column = 0;
-		this.initial = 'P';
+		this.initial = 'W';
 		this.doorDirection = DoorDirection.NONE;
 		pixel = new Point( this.row, this.column);
 		this.color = Color.BLACK;
@@ -40,7 +38,7 @@ public class BoardCell {
 		this.column = column;
 		this.initial = initial;
 		this.doorDirection = doorDirection;
-		pixel = new Point (this.row * SCALE + MARGIN, this.column * SCALE + MARGIN);
+		pixel = new Point (this.row * SCALE + 15, this.column * SCALE + 100);
 		this.color = Color.BLACK;
 	}
 
@@ -101,14 +99,13 @@ public class BoardCell {
 	}
 	
 	//C21A
-	public void draw ( Graphics g ) {
-		// TODO implement
+	public void draw (Graphics g ) {
 		// set color 
-		if (this.initial == 'P') 
+		if (this.initial == 'W') 
 		{
 			this.color = Color.GRAY;
 			g.setColor(this.color);
-			g.fillRect(this.pixel.x , this.pixel.y, WIDTH, HEIGHT);
+			g.fillRect(this.pixel.y , this.pixel.x, WIDTH, HEIGHT);
 		}
 		if (this.isRoom()) 
 		{
@@ -118,33 +115,33 @@ public class BoardCell {
 				{
 					this.color = Color.WHITE;
 					g.setColor(this.color);
-					g.fillRect(this.pixel.x, this.pixel.y, WIDTH, HEIGHT);
-					g.setColor(Color.YELLOW);
-					g.fillRect(this.pixel.x, this.pixel.y, WIDTH, 5);
+					g.fillRect(this.pixel.y, this.pixel.x, WIDTH, HEIGHT);
+					g.setColor(Color.BLUE);
+					g.fillRect(this.pixel.y, this.pixel.x, WIDTH, 4);
 				}
 				else if (doorDirection == DoorDirection.DOWN)
 				{
 					this.color = Color.WHITE;
 					g.setColor(this.color);
-					g.fillRect(this.pixel.x, this.pixel.y, WIDTH, HEIGHT);
-					g.setColor(Color.YELLOW);
-					g.fillRect(this.pixel.x, this.pixel.y + 25, WIDTH, 5);
+					g.fillRect(this.pixel.y, this.pixel.x, WIDTH, HEIGHT);
+					g.setColor(Color.BLUE);
+					g.fillRect(this.pixel.y, this.pixel.x + 15, WIDTH, 4);
 				}
 				else if (doorDirection == DoorDirection.LEFT)
 				{
 					this.color = Color.WHITE;
 					g.setColor(this.color);
-					g.fillRect(this.pixel.x, this.pixel.y, WIDTH, HEIGHT);
-					g.setColor(Color.YELLOW);
-					g.fillRect(this.pixel.x, this.pixel.y, 5,HEIGHT);
+					g.fillRect(this.pixel.y, this.pixel.x, WIDTH, HEIGHT);
+					g.setColor(Color.BLUE);
+					g.fillRect(this.pixel.y, this.pixel.x, 4,HEIGHT);
 				}
 				else if (doorDirection == DoorDirection.RIGHT)
 				{
 					this.color = Color.WHITE;
 					g.setColor(this.color);
-					g.fillRect(this.pixel.x, this.pixel.y, WIDTH, HEIGHT);
-					g.setColor(Color.YELLOW);
-					g.fillRect(this.pixel.x + 25, this.pixel.y, 5,HEIGHT);
+					g.fillRect(this.pixel.y, this.pixel.x, WIDTH, HEIGHT);
+					g.setColor(Color.BLUE);
+					g.fillRect(this.pixel.y + 15, this.pixel.x, 4,HEIGHT);
 				}
 
 			}
@@ -152,16 +149,16 @@ public class BoardCell {
 			{
 				this.color = Color.WHITE;
 				g.setColor(this.color);
-				g.fillRect(this.pixel.x, this.pixel.y, WIDTH, HEIGHT);
+				g.fillRect(this.pixel.y, this.pixel.x, WIDTH, HEIGHT);
 			}
 
 
 		}
-		if (this.initial == 'K') 
+		if (this.initial == 'X') 
 		{
 			this.color = Color.GREEN;
 			g.setColor(this.color);
-			g.fillRect(this.pixel.x, this.pixel.y, WIDTH, HEIGHT);
+			g.fillRect(this.pixel.y, this.pixel.x, WIDTH, HEIGHT);
 		}
 
 
