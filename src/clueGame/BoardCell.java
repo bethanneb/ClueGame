@@ -6,6 +6,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Point;
 
 public class BoardCell {
@@ -97,6 +98,94 @@ public class BoardCell {
 	public void setInitial(char initial) 
 	{
 		this.initial = initial;
+	}
+	
+	//C21A
+	public void draw ( Graphics g ) {
+		// TODO implement
+		// set color 
+		if (this.initial == 'P') 
+		{
+			this.color = Color.GRAY;
+			g.setColor(this.color);
+			g.fillRect(this.pixel.x , this.pixel.y, WIDTH, HEIGHT);
+		}
+		if (this.isRoom()) 
+		{
+			if ( isDoorway())
+			{
+				if (doorDirection == DoorDirection.UP)
+				{
+					this.color = Color.WHITE;
+					g.setColor(this.color);
+					g.fillRect(this.pixel.x, this.pixel.y, WIDTH, HEIGHT);
+					g.setColor(Color.YELLOW);
+					g.fillRect(this.pixel.x, this.pixel.y, WIDTH, 5);
+				}
+				else if (doorDirection == DoorDirection.DOWN)
+				{
+					this.color = Color.WHITE;
+					g.setColor(this.color);
+					g.fillRect(this.pixel.x, this.pixel.y, WIDTH, HEIGHT);
+					g.setColor(Color.YELLOW);
+					g.fillRect(this.pixel.x, this.pixel.y + 25, WIDTH, 5);
+				}
+				else if (doorDirection == DoorDirection.LEFT)
+				{
+					this.color = Color.WHITE;
+					g.setColor(this.color);
+					g.fillRect(this.pixel.x, this.pixel.y, WIDTH, HEIGHT);
+					g.setColor(Color.YELLOW);
+					g.fillRect(this.pixel.x, this.pixel.y, 5,HEIGHT);
+				}
+				else if (doorDirection == DoorDirection.RIGHT)
+				{
+					this.color = Color.WHITE;
+					g.setColor(this.color);
+					g.fillRect(this.pixel.x, this.pixel.y, WIDTH, HEIGHT);
+					g.setColor(Color.YELLOW);
+					g.fillRect(this.pixel.x + 25, this.pixel.y, 5,HEIGHT);
+				}
+
+			}
+			else
+			{
+				this.color = Color.WHITE;
+				g.setColor(this.color);
+				g.fillRect(this.pixel.x, this.pixel.y, WIDTH, HEIGHT);
+			}
+
+
+		}
+		if (this.initial == 'K') 
+		{
+			this.color = Color.GREEN;
+			g.setColor(this.color);
+			g.fillRect(this.pixel.x, this.pixel.y, WIDTH, HEIGHT);
+		}
+
+
+	}
+	
+	public void drawTargets( Graphics g) {
+		this.color = Color.CYAN;
+		g.setColor(this.color);
+		g.fillRect(this.pixel.x, this.pixel.y, WIDTH, HEIGHT);
+	}
+	
+	public void reDrawTargets ( Graphics g) {
+		if ( isDoorway())
+		{		
+			this.color = Color.WHITE;
+			g.setColor(this.color);
+			g.fillRect(this.pixel.x, this.pixel.y, WIDTH, HEIGHT);
+		}
+		if (this.initial == 'P') 
+		{
+			this.color = Color.GRAY;
+			g.setColor(this.color);
+			g.fillRect(this.pixel.x , this.pixel.y, WIDTH, HEIGHT);
+		}
 	}
 
 }
