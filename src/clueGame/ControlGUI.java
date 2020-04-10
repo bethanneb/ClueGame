@@ -12,8 +12,31 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 public class ControlGUI extends JPanel {
+	
+	//private JTextField name; 
+		public int dieRoll; 
+		// TODO need to be able call methods in Board class
+		private Board board;
+		private JPanel nextPlayerAndAccusation;
+		private JPanel currentPlayerAndDieRoll;
+		private JTextField currentName; 
+		private JTextField currentDie; 
+		private JTextField currentGuess;
+		private JTextField currentResult;
+		JFrame accusationWindow = new JFrame("Accusation");
+//		Accusation accusationClass = new Accusation();
+//		Suggestion suggestionHuman = new Suggestion("");
+
 
 	public ControlGUI() {
+		
+		dieRoll = 0; // FIXME
+		board = Board.getInstance();
+		currentName = new JTextField(board.whoIsTheCurrentPLayer().getPlayerName());
+		currentDie = new JTextField(String.valueOf(board.currentDieRollValue()));
+		currentGuess = new JTextField(board.whatIsTheCurrentGuess());
+		currentResult = new JTextField(board.whatIsTheCurrentResult());
+		suggestionHuman = board.passCurrentSuggestionState();
 		
 		setLayout(new GridLayout(2,0));
 		JPanel panel1 = createNamePanel();

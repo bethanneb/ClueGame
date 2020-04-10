@@ -28,6 +28,7 @@ import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Board extends JPanel {
@@ -576,7 +577,7 @@ public class Board extends JPanel {
 		}
 	}
 
-	
+
 
 	public Card getCard(String name, CardType type) {
 
@@ -661,7 +662,7 @@ public class Board extends JPanel {
 		visited = new HashSet<BoardCell>();
 	}
 
-	
+
 	//NEW FOR TESTS
 
 	public Solution getAnswerKey() {
@@ -675,14 +676,14 @@ public class Board extends JPanel {
 	public Set<ComputerPlayer> getComputerPlayers() {
 		return computerPlayers;
 	}
-	
+
 	public void setPlayers(ArrayList<Player> p) {
 		this.playersList = new ArrayList<Player>();
 		this.playersList = p;
 	}
-	
+
 	public Card handleSuggestion(ArrayList<Player> players, Solution suggestion, Player accuser) {
-		
+
 		Card disproved = new Card();
 
 		for (Player p: getPlayerList()) {
@@ -690,20 +691,20 @@ public class Board extends JPanel {
 			if(p == accuser) {
 				continue;
 			}
-		
+
 			disproved = p.disproveSuggestion(suggestion);
 			if (disproved != null) {
 				return disproved;
 			} 
-			
+
 		}
 		return null;
 	}
-	
+
 	public Player whoIsTheCurrentPLayer() { 
 		return this.currentPlayerInGame; /* NOTE: Empty player was made to return when game first starts */  
 	}
-	
+
 	//C21A
 	public void paintComponent ( Graphics g)
 	{
@@ -810,13 +811,249 @@ public class Board extends JPanel {
 		}
 
 	}
-	
+
 	public Set<HumanPlayer> getHumanPlayer() {
 		return humanPlayer;
 	}
 
-	
+	public int currentDieRollValue() { 
+		return this.dieRollValue; 
+	}
 
+	public void nextPlayerButtonMethod() {
+		if (this.targetSelected) {
+			// this method will be called when the "Next Player" button is clicked on
+			if (this.currentPlayerInGameCount == -1) this.currentPlayerInGameCount = 0;
+			else if (this.currentPlayerInGameCount == 5) this.currentPlayerInGameCount = 0;
+			else { this.currentPlayerInGameCount ++; }
+			// NOTE: updating the current player 
+			Player emptyPlayer = new Player();
+			if (this.currentPlayerInGameCount == -1) this.currentPlayerInGame = emptyPlayer;
+			else { this.currentPlayerInGame = this.gamePlayers.get(this.currentPlayerInGameCount); }
+
+			this.dieRollValue = rollDie(); 
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "You must take your turn", "Message", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+
+	public int rollDie() { 
+		// NOTE: random dice roll used to the pathLength in calcTargets
+		Random rand = new Random(); 
+		int dieRoll = rand.nextInt(6) + 1; 
+
+		dieRoll = 6; // FIX AFTER TESTING 
+
+		return dieRoll;  
+	}
+
+	public boolean updateHumanPosition(int col, int row, int pathlength, Player player) { 	
+
+		//System.out.println("Col: " + col);
+		///System.out.println("Row: " + row);
+		//System.out.println("pathlength: " + pathlength);
+		//System.out.println("Player information: " + player.getPlayerName());
+		// NOTE: need to update the original set that holds the human player
+		for (HumanPlayer human: humanPlayer)
+		{
+			if (human.getName() == player.getName())
+			{
+				// NOTE: update the "original" human player with the player's changed location
+				human.updatePosition(col, row);
+				this.doneWithHuman = true;	
+				revalidate();
+				repaint();
+
+			}
+		}
+
+		return false; 
+
+	}	
+
+	public boolean updateComputerPosition(int col, int row, int pathlength, Player player) { 
+
+		ArrayList<BoardCell> possibleTargets = new ArrayList<BoardCell>(); 
+		// NOTE: calcTargets with refresh and populate the targets HashSet
+		calcTargets(col, row, pathlength); 
+		//System.out.println("Targets found for the computer: " + targets.size()); // TESTING
+		for (BoardCell temp: targets) {
+			// NOTE: populating the temp arrayList for "dumb" AI
+			possibleTargets.add(temp); 
+		}
+		// NOTE: getting a random location for "dumb" AI
+		Random rand = new Random(); 
+		int location = rand.nextInt(possibleTargets.size()); 
+		int c = possibleTargets.get(location).getCol(); 
+		int r = possibleTargets.get(location).getRow(); 
+		// NOTE: need to update the original set that holds the computer players
+		for ( ComputerPlayer computer: computerPlayers)
+		{
+			// NOTE: ONLY change the player that is passed in
+			if (player.getPlayerName().equals(computer.getPlayerName()))
+			{
+				// NOTE: update the "original" computer player with the player's changed location
+				computer.updatePosition(c, r);
+				this.doneWithComputer = true;
+				revalidate();
+				repaint(); 
+			}
+		}
+		player.updatePosition(c, r);  // NOTE: probably unnecessary 
+
+		return false; 
+	}	
+
+	public void GamePlay()
+	{
+
+		//System.out.println("Current Player: " + currentPlayerInGame.getPlayerName());
+		if (this.currentPlayerInGame.getPlayerName().equals("CompSci"))
+		{
+			this.doneWithHuman = false;
+			this.targetSelected = false; 
+			int row = this.currentPlayerInGame.getCurrentRow();
+			int col = this.currentPlayerInGame.getCurrentColumn();
+			calcTargets(col, row, this.dieRollValue);
+			repaint();
+
+			this.updateHumanPosition(selectedBox.getCol(), selectedBox.getRow(), dieRollValue, this.currentPlayerInGame);  //ERROR
+			repaint();
+		}
+
+
+
+		if (this.currentPlayerInGame.getPlayerName().equals("MechE")  		|| 
+				this.currentPlayerInGame.getPlayerName().equals("ChemE") 	|| 
+				this.currentPlayerInGame.getPlayerName().equals("Mining")	|| 
+				this.currentPlayerInGame.getPlayerName().equals("Geology")	||
+				this.currentPlayerInGame.getPlayerName().equals("Physics"))
+		{
+			this.doneWithComputer = false;
+			int row = this.currentPlayerInGame.getCurrentRow(); 
+			int col = this.currentPlayerInGame.getCurrentColumn();
+			Card returnCardAnswer = new Card(); /* = generated Card created when handleSuggestion is called */
+
+
+			repaint();
+			this.updateComputerPosition(col, row, this.dieRollValue, this.currentPlayerInGame);
+			// TODO
+			if (this.compReadyMakeAccusation && !this.compSuggestionDisproved)
+			{
+				// make an accusation, the accusation will be the previous suggestion 
+				for (ComputerPlayer computer : computerPlayers)
+				{
+					if (computer.getPlayerName().equals(this.currentPlayerInGame.getPlayerName())) /* find the computer that matches this.currentPlayerInGame */
+					{
+						// create one string that will be used in the JOptionPane
+						Solution computerAnswer = new Solution();
+						computerAnswer = computer.getAccusation();
+						String compAnswer = computerAnswer.getPerson() + ", " + computerAnswer.getRoom() + "room, " + computerAnswer.getWeapon();
+						// check computerAnser against the store answerKey
+						if ( computerAnswer.getPerson().equals(answerKey.getPerson()) && 
+								computerAnswer.getRoom().equals(answerKey.getRoom()) && 
+								computerAnswer.getWeapon().equals(answerKey.getWeapon()) )
+						{
+							JOptionPane.showMessageDialog(null, "Computer Player: " + computer.getPlayerName() + " won the game. Answer was: "
+									+ compAnswer, "Message", JOptionPane.INFORMATION_MESSAGE);
+						}
+						else
+						{
+							JOptionPane.showMessageDialog(null, "Computer Player: " + computer.getPlayerName() + " was wrong. Solution given was: "
+									+ compAnswer, "Message", JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
+				}
+
+
+			}
+			// suggestions can only be made when a player is in a room
+			if (getCellAt(col, row).isDoorway())
+			{
+				System.out.println("Computer's Room location: " + getCellAt(row, col).getInitial());
+				// In the ComputerPlayer class, creatSuggestion exists: 
+				// 	- public void createSuggestion(BoardCell cell, ArrayList<Card> peopleArray, ArrayList<Card> weaponsArray, Set<String> rooms , ComputerPlayer player); 
+				// need a ComputerPlayer object to call public Solution getCreatedSoln(); and createSuggestion( ... ); 
+				// 	- Should manipulate the original set of ComputerPlayers!
+				// All of the players except this.currentPlayerInGame need to call disproveSuggestion
+				//  - Board class' handleSuggestion will run all of the above functionalities 
+				for (ComputerPlayer computer : computerPlayers)
+				{
+					if (computer.getPlayerName().equals(this.currentPlayerInGame.getPlayerName())) /* find the computer that matches this.currentPlayerInGame */
+					{
+						// public Card handleSuggestion(ComputerPlayer computerPlayer);
+						returnCardAnswer = handleSuggestion(computer);
+						// TODO: if returnCardAnswer = null , then that means that the suggestion was not disproved. You need to update the ControlPanel with the results. 
+						// making sure room, weapon, and person of computer.accusation is set to something before being able to make an accusation.
+						this.compReadyMakeAccusation = computer.isAccusationReady();
+					}
+				}
+			}
+			else { this.currentResults = ""; this.currentGuess = ""; }
+
+			repaint();
+		}
+	}
+	
+	public Card handleSuggestion(ComputerPlayer computerPlayer) {
+
+		int row = computerPlayer.getCurrentRow(); 
+		int col = computerPlayer.getCurrentColumn();
+
+		// createSuggestions saves the generated suggestion in ComputerPlayer's creadSoln (which is of type Solution)
+		computerPlayer.createSuggestion(board[col][row], possiblePeople, possibleWeapons, legend, computerPlayer); 
+		this.currentGuess = (computerPlayer.getPlayerName() + ": " + computerPlayer.getCreatedSoln().getPerson() + ", " + computerPlayer.getCreatedSoln().getRoom() + ", " + computerPlayer.getCreatedSoln().getWeapon()) ;
+		ArrayList<Card> foundCards = new ArrayList<Card>(); 
+
+		for(ComputerPlayer tempPlayer: computerPlayers) {
+			if (tempPlayer == computerPlayer) {
+				continue;  
+			}
+			else { 
+				// if a card is found by another player, the card is added to the ArrayList of cards
+				Card temp = tempPlayer.disproveSuggestion(computerPlayer.createdSoln); 
+				if ( temp == null) {}
+				else { foundCards.add(temp); }
+				
+			}
+		}
+
+		// selecting a random number for selecting a found Card
+		Random rand = new Random(); 
+		int location = rand.nextInt(foundCards.size()); 
+
+		if (foundCards.size() == 0) { /* if the size of FoundCards = 0, that means not cards were found to disprove the suggestion */
+			// store the suggestion that was found to be the next accusation. 
+			computerPlayer.setAccusation(computerPlayer.getCreatedSoln());
+			this.compSuggestionDisproved = false;
+			this.currentResults = "no new clue";
+			return null;
+		}
+		else { 
+			computerPlayer.addSeen(foundCards.get(location));
+			this.compSuggestionDisproved = true;
+			//System.out.println("Found other cards that disprove the suggestion. ArrayList size: " + foundCards.size() );
+			if (foundCards.get(location) != null)
+			{
+				this.currentResults = foundCards.get(location).getCardName();
+				return foundCards.get(location); 
+			}
+			else
+			{
+				// if null, need to choose another location to go to
+				this.compSuggestionDisproved = true;
+				this.currentResults = "no new clue";
+				return null; 
+			}
+		}
+
+	}
+
+	public void closeMyFrame() { 
+		myFrame.setVisible(false);
+		myFrame.dispose();
+	}
 
 
 
