@@ -6,6 +6,8 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Point;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,6 +19,7 @@ public class Player {
 	private int row;
 	private int column;
 	private Color color;
+	private Point pixel;
 	private Set<Card> myCards;
 	private Set<Card> seenCards;
 	private String colorString;
@@ -46,6 +49,7 @@ public class Player {
 		this.color = color;
 		myCards = new HashSet<Card>();
 		seenCards = new HashSet<Card>();
+		pixel = new Point (this.row * 22 + 15, this.column * 22 + 100);
 	}
 
 	public Player( String name, String color, int r, int c ) {
@@ -122,6 +126,11 @@ public class Player {
 		}
 
 		return null;
+	}
+	
+	public void draw(Graphics g) {
+		g.setColor(color);
+		g.fillOval(pixel.y, pixel.x, 20, 20);
 	}
 	
 	public int getMyCardSize()

@@ -47,11 +47,10 @@ public class ClueGame extends JFrame {
 		control = guiControl;
 		add(control, BorderLayout.SOUTH);
 
-		//JPanel notes = new JPanel();
-		//notes.setSize(50, 5);
-		//DetectiveNotesGUI guiNotes = new DetectiveNotesGUI();
-		//notes = guiNotes;
-		//add(notes, BorderLayout.EAST);
+		JPanel notes = new JPanel();
+		notes.setSize(50, 5);
+		DetectiveNotesGUI guiNotes = new DetectiveNotesGUI();
+		notes = guiNotes;
 		
 		CardDisplayGUI guiCard = new CardDisplayGUI(board); 
 		JPanel cards = new JPanel(); 
