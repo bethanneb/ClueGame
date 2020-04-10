@@ -11,9 +11,9 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-public class GUI extends JPanel {
+public class ControlGUI extends JPanel {
 
-	public GUI() {
+	public ControlGUI() {
 		
 		setLayout(new GridLayout(2,0));
 		JPanel panel1 = createNamePanel();
@@ -118,7 +118,7 @@ public class GUI extends JPanel {
 		frame.setTitle("Clue Game");
 		frame.setSize(800, 200);	
 		// Create the JPanel and add it to the JFrame
-		GUI gui = new GUI();
+		ControlGUI gui = new ControlGUI();
 		frame.add(gui, BorderLayout.CENTER);
 		// Now let's view it
 		frame.setVisible(true);
