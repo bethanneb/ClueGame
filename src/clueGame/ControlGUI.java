@@ -12,31 +12,32 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 public class ControlGUI extends JPanel {
-	
+
 	//private JTextField name; 
-		public int dieRoll; 
-		// TODO need to be able call methods in Board class
-		private Board board;
-		private JPanel nextPlayerAndAccusation;
-		private JPanel currentPlayerAndDieRoll;
-		private JTextField currentName; 
-		private JTextField currentDie; 
-		private JTextField currentGuess;
-		private JTextField currentResult;
-		JFrame accusationWindow = new JFrame("Accusation");
-//		Accusation accusationClass = new Accusation();
-//		Suggestion suggestionHuman = new Suggestion("");
+	public int dieRoll; 
+	// TODO need to be able call methods in Board class
+	private Board board;
+	private JPanel nextPlayerAndAccusation;
+	private JPanel currentPlayerAndDieRoll;
+	private JTextField currentName; 
+	private JTextField currentDie; 
+	private JTextField currentGuess;
+	private JTextField currentResult;
+	JFrame accusationWindow = new JFrame("Accusation");
+	//		Accusation accusationClass = new Accusation();
+	//		Suggestion suggestionHuman = new Suggestion("");
 
 
 	public ControlGUI() {
-		
-		currentName = new JTextField(board.whoIsTheCurrentPLayer().getPlayerName());
-		currentDie = new JTextField(String.valueOf(board.currentDieRollValue()));
-//		currentGuess = new JTextField(board.whatIsTheCurrentGuess());
-//		currentResult = new JTextField(board.whatIsTheCurrentResult());
-//		suggestionHuman = board.passCurrentSuggestionState();
+		//dieRoll = 0; // FIXME
+		//board = Board.getInstance();
+		//currentName = new JTextField(board.whoIsTheCurrentPLayer().getPlayerName());
+		//currentDie = new JTextField(String.valueOf(board.currentDieRollValue()));
+		//currentGuess = new JTextField(board.whatIsTheCurrentGuess());
+		//currentResult = new JTextField(board.whatIsTheCurrentResult());
+		//suggestionHuman = board.passCurrentSuggestionState();
 		this.currentPlayerAndDieRoll = createNamePanel();
-		
+
 		setLayout(new GridLayout(2,0));
 		JPanel panel1 = createNamePanel();
 		JPanel panel2 = createNextPlayerButtonPanel(); 
@@ -61,12 +62,12 @@ public class ControlGUI extends JPanel {
 		JTextField name = new JTextField(board.whoIsTheCurrentPLayer().getPlayerName());
 		// blank gray box aka nothing is in it yet
 		name.setEditable(false);
-		
+
 		panel.add(name);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Whose turn?"));
 		return panel;
 	}
-	
+
 	//panel 2
 	private JPanel createNextPlayerButtonPanel() {
 		JButton nextPlayer = new JButton("Next player");
@@ -88,27 +89,27 @@ public class ControlGUI extends JPanel {
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
 		panel.setLayout(new GridLayout(1,2));
-		
+
 		JLabel nameLabel = new JLabel("Roll"); 
 		JTextField dieNumber = new JTextField(); 
 		dieNumber.setEditable(false);
-		
+
 		panel.add(nameLabel);
 		panel.add(dieNumber);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Die"));
 		return panel;
 	}
-	
+
 	// panel 5
 	private JPanel createGuessPanel() {
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
 		panel.setLayout(new GridLayout(2,6));
-		
+
 		JLabel nameLabel = new JLabel("Guess");
 		JTextField guess = new JTextField(); 
 		guess.setEditable(false);
-		
+
 		panel.add(nameLabel);
 		panel.add(guess);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Guess"));
@@ -120,11 +121,11 @@ public class ControlGUI extends JPanel {
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
 		panel.setLayout(new GridLayout(1,2));
-		
+
 		JLabel nameLabel = new JLabel("Response");
 		JTextField response = new JTextField();
 		response.setEditable(false);
-		
+
 		panel.add(nameLabel);
 		panel.add(response);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Guess Result"));
@@ -132,7 +133,7 @@ public class ControlGUI extends JPanel {
 	}
 
 
-	
+
 	public static void main(String[] args) {
 		// Create a JFrame with all the normal functionality
 		JFrame frame = new JFrame();

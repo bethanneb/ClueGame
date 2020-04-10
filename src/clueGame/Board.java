@@ -718,6 +718,25 @@ public class Board extends JPanel {
 				getCellAt(i, j).draw(g);
 			}
 		}
+		
+		g.setColor(Color.BLACK);
+		g.drawString("Kitchen", 110, 60);
+		g.drawString("Jim's Desk", 232, 50);
+		g.drawString("Dwight's", 372, 50);
+		g.drawString("Desk", 372, 65);
+		g.drawString("Vance", 520, 50);
+		g.drawString("Refrigeration", 500, 65);
+		g.drawString("Front", 103, 195);
+		g.drawString("Desk", 103, 280);
+		g.drawString("Conference", 510, 240);
+		g.drawString("Room", 525, 255);
+		g.drawString("Michael's Office", 101, 450);
+		g.drawString("Break Room", 305, 440);
+		g.drawString("Warehouse", 500, 440);
+		
+		for(Player p: playersList) {
+			p.draw(g);
+		}
 
 
 	}
