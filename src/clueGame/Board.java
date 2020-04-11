@@ -226,7 +226,6 @@ public class Board extends JPanel implements MouseListener {
 			loadBoardConfig();
 			loadConfigFiles();
 			loadCards();
-			//humanPlayer = new HashSet<HumanPlayer>();
 			//deal the deck of cards
 			dealCards();
 			//find adjacencies (ADD THIS IN?)
