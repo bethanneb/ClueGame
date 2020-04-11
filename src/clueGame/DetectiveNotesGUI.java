@@ -19,30 +19,35 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 
-public class DetectiveNotesGUI extends JPanel {
+public class DetectiveNotesGUI extends JDialog {
 	//private JTextField name; 
 
 	public DetectiveNotesGUI() { 
-		setBorder(new TitledBorder (new EtchedBorder(), "Detective Notes"));
-		setLayout(new GridLayout(6,1));
+		setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+		setTitle("Detective Notes");
+		setSize(900, 600);
+		JPanel fullPanel = new JPanel();
+		fullPanel.setLayout(new GridLayout(3,2));
+		add(fullPanel);
 		JPanel panel = people();
 		JPanel panel1 = weapons(); 
 		JPanel panel2 = rooms(); 
 		 
-		add(panel);
+		fullPanel.add(panel);
 		panel = peopleGuess(); 
-		add(panel);
+		fullPanel.add(panel);
 		
-		add(panel1);
+		fullPanel.add(panel1);
 		panel1 = weaponsGuess(); 
-		add(panel1);
+		fullPanel.add(panel1);
 
-		add(panel2);		
+		fullPanel.add(panel2);		
 		panel2 = roomsGuess(); 
-		add(panel2);
+		fullPanel.add(panel2);
 		
 		
 	}
+	
 
 	private JPanel people() {
 		 

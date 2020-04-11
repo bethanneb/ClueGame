@@ -11,6 +11,9 @@ import javax.swing.JPanel;
 //import clueGame.ControlGUI.ButtonListener;
 
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import java.util.*; 
 import java.awt.*;
@@ -18,7 +21,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ClueGame extends JFrame {
-	private final static int HEIGHT = 675;
+	private final static int HEIGHT = 700;
 	private final static int WIDTH = 800;
 	private static Board board;
 	JPanel panel;
@@ -37,6 +40,12 @@ public class ClueGame extends JFrame {
 		board.setConfigFiles("OurClueLayout.csv", "OurClueLegend.txt");	
 		board.setCardFiles("Players.txt", "Cards.txt");
 		board.initialize();
+		
+		
+		//File menu
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		menuBar.add(createFileMenu());
 
 		// paintComponent is automatically be called 1 time
 		panel = board;
@@ -46,17 +55,39 @@ public class ClueGame extends JFrame {
 		ControlGUI guiControl = new ControlGUI();
 		control = guiControl;
 		add(control, BorderLayout.SOUTH);
-
-		JPanel notes = new JPanel();
-		notes.setSize(50, 5);
-		DetectiveNotesGUI guiNotes = new DetectiveNotesGUI();
-		notes = guiNotes;
 		
 		CardDisplayGUI guiCard = new CardDisplayGUI(board); 
 		JPanel cards = new JPanel(); 
 		cards = guiCard; 
 		cards.setSize(10,5);
 		add(cards, BorderLayout.EAST);
+	}
+	
+	public JMenu createFileMenu() {
+		JMenu menu = new JMenu("File");
+		//	Detective note option
+		JMenuItem noteItem = new JMenuItem("Detective Notes");
+		DetectiveNotesGUI notes = new DetectiveNotesGUI();
+		class NoteItemListener implements ActionListener {
+			public void actionPerformed(ActionEvent e)
+			{
+				notes.setVisible(true);
+			}
+		}
+		noteItem.addActionListener(new NoteItemListener());
+		menu.add(noteItem);
+		
+		//	Exit option
+		JMenuItem exitItem = new JMenuItem("Exit");
+		class ExitItemListener implements ActionListener {
+			public void actionPerformed(ActionEvent e)
+			{
+				System.exit(0);
+			}
+		}
+		exitItem.addActionListener(new ExitItemListener());
+		menu.add(exitItem);
+		return menu;
 	}
 
 
