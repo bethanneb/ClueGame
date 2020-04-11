@@ -36,7 +36,7 @@ public class ControlGUI extends JPanel {
 		//currentGuess = new JTextField(board.whatIsTheCurrentGuess());
 		//currentResult = new JTextField(board.whatIsTheCurrentResult());
 		//suggestionHuman = board.passCurrentSuggestionState();
-		this.currentPlayerAndDieRoll = createNamePanel();
+		//this.currentPlayerAndDieRoll = createNamePanel();
 
 		setLayout(new GridLayout(2,0));
 		JPanel panel1 = createNamePanel();
@@ -59,7 +59,7 @@ public class ControlGUI extends JPanel {
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
 		panel.setLayout(new GridLayout(1,2));
-		JTextField name = new JTextField(board.whoIsTheCurrentPLayer().getPlayerName());
+		JTextField name = new JTextField(); 
 		// blank gray box aka nothing is in it yet
 		name.setEditable(false);
 
