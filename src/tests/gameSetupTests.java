@@ -56,15 +56,15 @@ public class gameSetupTests {
 		// 3rd character and also computer player
 		assertEquals("Jim Halpert", playersList.get(2).getName()); //name
 		assertEquals(Color.BLUE, playersList.get(2).getColor()); //color
-		assertEquals(13, playersList.get(2).getRow()); //row
-		assertEquals(13, playersList.get(2).getColumn()); //column
+		assertEquals(0, playersList.get(2).getRow()); //row
+		assertEquals(15, playersList.get(2).getColumn()); //column
 		assertTrue(playersList.get(2).isComputer()); //is the computer player
 
 		// last character
 		assertEquals("Angela Martin", playersList.get(7).getName()); //name
 		assertEquals(Color.MAGENTA, playersList.get(7).getColor()); //color
-		assertEquals(11, playersList.get(7).getRow()); //row 
-		assertEquals(4, playersList.get(7).getColumn()); //column
+		assertEquals(13, playersList.get(7).getRow()); //row 
+		assertEquals(0, playersList.get(7).getColumn()); //column
 	}
 
 	/*

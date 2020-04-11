@@ -52,8 +52,8 @@ public class DetectiveNotesGUI extends JPanel {
 		
 		String[] people = {"Michael Scott", "Dwight Schrute", "Jim Halpert", "Pam Halpert", "Kevin Malone", "Andy Bernard", "Oscar Martinez", "Angela Martin"};
 		for (int i = 0; i < people.length; i ++) { 
-		JCheckBox person = new JCheckBox(people[i]); 
-		panel.add(person); 
+			JCheckBox person = new JCheckBox(people[i]); 
+			panel.add(person); 
 		} 
 		
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "People"));
@@ -68,8 +68,8 @@ public class DetectiveNotesGUI extends JPanel {
 			
 			String[] weapons = {"Poison Dart", "Knife", "Taser", "Boomerang", "Samurai Sword", "Pepper Spray", "Crossbow", "Nunchucks"};
 			for (int i = 0; i < weapons.length; i ++) { 
-			JCheckBox weapon = new JCheckBox(weapons[i]); 
-			panel.add(weapon); 
+				JCheckBox weapon = new JCheckBox(weapons[i]); 
+				panel.add(weapon); 
 			} 
 			
 			panel.setBorder(new TitledBorder (new EtchedBorder(), "Weapon"));
@@ -83,10 +83,10 @@ public class DetectiveNotesGUI extends JPanel {
 			panel.setLayout(new GridLayout(3,3));
 			
 			
-			String[] rooms = {"Conference Room", "Warehouse", "Front Desk", "Vance Refrigeration", "Break Room", "Kitchen", "Jim’s Desk", "Michael’s House", "Dwight’s Desk"};
+			String[] rooms = {"Conference Room", "Warehouse", "Front Desk", "Vance Refrigeration", "Break Room", "Kitchen", "Jim's Desk", "Michael's House", "Dwight's Desk"};
 			for (int i = 0; i < rooms.length; i ++) { 
-			JCheckBox room = new JCheckBox(rooms[i]); 
-			panel.add(room); 
+				JCheckBox room = new JCheckBox(rooms[i]); 
+				panel.add(room); 
 			} 
 			
 			panel.setBorder(new TitledBorder (new EtchedBorder(), "Room"));
