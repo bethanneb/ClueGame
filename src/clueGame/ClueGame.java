@@ -42,20 +42,22 @@ public class ClueGame extends JFrame {
 		board.initialize();
 		
 		
-		//File menu
+		//file menu
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());
 
-		// paintComponent is automatically be called 1 time
+		//paintComponent is automatically be called 1 time
 		panel = board;
 		add(panel, BorderLayout.CENTER);
 
+		//control panel
 		JPanel control = new JPanel();
 		ControlGUI guiControl = new ControlGUI();
 		control = guiControl;
 		add(control, BorderLayout.SOUTH);
 		
+		//card display
 		CardDisplayGUI guiCard = new CardDisplayGUI(board); 
 		JPanel cards = new JPanel(); 
 		cards = guiCard; 
@@ -65,7 +67,7 @@ public class ClueGame extends JFrame {
 	
 	public JMenu createFileMenu() {
 		JMenu menu = new JMenu("File");
-		//	Detective note option
+		//detective note option
 		JMenuItem noteItem = new JMenuItem("Detective Notes");
 		DetectiveNotesGUI notes = new DetectiveNotesGUI();
 		class NoteItemListener implements ActionListener {
@@ -77,7 +79,7 @@ public class ClueGame extends JFrame {
 		noteItem.addActionListener(new NoteItemListener());
 		menu.add(noteItem);
 		
-		//	Exit option
+		//exit option
 		JMenuItem exitItem = new JMenuItem("Exit");
 		class ExitItemListener implements ActionListener {
 			public void actionPerformed(ActionEvent e)

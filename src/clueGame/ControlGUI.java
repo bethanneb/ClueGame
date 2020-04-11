@@ -30,14 +30,6 @@ public class ControlGUI extends JPanel {
 
 	public ControlGUI() {
 		
-		//dieRoll = 0; // FIXME
-		//board = Board.getInstance();
-		//currentName = new JTextField(board.whoIsTheCurrentPLayer().getPlayerName());
-		//currentDie = new JTextField(String.valueOf(board.currentDieRollValue()));
-		//currentGuess = new JTextField(board.whatIsTheCurrentGuess());
-		//currentResult = new JTextField(board.whatIsTheCurrentResult());
-		//suggestionHuman = board.passCurrentSuggestionState();
-		
 		setLayout(new GridLayout(2,0));
 		JPanel panel1 = createNamePanel();
 		JPanel panel2 = createNextPlayerButtonPanel(); 
