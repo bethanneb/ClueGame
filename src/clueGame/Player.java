@@ -49,6 +49,7 @@ public class Player {
 		this.color = color;
 		myCards = new HashSet<Card>();
 		seenCards = new HashSet<Card>();
+		// can draw with correct scaling 
 		pixel = new Point (this.row * 22 + 15, this.column * 22 + 100);
 	}
 
@@ -128,6 +129,7 @@ public class Player {
 		return null;
 	}
 	
+	// draws players using their given color and starting location
 	public void draw(Graphics g) {
 		g.setColor(color);
 		g.fillOval(pixel.y, pixel.x, 20, 20);

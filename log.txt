@@ -1,3 +1,124 @@
+commit f9ad58a093defd6250d0840f3933f1d3fdd4270d
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Apr 10 19:22:56 2020 -0600
+
+    added comments
+
+commit 9b74ba6d48b49703b5370b54f5b1da37edbe27e4
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Apr 10 18:56:57 2020 -0600
+
+    added file menu bar and fixed detective notes
+
+commit eb70cc8255183fe0f6f1062b1d7465e269981e18
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Apr 10 18:06:32 2020 -0600
+
+    moved players
+
+commit 3a58f97ac8f1cfe57c5ba9f37732dc05a1c3c363
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Apr 10 17:59:30 2020 -0600
+
+    fixed minor things in detective notes
+
+commit 573b93b55b8e19cd8a6eb90b7ceea9a81d09f6a9
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Apr 10 17:54:24 2020 -0600
+
+    all players and names of rooms are displayable
+
+commit 1b687feb815e41cdf0c926dbf8ce8d23602f3377
+Merge: cd71019 e85d3ff
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 10 17:02:30 2020 -0600
+
+    Merge branch 'master' of https://github.com/bethanneb/ClueGame
+
+commit cd7101950991adf02a1c5f74f5dca54dee77f3cc
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 10 17:02:21 2020 -0600
+
+    Updating control GUI; added some more functions to Board; includes repainting game board
+
+commit e85d3ffccf4bc81524506d50a0681a7c6ac31b72
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Apr 10 16:58:54 2020 -0600
+
+    fixed board display and took out players for now
+
+commit 87ef32f67bcbcd7dc7235db22ddb5fdd6a50faee
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 10 02:29:50 2020 -0600
+
+    Added classes to display cards and detective notes; added other methods in Board to try to make those work; board is currently not being drawn for me(BethAnne)
+
+commit be7d6c8d70be5c363b4e18ded29f734cfc724ae6
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Apr 9 23:58:27 2020 -0600
+
+    Added ClueGame class and renamed GUI class to ControlGUI
+
+commit b6d826752ce385db29b8e8429ce97e3ba189d361
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Thu Apr 9 23:51:57 2020 -0600
+
+    Added paintComponent to Board class and necessary functions to BoardCell
+
+commit 6042d50e9bfbe6b7f4b8140328f3b5417a2ab890
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Apr 6 18:16:48 2020 -0600
+
+    Changed GUI window name to Clue Game
+
+commit df852fa771fbd0e921508e0ce0ee2e4a4d43b08f
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Apr 6 18:14:52 2020 -0600
+
+    Made GUI window wider
+
+commit da5010f8d70bd4daa57b480babacceb2378e7cd3
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Apr 6 18:13:43 2020 -0600
+
+    Changes size of guess box
+
+commit 718cdc7738460019d155facebcdfc4e70d8dae3d
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Mon Apr 6 17:58:42 2020 -0600
+
+    fixed gui, has all the right components in the right spot. doesn't look exactly like example though
+
+commit 33fe8b4d01d229a449df5261a2000362dce1b35d
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Apr 6 15:36:33 2020 -0600
+
+    Fixed main
+
+commit 3f670a466335d891f55dcc191a03e3dd9a043d0c
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Apr 6 15:33:45 2020 -0600
+
+    Uncommented our code; example code commented out
+
+commit 3effda93c0be11dbf5911e5e059e9a65af3bb198
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Apr 6 15:24:57 2020 -0600
+
+    Added code to GUI, but wouldn't open GUI window so added example code and commented out my code, but still won't open
+
+commit 0dec1a1f5b976d6864a45e6a8b28eb769de1b2fc
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Apr 6 14:34:55 2020 -0600
+
+    Added GUI class to ClueGame package
+
+commit dd3dd4a1bd871bc81515662177b5e58e27f0099a
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 3 22:25:53 2020 -0600
+
+    Updated git log
+
 commit 1879196861c0770b0a7654ebe6501972e67b689f
 Merge: c2d1461 fc57122
 Author: Elizabeth Bauch <ebauch@mymail.mines.edu>

@@ -20,12 +20,13 @@ import javax.swing.*;
 import java.util.*;
 
 public class DetectiveNotesGUI extends JDialog {
-	//private JTextField name; 
 
 	public DetectiveNotesGUI() { 
 		setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 		setTitle("Detective Notes");
 		setSize(900, 600);
+		
+		//panel that will show this
 		JPanel fullPanel = new JPanel();
 		fullPanel.setLayout(new GridLayout(3,2));
 		add(fullPanel);
@@ -33,6 +34,7 @@ public class DetectiveNotesGUI extends JDialog {
 		JPanel panel1 = weapons(); 
 		JPanel panel2 = rooms(); 
 		 
+		//add all info
 		fullPanel.add(panel);
 		panel = peopleGuess(); 
 		fullPanel.add(panel);
@@ -48,7 +50,7 @@ public class DetectiveNotesGUI extends JDialog {
 		
 	}
 	
-
+	//create people check boxes
 	private JPanel people() {
 		 
 		JPanel panel = new JPanel();
@@ -65,6 +67,7 @@ public class DetectiveNotesGUI extends JDialog {
 		return panel;
 	}
 	
+	//create weapon check boxes
 	private JPanel weapons() {
 		 
 			JPanel panel = new JPanel();
@@ -81,6 +84,7 @@ public class DetectiveNotesGUI extends JDialog {
 			return panel;
 	}
 	
+	//create room check boxes
 	private JPanel rooms() {
 		 
 			JPanel panel = new JPanel();
@@ -127,18 +131,5 @@ public class DetectiveNotesGUI extends JDialog {
 		return panel;
 	}
 
-	
-	public static void main(String[] args) {
-		// Create a JFrame with all the normal functionality
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("Detective Notes");
-		frame.setSize(250, 150);	
-		// Create the JPanel and add it to the JFrame
-		DetectiveNotesGUI gui = new DetectiveNotesGUI();
-		frame.add(gui, BorderLayout.CENTER);
-		// Now let's view it
-		frame.setVisible(true);
-	}
 
 }

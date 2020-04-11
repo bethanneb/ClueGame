@@ -34,6 +34,7 @@ public class CardDisplayGUI extends JPanel{
 			myCards = temp.getMyCards(); 
 		}
 
+		//puts all cards in respective categories
 		for (Card temp: myCards) { 
 			if (temp.getCardType() == CardType.PERSON) { 
 				people.add(temp); 
@@ -47,8 +48,8 @@ public class CardDisplayGUI extends JPanel{
 		}
 
 
+		//add all info in desired layout
 		setBorder(new TitledBorder (new EtchedBorder(), "My Cards"));
-
 		ArrayList<JPanel> panels = new ArrayList<JPanel>();
 
 
@@ -81,8 +82,6 @@ public class CardDisplayGUI extends JPanel{
 
 		}
 
-
-
 		panel.setLayout(new GridLayout(3,1));
 
 
@@ -102,8 +101,6 @@ public class CardDisplayGUI extends JPanel{
 			panel.add(textName);
 
 		}
-
-
 
 		panel.setLayout(new GridLayout(3,1));
 

@@ -716,17 +716,17 @@ public class Board extends JPanel implements MouseListener {
 	//C21A
 	public void paintComponent (Graphics g)
 	{
-		// paintComponent method for drawing the board. It is drawn in an object-oriented manner
-		// use an object-oriented approach that has each BoardCell object draw itself.
+
 		super.paintComponent(g);
-		// NOTE: call each BoardCell object to draw itself.
-		// the draw method from BoardCell class will be called
+
+		//draws board
 		for ( int i = 21; i >= 0; i--){
 			for ( int j = 21; j >= 0; j--){
 				getCellAt(i, j).draw(g);
 			}
 		}
-		
+
+		//labels rooms
 		g.setColor(Color.BLACK);
 		g.drawString("Kitchen", 110, 60);
 		g.drawString("Jim's Desk", 232, 50);
@@ -741,7 +741,8 @@ public class Board extends JPanel implements MouseListener {
 		g.drawString("Michael's Office", 101, 450);
 		g.drawString("Break Room", 305, 440);
 		g.drawString("Warehouse", 500, 440);
-		
+
+		//draws players
 		for(Player p: playersList) {
 			p.draw(g);
 		}
@@ -934,7 +935,7 @@ public class Board extends JPanel implements MouseListener {
 			repaint();
 		}
 	}
-	
+
 	public Card handleSuggestion(ComputerPlayer computerPlayer) {
 
 		int row = computerPlayer.getCurrentRow(); 
@@ -954,7 +955,7 @@ public class Board extends JPanel implements MouseListener {
 				Card temp = tempPlayer.disproveSuggestion(computerPlayer.createdSoln); 
 				if ( temp == null) {}
 				else { foundCards.add(temp); }
-				
+
 			}
 		}
 
@@ -1136,6 +1137,9 @@ public class Board extends JPanel implements MouseListener {
 		JOptionPane.showMessageDialog(null, message);
 	}
 	
+
+
+
 
 
 
