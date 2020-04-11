@@ -8,6 +8,7 @@ package clueGame;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 
 public class BoardCell {
 	private int row;
@@ -182,6 +183,20 @@ public class BoardCell {
 			this.color = Color.GRAY;
 			g.setColor(this.color);
 			g.fillRect(this.pixel.x , this.pixel.y, WIDTH, HEIGHT);
+		}
+	}
+	
+	//C22A
+	public boolean containsClick(int mouseX, int mouseY) {
+		Rectangle rect = new Rectangle(pixel.x, pixel.y, WIDTH, HEIGHT);
+		if (rect.contains(new Point(mouseX, mouseY)))
+		{
+			System.out.println("Click was found to be in a cell: BoardCell class");
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 
