@@ -5,10 +5,14 @@
 
 package clueGame;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -26,12 +30,15 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.UIManager;
 
-public class Board extends JPanel {
+public class Board extends JPanel implements MouseListener {
 	public static final int MAX_BOARD_SIZE = 50;
 	public static final int DECK_SIZE = 25;
 	public static final int NUM_WEAPONS = 8;
@@ -53,6 +60,7 @@ public class Board extends JPanel {
 	private Card[] cards;
 	public Solution solution;
 	private Player[] players;
+	public Suggestion suggest;
 
 	private Solution answerKey = new Solution();
 	// Set that would hold the computer player
@@ -218,7 +226,7 @@ public class Board extends JPanel {
 			loadBoardConfig();
 			loadConfigFiles();
 			loadCards();
-			humanPlayer = new HashSet<HumanPlayer>();
+			//humanPlayer = new HashSet<HumanPlayer>();
 			//deal the deck of cards
 			dealCards();
 			//find adjacencies (ADD THIS IN?)
@@ -764,7 +772,7 @@ public class Board extends JPanel {
 			this.dieRollValue = rollDie(); 
 		}
 		else {
-			JOptionPane.showMessageDialog(null, "You must take your turn", "Message", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Take your turn", "Message", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
@@ -839,7 +847,7 @@ public class Board extends JPanel {
 	{
 
 		//System.out.println("Current Player: " + currentPlayerInGame.getPlayerName());
-		if (this.currentPlayerInGame.getPlayerName().equals("CompSci"))
+		if (this.currentPlayerInGame.getPlayerName().equals("Michael Scott"))
 		{
 			this.doneWithHuman = false;
 			this.targetSelected = false; 
@@ -854,11 +862,13 @@ public class Board extends JPanel {
 
 
 
-		if (this.currentPlayerInGame.getPlayerName().equals("MechE")  		|| 
-				this.currentPlayerInGame.getPlayerName().equals("ChemE") 	|| 
-				this.currentPlayerInGame.getPlayerName().equals("Mining")	|| 
-				this.currentPlayerInGame.getPlayerName().equals("Geology")	||
-				this.currentPlayerInGame.getPlayerName().equals("Physics"))
+		if (this.currentPlayerInGame.getPlayerName().equals("Dwight Schrute")  		|| 
+				this.currentPlayerInGame.getPlayerName().equals("Jim Halpert") 	|| 
+				this.currentPlayerInGame.getPlayerName().equals("Pam Halpert")	|| 
+				this.currentPlayerInGame.getPlayerName().equals("Kevin Malone")	||
+				this.currentPlayerInGame.getPlayerName().equals("Andy Bernard") 	|| 
+				this.currentPlayerInGame.getPlayerName().equals("Oscar Martinez")	|| 
+				this.currentPlayerInGame.getPlayerName().equals("Angela Martin"))
 		{
 			this.doneWithComputer = false;
 			int row = this.currentPlayerInGame.getCurrentRow(); 
@@ -984,7 +994,149 @@ public class Board extends JPanel {
 		myFrame.setVisible(false);
 		myFrame.dispose();
 	}
+	
+	//C22A
+	public void mouseClicked (MouseEvent event) {
+		if ( this.targetSelected == false && inWindow == false )
+		{
+			BoardCell whichBox = null;
+			//selectedBox = null;
+			// FIXME
+			for ( int i = 0; i < 22; i++)
+			{
+				for ( int j = 0; j < 23; j++)
+				{
+					if (getCellAt(i, j).containsClick(event.getX(), event.getY()))
+					{
+						whichBox = getCellAt(i, j);
+						repaint();
+						break;
+					}
 
+				}
+			}
+			// NOTE: checking to see if the clicked BoardCell was part of the targets HashSet
+			if (whichBox != null)
+			{
+				if ( targets.contains(whichBox)) 
+				{
+					selectedBox = whichBox;
+					repaint();
+					
+					if (whichBox.isDoorway()) 
+					{
+
+						inWindow = true; 
+						
+						myFrame = new JFrame("Suggestion");
+						myFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+						try 
+						{
+							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+
+						
+						char i = whichBox.getInitial(); 
+						String currentRoom = ""; 
+						for (String temp : rooms) { 
+							if(i == temp.charAt(0)) { 
+								currentRoom = temp;
+								break;
+							}
+						}
+						
+						
+						
+						JPanel myPanel = new JPanel();
+						suggest = new Suggestion(currentRoom); 
+
+						myPanel = suggest; 
+
+						
+						myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
+						myPanel.setOpaque(true);
+
+						JTextArea text = new JTextArea(15, 50);
+						text.setEditable(false);
+						text.setFont(Font.getFont(Font.SANS_SERIF));
+						JPanel input = new JPanel(); 
+						input.setLayout(new FlowLayout()); 
+						myPanel.add(input);
+
+						myFrame.getContentPane().add(BorderLayout.CENTER, myPanel); 
+						myFrame.pack();
+						myFrame.setLocationByPlatform(true);
+						myFrame.setVisible(true);
+						myFrame.setResizable(false);
+						inWindow = false; 
+					}
+					GamePlay();
+					this.targetSelected = true; 
+					return;
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "That is not a target", "Message", JOptionPane.INFORMATION_MESSAGE);
+					repaint();
+					GamePlay();
+					return;
+				}
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "That is not a target", "Message", JOptionPane.INFORMATION_MESSAGE);
+				//System.out.println("Box selected was not a box");
+				repaint();
+			}
+			revalidate();
+			repaint();
+		}
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void incorrectAccusation(Solution soln) { 
+
+		String message = "Incorrect guess. " + soln.getPerson() + " " + soln.getWeapon() + " " 
+				+ soln.getRoom() + " was not the answer. "; 
+
+		JOptionPane.showMessageDialog(null, message);
+	}
+	
+	public void correctAccuation(Solution soln) { 
+		String message = "You win! " + soln.getPerson() + " " + soln.getWeapon() + " " + 
+				soln.getRoom() + " was the correct answer!"; 
+
+		JOptionPane.showMessageDialog(null, message);
+	}
+	
 
 
 

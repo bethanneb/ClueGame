@@ -102,8 +102,13 @@ public class ClueGame extends JFrame {
 		Set<HumanPlayer>  humanPlayer = new HashSet<HumanPlayer>();
 		humanPlayer = board.getHumanPlayer();
 		String humanName = "";
-		for (HumanPlayer human: humanPlayer)
-		{ humanName = human.getPlayerName(); }
+		for (HumanPlayer human: humanPlayer) { 
+			humanName = human.getPlayerName();
+			System.out.println("Name: " + human.getPlayerName());
+			}
+
+		String message = "You are " + humanName + ", press Next Player to begin play";
+		JOptionPane.showMessageDialog(frame, message, "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
 
 		
 		 
