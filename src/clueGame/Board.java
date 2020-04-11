@@ -218,6 +218,7 @@ public class Board extends JPanel {
 			loadBoardConfig();
 			loadConfigFiles();
 			loadCards();
+			humanPlayer = new HashSet<HumanPlayer>();
 			//deal the deck of cards
 			dealCards();
 			//find adjacencies (ADD THIS IN?)
@@ -418,7 +419,7 @@ public class Board extends JPanel {
 	//I think it could be to load in players and cards because they are both .txt files
 	public void loadConfigFiles() throws FileNotFoundException, BadConfigFormatException {
 		playersList = new ArrayList<Player>();
-		humanPlayer = new HashSet<HumanPlayer>();
+		//humanPlayer = new HashSet<HumanPlayer>();
 		BufferedReader reader = null;
 		try {
 			//read entire file and put into standard characters (we had some issues with special characters so we used BufferedReader)
