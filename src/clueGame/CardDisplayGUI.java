@@ -5,6 +5,7 @@
 package clueGame;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
@@ -69,13 +70,15 @@ public class CardDisplayGUI extends JPanel{
 
 	}
 
+	//add person card
 	private JPanel personPanel() {
 
 		JPanel panel = new JPanel();
 		
 		for (Card temp: people) {
 			String name = temp.getCardName();
-			JTextField textName = new JTextField(name); 
+			JTextField textName = new JTextField(name);
+			textName.setBackground(Color.WHITE);
 			textName.setEditable(false);
 			
 			panel.add(textName);
@@ -89,6 +92,7 @@ public class CardDisplayGUI extends JPanel{
 		return panel;
 	}
 
+	//add weapon card
 	private JPanel weaponPanel() {
 
 		JPanel panel = new JPanel();
@@ -96,6 +100,7 @@ public class CardDisplayGUI extends JPanel{
 		for (Card temp: weapons) {
 			String name = temp.getCardName();
 			JTextField textName = new JTextField(name); 
+			textName.setBackground(Color.WHITE);
 			textName.setEditable(false);
 			
 			panel.add(textName);
@@ -109,6 +114,7 @@ public class CardDisplayGUI extends JPanel{
 		return panel;
 	}
 
+	//add room card
 	private JPanel roomPanel() {
 
 		JPanel panel = new JPanel();
@@ -116,13 +122,12 @@ public class CardDisplayGUI extends JPanel{
 		for (Card temp: rooms) {
 			String name = temp.getCardName();
 			JTextField textName = new JTextField(name); 
+			textName.setBackground(Color.WHITE);
 			textName.setEditable(false);
 			
 			panel.add(textName);
 
 		}
-
-
 
 		panel.setLayout(new GridLayout(3,1));
 
