@@ -2,13 +2,16 @@
 package clueGame;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
@@ -25,8 +28,8 @@ public class ControlGUI extends JPanel {
 		private JTextField currentGuess;
 		private JTextField currentResult;
 		JFrame accusationWindow = new JFrame("Accusation");
-//		Accusation accusationClass = new Accusation();
-//		Suggestion suggestionHuman = new Suggestion("");
+		Accusation accusationClass = new Accusation();
+		Suggestion suggestionHuman = new Suggestion("");
 
 
 	public ControlGUI() {
@@ -71,8 +74,75 @@ public class ControlGUI extends JPanel {
 		JButton nextPlayer = new JButton("Next player");
 		JPanel panel = new JPanel();
 		panel.add(nextPlayer);
+		// NOTE: nextPlayer needs to be a listener
+		nextPlayer.addActionListener(new NextPlayerButtonListener());
+		// TODO accusation need to addActionListener
+		JButton accusation = new JButton("Make an accusation");
+		accusation.addActionListener(new MakeAccusationButtonListener());
+		panel.add(accusation); 
 		return panel;
 	}
+	
+	//We decided to implement this class within this one to make it easier to access certain variables
+	private class NextPlayerButtonListener implements ActionListener
+	{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (board.doneWithHuman) // && board.inWindow == false) 
+			{
+				
+				// TODO call appropriate methods in the Board Class for processing 
+				board.nextPlayerButtonMethod();
+				// TODO need to refresh the createDiePanel and createNamePanel
+				refreshDieAndNamePanel();
+				board.GamePlay();
+				//refreshGuessResultPanels(); //ADD FUNCTION LATER?
+			}
+		}
+	}
+	
+	public void refreshDieAndNamePanel() {
+		this.currentName.setText(board.whoIsTheCurrentPLayer().getPlayerName());  
+		this.currentName.setEditable(false);
+		this.currentDie.setText(String.valueOf(board.currentDieRollValue()));
+		//this.currentPlayerAndDieRoll.repaint();
+	}
+	
+	private class MakeAccusationButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent event)
+		{
+			
+			accusationWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			try
+			{
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			
+			JPanel accusationPanel = new JPanel();
+			
+			accusationPanel = accusationClass;
+			accusationPanel.setLayout(new BoxLayout(accusationPanel, BoxLayout.Y_AXIS));
+			accusationPanel.setOpaque(true);
+			
+			accusationWindow.getContentPane().add(BorderLayout.CENTER, accusationPanel);
+			accusationWindow.pack();
+			accusationWindow.setLocationByPlatform(true);
+			accusationWindow.setVisible(true);
+			accusationWindow.setResizable(true);
+			accusationClass.passFrame(accusationWindow);
+		}
+	}
+
+	
+	
+	
+	
 
 	//panel 3
 	private JPanel createAccusationButtonPanel() {

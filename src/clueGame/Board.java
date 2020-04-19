@@ -1135,6 +1135,16 @@ public class Board extends JPanel implements MouseListener {
 		JOptionPane.showMessageDialog(null, message);
 	}
 	
+	//C23A
+	public void buildGamePlayers() {
+		for (HumanPlayer human: humanPlayer)
+		{ this.gamePlayers.add(human); }
+		for (ComputerPlayer computer: computerPlayers)
+		{ this.gamePlayers.add(computer); }
+		//for (Player computer: this.gamePlayers)
+		//{ System.out.println(computer.getPlayerName()); }
+	}
+	
 
 
 
