@@ -1,4 +1,4 @@
-  
+
 package clueGame;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -46,7 +46,8 @@ public class ControlGUI extends JPanel {
 		add(panel5);
 		add(panel6);
 	}
-	
+
+	//panel 1
 	public JPanel createNamePanel() {
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
