@@ -116,10 +116,10 @@ public class Board extends JPanel implements MouseListener {
 		super();
 		visited = new HashSet<BoardCell>(); //should we set these up here? might be inefficient.
 		targets = new HashSet<BoardCell>();
-		this.boardConfigFile = "OurClueLayout.csv";
-		this.roomConfigFile = "OurClueLegend.txt";
+		boardConfigFile = "OurClueLayout.csv";
+		roomConfigFile = "OurClueLegend.txt";
 		Player emptyPlayer = new Player();
-		this.currentPlayerInGame = emptyPlayer;
+		currentPlayerInGame = emptyPlayer;
 		//		this.panel = new JPanel();
 		//		JLabel name = new JLabel("Clue Game Board");
 		//		panel.add(name);
@@ -458,21 +458,17 @@ public class Board extends JPanel implements MouseListener {
 				//convert string with color name into color
 				Color color = convertColor(colorString);
 
-				// Michael is human player and Jim is computer player, otherwise just normal player
+				// Michael is human player
 				if(name.equals("Michael Scott")){
 					HumanPlayer player1 = new HumanPlayer(name, row, column, color);
 					playersList.add(player1);
 					humanPlayer.add(player1);
 				}
-				else if(name.equals("Jim Halpert")) {
+				else {
 					ComputerPlayer player2 = new ComputerPlayer(name, row, column, color);
 					playersList.add(player2);
 				}
-				else {
-					Player player3 = new Player(name, row, column, color);
-					playersList.add(player3);
-				}
-
+				
 				//NEW
 				Card people = new Card (splits[0], CardType.PERSON);
 				peoplePile.add(people);
@@ -710,7 +706,7 @@ public class Board extends JPanel implements MouseListener {
 	}
 
 	public Player whoIsTheCurrentPLayer() { 
-		return this.currentPlayerInGame; // NOTE: Empty player was made to return when game first starts  
+		return currentPlayerInGame; // NOTE: Empty player was made to return when game first starts  
 	}
 
 	//C21A
