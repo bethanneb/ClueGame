@@ -38,6 +38,8 @@ public class ControlGUI extends JPanel {
 		JPanel panel4 = createDiePanel(); 
 		JPanel panel5 = createGuessPanel(); 
 		JPanel panel6 = createGuessResultPanel(); 
+		System.out.println("Current Player: " + board.whoIsTheCurrentPLayer().getPlayerName());
+		currentName = new JTextField(board.whoIsTheCurrentPLayer().getPlayerName());
 
 		add(panel1);
 		add(panel2); 
@@ -52,10 +54,13 @@ public class ControlGUI extends JPanel {
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
 		panel.setLayout(new GridLayout(1,2));
+		//JLabel nameLabel = new JLabel("Name");
 		JTextField name = new JTextField(); 
 		// blank gray box aka nothing is in it yet
 		name.setEditable(false);
-		
+		currentName.setEditable(false);
+		panel.add(currentName);
+		//panel.add(nameLabel);
 		panel.add(name);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Whose turn?"));
 		return panel;

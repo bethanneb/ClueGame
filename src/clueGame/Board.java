@@ -843,10 +843,8 @@ public class Board extends JPanel implements MouseListener {
 		return false; 
 	}	
 
-	public void GamePlay()
-	{
+	public void GamePlay() {
 
-		//System.out.println("Current Player: " + currentPlayerInGame.getPlayerName());
 		if (this.currentPlayerInGame.getPlayerName().equals("Michael Scott"))
 		{
 			this.doneWithHuman = false;
