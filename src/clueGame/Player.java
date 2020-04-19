@@ -41,6 +41,19 @@ public class Player {
 		this.colorMain = Color.white;
 	}
 	
+	// Player parameterized constructors
+	public Player( String name, String color, int r, int c ) {
+		this.playerName = name;
+		this.currentRow = r;
+		this.currentColumn = c;
+		this.colorMain = convertColor(color);
+		this.myCards = new HashSet<Card>();
+		this.seenCards = new HashSet<Card>();
+		// can draw with correct scaling 
+		pixel = new Point (this.row * 22 + 15, this.column * 22 + 100);
+		
+	}
+	
 	public Player(String playerName, int row, int column, Color color) {
 		super();
 		this.playerName = playerName;
@@ -51,16 +64,6 @@ public class Player {
 		seenCards = new HashSet<Card>();
 		// can draw with correct scaling 
 		pixel = new Point (this.row * 22 + 15, this.column * 22 + 100);
-	}
-
-	public Player( String name, String color, int r, int c ) {
-		this.playerName = name;
-		this.row = r;
-		this.column = c;
-		this.color = convertColor(color);
-		this.myCards = new HashSet<Card>();
-		this.seenCards = new HashSet<Card>();
-
 	}
 
 	public Color convertColor (String strColor) {
