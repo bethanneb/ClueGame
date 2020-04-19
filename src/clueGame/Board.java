@@ -712,7 +712,6 @@ public class Board extends JPanel implements MouseListener {
 	//C21A
 	public void paintComponent (Graphics g)
 	{
-
 		super.paintComponent(g);
 
 		//draws board
@@ -751,21 +750,31 @@ public class Board extends JPanel implements MouseListener {
 	}
 
 	public int currentDieRollValue() { 
-		return this.dieRollValue; 
+		return dieRollValue; 
 	}
 
 	public void nextPlayerButtonMethod() {
-		if (this.targetSelected) {
+		if (targetSelected) {
 			// this method will be called when the "Next Player" button is clicked on
-			if (this.currentPlayerInGameCount == -1) this.currentPlayerInGameCount = 0;
-			else if (this.currentPlayerInGameCount == 5) this.currentPlayerInGameCount = 0;
-			else { this.currentPlayerInGameCount ++; }
+			if (currentPlayerInGameCount == -1) {
+				currentPlayerInGameCount = 0;
+			}
+			else if (currentPlayerInGameCount == 7) {
+				currentPlayerInGameCount = 0;
+			}
+			else {
+				currentPlayerInGameCount ++; 
+			}
 			// NOTE: updating the current player 
 			Player emptyPlayer = new Player();
-			if (this.currentPlayerInGameCount == -1) this.currentPlayerInGame = emptyPlayer;
-			else { this.currentPlayerInGame = this.gamePlayers.get(this.currentPlayerInGameCount); }
+			if (currentPlayerInGameCount == -1) {
+				currentPlayerInGame = emptyPlayer;
+			}
+			else{
+				currentPlayerInGame = playersList.get(currentPlayerInGameCount);
+			}
 
-			this.dieRollValue = rollDie(); 
+			dieRollValue = rollDie(); 
 		}
 		else {
 			JOptionPane.showMessageDialog(null, "Take your turn", "Message", JOptionPane.INFORMATION_MESSAGE);
@@ -776,18 +785,10 @@ public class Board extends JPanel implements MouseListener {
 		// NOTE: random dice roll used to the pathLength in calcTargets
 		Random rand = new Random(); 
 		int dieRoll = rand.nextInt(6) + 1; 
-
-		dieRoll = 6; // FIX AFTER TESTING 
-
 		return dieRoll;  
 	}
 
 	public boolean updateHumanPosition(int col, int row, int pathlength, Player player) { 	
-
-		//System.out.println("Col: " + col);
-		///System.out.println("Row: " + row);
-		//System.out.println("pathlength: " + pathlength);
-		//System.out.println("Player information: " + player.getPlayerName());
 		// NOTE: need to update the original set that holds the human player
 		for (HumanPlayer human: humanPlayer)
 		{
@@ -795,7 +796,7 @@ public class Board extends JPanel implements MouseListener {
 			{
 				// NOTE: update the "original" human player with the player's changed location
 				human.updatePosition(col, row);
-				this.doneWithHuman = true;	
+				doneWithHuman = true;	
 				revalidate();
 				repaint();
 
@@ -840,45 +841,37 @@ public class Board extends JPanel implements MouseListener {
 	}	
 
 	public void GamePlay() {
-
-		if (this.currentPlayerInGame.getPlayerName().equals("Michael Scott"))
-		{
-			this.doneWithHuman = false;
-			this.targetSelected = false; 
-			int row = this.currentPlayerInGame.getCurrentRow();
-			int col = this.currentPlayerInGame.getCurrentColumn();
-			calcTargets(col, row, this.dieRollValue);
+		
+		if (currentPlayerInGame.getPlayerName().equals("Michael Scott")){
+			doneWithHuman = false;
+			targetSelected = false; 
+			int row = currentPlayerInGame.getCurrentRow();
+			int col = currentPlayerInGame.getCurrentColumn();
+			calcTargets(col, row, currentDieRollValue());
 			repaint();
 
-			this.updateHumanPosition(selectedBox.getCol(), selectedBox.getRow(), dieRollValue, this.currentPlayerInGame);  //ERROR
+			updateHumanPosition(selectedBox.getCol(), selectedBox.getRow(), currentDieRollValue(), currentPlayerInGame);  //ERROR
 			repaint();
 		}
 
 
 
-		if (this.currentPlayerInGame.getPlayerName().equals("Dwight Schrute")  		|| 
-				this.currentPlayerInGame.getPlayerName().equals("Jim Halpert") 	|| 
-				this.currentPlayerInGame.getPlayerName().equals("Pam Halpert")	|| 
-				this.currentPlayerInGame.getPlayerName().equals("Kevin Malone")	||
-				this.currentPlayerInGame.getPlayerName().equals("Andy Bernard") 	|| 
-				this.currentPlayerInGame.getPlayerName().equals("Oscar Martinez")	|| 
-				this.currentPlayerInGame.getPlayerName().equals("Angela Martin"))
-		{
-			this.doneWithComputer = false;
-			int row = this.currentPlayerInGame.getCurrentRow(); 
-			int col = this.currentPlayerInGame.getCurrentColumn();
+		else {
+			doneWithComputer = false;
+			int row = currentPlayerInGame.getCurrentRow(); 
+			int col = currentPlayerInGame.getCurrentColumn();
 			Card returnCardAnswer = new Card(); /* = generated Card created when handleSuggestion is called */
 
 
 			repaint();
-			this.updateComputerPosition(col, row, this.dieRollValue, this.currentPlayerInGame);
+			updateComputerPosition(col, row, currentDieRollValue(), currentPlayerInGame);
 			// TODO
-			if (this.compReadyMakeAccusation && !this.compSuggestionDisproved)
+			if (compReadyMakeAccusation && !compSuggestionDisproved)
 			{
 				// make an accusation, the accusation will be the previous suggestion 
 				for (ComputerPlayer computer : computerPlayers)
 				{
-					if (computer.getPlayerName().equals(this.currentPlayerInGame.getPlayerName())) /* find the computer that matches this.currentPlayerInGame */
+					if (computer.getPlayerName().equals(currentPlayerInGame.getPlayerName())) /* find the computer that matches this.currentPlayerInGame */
 					{
 						// create one string that will be used in the JOptionPane
 						Solution computerAnswer = new Solution();
@@ -1130,16 +1123,7 @@ public class Board extends JPanel implements MouseListener {
 
 		JOptionPane.showMessageDialog(null, message);
 	}
-	
-	//C23A
-	public void buildGamePlayers() {
-		for (HumanPlayer human: humanPlayer)
-		{ this.gamePlayers.add(human); }
-		for (ComputerPlayer computer: computerPlayers)
-		{ this.gamePlayers.add(computer); }
-		//for (Player computer: this.gamePlayers)
-		//{ System.out.println(computer.getPlayerName()); }
-	}
+
 	
 
 

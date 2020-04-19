@@ -35,7 +35,6 @@ public class Accusation extends JPanel {
 		board.setConfigFiles("OurClueLayout.csv", "OurClueLegend.txt");	
 		board.setCardFiles("Players.txt", "Cards.txt");
 		board.initialize();
-		board.buildGamePlayers();
 		peopleAnswer = "";
 		roomAnswer = "";
 		weaponAnswer = "";

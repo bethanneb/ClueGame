@@ -145,8 +145,8 @@ public class ControlGUI extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (board.doneWithHuman) // && board.inWindow == false) 
-			{
+			//if (board.doneWithHuman) // && board.inWindow == false) 
+			//{
 
 				// TODO call appropriate methods in the Board Class for processing 
 				board.nextPlayerButtonMethod();
@@ -154,7 +154,7 @@ public class ControlGUI extends JPanel {
 				refreshDieAndNamePanel();
 				board.GamePlay();
 				//refreshGuessResultPanels(); //ADD FUNCTION LATER?
-			}
+			//}
 		}
 	}
 

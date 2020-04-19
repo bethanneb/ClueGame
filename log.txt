@@ -1,14 +1,126 @@
+commit c24468aa33dc1b84e9c98ecc198ed9f8f220f865
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Sun Apr 19 15:29:37 2020 -0600
+
+    fixed null point error in control gui
+
+commit 8d82a685931edf668b3b4b31805a748c83cef946
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Apr 19 14:10:42 2020 -0600
+
+    Tried to fix issues in ControlGUI; unsuccessful but added other stuff for for the GUI board
+
+commit 255b7501ad30485a28b40a8f9274fe89589d7434
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sat Apr 18 22:54:47 2020 -0600
+
+    Added Accusation class and changed NextPlayerButtonPanel function in controlGUI; added some classes withing that class just to make things easier because of variable access; still only errors in controlGUI from trying to cahnge NamePanel function in controlGUI
+
+commit fbe5251436589b570af539652396ee4bf93f59ef
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sat Apr 18 21:29:03 2020 -0600
+
+    Having issues with theControlGUI class; trying to add names of player's to indicate who's turn it is
+
+commit 1953ce9a40f95c78c0b3e3b831465bc3f7f5dff6
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sat Apr 18 20:53:12 2020 -0600
+
+    Caused some data allocation issues but not sure how
+
+commit ce15af0eb1eb115d8a4bf6f9fc3e26bdd10d935b
+Merge: 6268e6f fb52b32
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sat Apr 18 20:46:10 2020 -0600
+
+    Merge branch 'master' of https://github.com/bethanneb/ClueGame
+
+commit 6268e6f12a117ad3894a01e888dcc50dd17cf16e
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sat Apr 18 20:46:04 2020 -0600
+
+    Implementing moving players
+
+commit fb52b32dfd458231bb7116cbb80294aa9f6c85ab
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Mon Apr 13 11:52:02 2020 -0600
+
+    made card boxes white and added comments
+
+commit f86de0fd6efff78bafb59e9f1689756e35a63891
+Merge: 3cd635f bddbfc2
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sat Apr 11 01:35:18 2020 -0600
+
+    Merge branch 'master' of https://github.com/bethanneb/ClueGame
+
+commit 3cd635fba99fad2aba4b9b636dcd0f07b1ef4523
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sat Apr 11 01:35:14 2020 -0600
+
+    Splash Screen and card display working as far as I can tell; not sure if we are done with control GUI yet
+
+commit 4f99460b71a8b20500ca59e4a3ba91c6da29bed7
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sat Apr 11 01:17:31 2020 -0600
+
+    Added Suggestion class to git repo
+
+commit eeba76b90af3f21bdaf3141e00b3ab6b06089908
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sat Apr 11 01:17:05 2020 -0600
+
+    Added Suggestion class, and function to Board such as GamePlay; GUI Board now says welcome Player...etc.
+
+commit 75a59f7458d139ac9abc6b10d58797a0e90a5e02
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sat Apr 11 00:51:39 2020 -0600
+
+    Started adding splash screen messages, and functions to determine if they clicked their mouse
+
+commit bddbfc2e92cd9b508c81f6500a5abdc2094091ab
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Fri Apr 10 19:28:34 2020 -0600
+
+    put all new stuff back
+
 commit f9ad58a093defd6250d0840f3933f1d3fdd4270d
 Author: dbunavi <dbunavi@mymail.mines.edu>
 Date:   Fri Apr 10 19:22:56 2020 -0600
 
     added comments
 
+commit 25d0590741653fdc4c0f2deda3388c263641b96c
+Merge: 4798b16 9b74ba6
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 10 18:58:16 2020 -0600
+
+    Merge branch 'master' of https://github.com/bethanneb/ClueGame
+
+commit 4798b164ea90369a29af58c7ea8a6bdf4de49e07
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 10 18:58:10 2020 -0600
+
+    GUI stuff
+
 commit 9b74ba6d48b49703b5370b54f5b1da37edbe27e4
 Author: dbunavi <dbunavi@mymail.mines.edu>
 Date:   Fri Apr 10 18:56:57 2020 -0600
 
     added file menu bar and fixed detective notes
+
+commit c8833fc84ad952f1627e66c4ef4650bf1c4fc1cf
+Merge: f715f2c eb70cc8
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 10 18:07:47 2020 -0600
+
+    Merge branch 'master' of https://github.com/bethanneb/ClueGame
+
+commit f715f2c83a07f6bb47f7a9fd45174df3640d1f49
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 10 18:07:43 2020 -0600
+
+    Fixed some bugs in ControlGUI
 
 commit eb70cc8255183fe0f6f1062b1d7465e269981e18
 Author: dbunavi <dbunavi@mymail.mines.edu>
@@ -21,6 +133,19 @@ Author: dbunavi <dbunavi@mymail.mines.edu>
 Date:   Fri Apr 10 17:59:30 2020 -0600
 
     fixed minor things in detective notes
+
+commit 623f8224bcffe91e7ffff90fbd1b01461c491686
+Merge: 9799ff3 573b93b
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 10 17:56:40 2020 -0600
+
+    Merged controlGUI
+
+commit 9799ff38ce43ba51a66e537f5162e5a00afcf55f
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Fri Apr 10 17:55:31 2020 -0600
+
+    GUI
 
 commit 573b93b55b8e19cd8a6eb90b7ceea9a81d09f6a9
 Author: dbunavi <dbunavi@mymail.mines.edu>
