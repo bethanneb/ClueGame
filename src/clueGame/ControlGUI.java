@@ -86,7 +86,7 @@ public class ControlGUI extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1,0));
 		// TODO accusation need to addActionListener
-		accusation.addActionListener(new MakeAccusationButtonListener());
+		//accusation.addActionListener(new MakeAccusationButtonListener());
 		panel.add(accusation); 
 		return panel;
 	}
@@ -162,7 +162,7 @@ public class ControlGUI extends JPanel {
 		this.currentName.setText(board.whoIsTheCurrentPLayer().getPlayerName());  
 		this.currentName.setEditable(false);
 		this.currentDie.setText(String.valueOf(board.currentDieRollValue()));
-		//this.currentPlayerAndDieRoll.repaint();
+		this.currentPlayerAndDieRoll.repaint();
 	}
 
 	private class MakeAccusationButtonListener implements ActionListener
@@ -194,9 +194,6 @@ public class ControlGUI extends JPanel {
 			accusationClass.passFrame(accusationWindow);
 		}
 	}
-
-
-
 
 	public static void main(String[] args) {
 		// Create a JFrame with all the normal functionality
