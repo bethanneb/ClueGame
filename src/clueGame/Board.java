@@ -710,7 +710,7 @@ public class Board extends JPanel implements MouseListener {
 	}
 
 	public Player whoIsTheCurrentPLayer() { 
-		return this.currentPlayerInGame; /* NOTE: Empty player was made to return when game first starts */  
+		return this.currentPlayerInGame; // NOTE: Empty player was made to return when game first starts  
 	}
 
 	//C21A
