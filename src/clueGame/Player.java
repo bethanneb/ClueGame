@@ -157,10 +157,10 @@ public class Player {
 	}
 	
 	public void updatePosition(int r, int c) { 
-		previousColumn = currentColumn; 
-		currentColumn = c; 
-		previousRow = currentRow; 
-		currentRow = r; 
+		previousColumn = column; 
+		column = c; 
+		previousRow = row; 
+		row = r; 
 	}
 	
 	public int getPreviousColumn() {
