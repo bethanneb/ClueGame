@@ -710,8 +710,7 @@ public class Board extends JPanel implements MouseListener {
 	}
 
 	//C21A
-	public void paintComponent (Graphics g)
-	{
+	public void paintComponent (Graphics g) {
 		super.paintComponent(g);
 
 		//draws board
@@ -754,6 +753,7 @@ public class Board extends JPanel implements MouseListener {
 				g.fillOval(pixel.x, pixel.y, 30, 30);
 			}
 		}
+		//end of C23A additions
 
 		//labels rooms
 		g.setColor(Color.BLACK);
@@ -1018,7 +1018,7 @@ public class Board extends JPanel implements MouseListener {
 		myFrame.dispose();
 	}
 	
-	//C22A
+	//C23A
 	public void mouseClicked (MouseEvent event) {
 		if ( this.targetSelected == false && inWindow == false )
 		{
