@@ -471,6 +471,7 @@ public class Board extends JPanel {
 				else {
 					ComputerPlayer player2 = new ComputerPlayer(name, row, column, color);
 					playersList.add(player2);
+					computerPlayers.add(player2);
 				}
 
 				//NEW
@@ -744,14 +745,13 @@ public class Board extends JPanel {
 
 		if (!currentPlayerInGame.getPlayerName().equals("Michael Scott") && this.doneWithComputer)
 		{
-			for ( ComputerPlayer comp: computerPlayers)
-			{
-				int x = comp.getCurrentRow();
-				int y = comp.getCurrentColumn();
+			for ( ComputerPlayer comp: computerPlayers){
+				int x = comp.getRow();
+				int y = comp.getColumn();
 				Color color = comp.getColor();
 				g.setColor(color);
-				Point pixel = new Point( x * 32 + 50, y * 32 + 50);
-				g.fillOval(pixel.x, pixel.y, 30, 30);
+				Point pixel = new Point(x*22+15, y*22+100);
+				g.fillOval(pixel.y, pixel.x, 20, 20);
 			}
 		}
 		//end of C23A additions
@@ -809,8 +809,7 @@ public class Board extends JPanel {
 				currentPlayerInGame = playersList.get(currentPlayerInGameCount);
 			}
 
-			dieRollValue = rollDie(); 
-			//targetSelected = false;
+			dieRollValue = rollDie();
 			//System.out.println("Next roll:" + dieRollValue);
 		}
 		else {
@@ -860,13 +859,12 @@ public class Board extends JPanel {
 		int c = possibleTargets.get(location).getCol(); 
 		int r = possibleTargets.get(location).getRow(); 
 		// NOTE: need to update the original set that holds the computer players
-		for ( ComputerPlayer computer: computerPlayers)
-		{
+		for ( ComputerPlayer computer: computerPlayers){
 			// NOTE: ONLY change the player that is passed in
 			if (player.getPlayerName().equals(computer.getPlayerName()))
 			{
 				// NOTE: update the "original" computer player with the player's changed location
-				computer.updatePosition(c, r);
+				computer.updatePosition(r, c);
 				this.doneWithComputer = true;
 				revalidate();
 				repaint(); 
@@ -894,8 +892,8 @@ public class Board extends JPanel {
 
 		else {
 			doneWithComputer = false;
-			int row = currentPlayerInGame.getCurrentRow(); 
-			int col = currentPlayerInGame.getCurrentColumn();
+			int row = currentPlayerInGame.getRow(); 
+			int col = currentPlayerInGame.getColumn();
 			Card returnCardAnswer = new Card(); /* = generated Card created when handleSuggestion is called */
 
 
@@ -1015,14 +1013,24 @@ public class Board extends JPanel {
 		myFrame.dispose();
 	}
 
-//	public boolean containsClick( int mouseX, int mouseY, int targetX, int targetY) {
+//<<<<<<< HEAD
+////	public boolean containsClick( int mouseX, int mouseY, int targetX, int targetY) {
+////		Rectangle rect = new Rectangle( targetY, targetX, 30, 30);
+////		return (rect.contains(new Point(mouseX, mouseY)));
+////		//		if ( rect.contains(new Point(mouseX, mouseY))) {
+////		//			return true;
+////		//		}
+////		//		return false;
+////	}
+//=======
+//	public boolean containsClick(int mouseX, int mouseY, int targetX, int targetY) {
 //		Rectangle rect = new Rectangle( targetY, targetX, 30, 30);
-//		return (rect.contains(new Point(mouseX, mouseY)));
-//		//		if ( rect.contains(new Point(mouseX, mouseY))) {
-//		//			return true;
-//		//		}
-//		//		return false;
+//		if ( rect.contains(new Point(mouseX, mouseY))) {
+//			return true;
+//		}
+//		return false;
 //	}
+//>>>>>>> ab5f1bd24a06962b98988b379d35c5dcb445d0ae
 
 	private class TargetListener implements MouseListener{
 
@@ -1036,9 +1044,9 @@ public class Board extends JPanel {
 		public void mouseClicked(MouseEvent event) {
 			if (targetSelected == false && inWindow == false) {
 				BoardCell whichBox = null;
-				for ( int i = 0; i < 22; i++){
-					for ( int j = 0; j < 22; j++){
-						if (getCellAt(i, j).containsClick(event.getX(), event.getY())){
+				for (int i = 0; i < 22; i++){
+					for (int j = 0; j < 22; j++){
+						if (getCellAt(i,j).containsClick(event.getX(), event.getY())){
 							System.out.println(i);
 							System.out.println(j);
 							whichBox = getCellAt(i, j);
