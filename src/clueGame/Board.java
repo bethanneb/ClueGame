@@ -845,6 +845,7 @@ public class Board extends JPanel implements MouseListener {
 			}
 
 			dieRollValue = rollDie(); 
+			System.out.println("Next roll:" + dieRollValue);
 		}
 		else {
 			JOptionPane.showMessageDialog(null, "Take your turn", "Message", JOptionPane.INFORMATION_MESSAGE);

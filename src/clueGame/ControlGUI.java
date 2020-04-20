@@ -105,7 +105,7 @@ public class ControlGUI extends JPanel {
 		name.setEditable(false);
 		panel.add(nameLabel);
 		//panel.add(name);
-		System.out.println("Current die: " + currentDie);
+		System.out.println("Current die: " + board.currentDieRollValue());
 		panel.add(this.currentDie);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Die"));
 		return panel;
