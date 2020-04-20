@@ -774,7 +774,7 @@ public class Board extends JPanel {
 			if (currentPlayerInGameCount == -1) {
 				currentPlayerInGameCount = 0;
 			}
-			else if (currentPlayerInGameCount == 8) {
+			else if (currentPlayerInGameCount == 7) {
 				currentPlayerInGameCount = 0;
 			}
 			else {
