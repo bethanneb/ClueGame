@@ -191,7 +191,6 @@ public class BoardCell {
 		Rectangle rect = new Rectangle(pixel.x, pixel.y, WIDTH, HEIGHT);
 		if (rect.contains(new Point(mouseX, mouseY)))
 		{
-			System.out.println("Click was found to be in a cell: BoardCell class");
 			return true;
 		}
 		else

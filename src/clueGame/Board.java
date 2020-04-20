@@ -797,17 +797,17 @@ public class Board extends JPanel {
 	public int rollDie() { 
 		Random rand = new Random(); 
 		int dieRoll = rand.nextInt(6) + 1; 
-		System.out.println("Roll: " + dieRoll);
 		return dieRoll;  
 	}
 
-	public void updateHumanPosition(Player player) { 	
+	public void updateHumanPosition(Player player) { 
+		//pick target
 		addMouseListener(new TargetListener());
 
-		
+		//done with turn
+		doneWithHuman = true;
 
-		doneWithHuman = true;	
-		revalidate();
+		//make sure everything is repainted
 		repaint();
 	}
 
@@ -828,26 +828,36 @@ public class Board extends JPanel {
 		//show it on board
 		repaint(); 
 
+		//computer turn over
 		doneWithComputer = true;
 	}	
 
+
 	public void GamePlay() {
-		selectedBox = new BoardCell();
 		int row = currentPlayerInGame.getRow(); 
 		int col = currentPlayerInGame.getColumn();
 
+		//if human player turn
 		if (currentPlayerInGame instanceof HumanPlayer){
+			//must take turn
 			doneWithHuman = false;
 			targetSelected = false; 
+
+			//find targets and then show them
 			calcTargets(row, col, currentDieRollValue());
 			repaint();
 
+			//update position
 			updateHumanPosition(currentPlayerInGame); 
 			repaint();
 		}
 
+		//if computer player turn
 		else {
+			//must take turn
 			doneWithComputer = false;
+
+			//update position
 			updateComputerPosition(col, row, currentDieRollValue(), currentPlayerInGame);
 			repaint();
 
@@ -914,14 +924,6 @@ public class Board extends JPanel {
 		myFrame.dispose();
 	}
 
-	public boolean containsClick(int mouseX, int mouseY) {
-		Rectangle rect = new Rectangle(0, 0, 700, 800);
-		if (rect.contains(new Point(mouseX, mouseY))) {
-			return true;
-		}
-
-		return false;
-	}
 
 	private class TargetListener implements MouseListener{
 
@@ -930,33 +932,36 @@ public class Board extends JPanel {
 		public void mouseEntered(MouseEvent e) {}
 		public void mouseExited(MouseEvent e) {}
 		public void mousePressed(MouseEvent e) {
+
 			if (targetSelected == false && inWindow == false){
+				//puts the cell that was clicked in whichbox
 				BoardCell whichBox = null;
 				for (int i = 0; i < 22; i++){
 					for (int j = 0; j < 22; j++){
 						if (getCellAt(i,j).containsClick(e.getY(), e.getX())){
 							whichBox = getCellAt(i, j);
-							repaint();
 							break;
 						}
 
 					}
 				}
-				// NOTE: checking to see if the clicked BoardCell was part of the targets HashSet
+				//checks to see if the box is a target
 				if (whichBox != null){
+					//if it is, update location and end turn
 					if (targets.contains(whichBox)) {
 						selectedBox = whichBox;
 						clickRow = selectedBox.getRow();
 						clickCol = selectedBox.getCol();
 						currentPlayerInGame.updatePosition(clickRow, clickCol);
-						targetSelected = true; 
-						return;
+						targetSelected = true;
 					}
+					//otherwise error message
+					//this message pops up multiple times sometimes, not sure why
 					else {
 						JOptionPane.showMessageDialog(null, "That is not a target", "Message", JOptionPane.INFORMATION_MESSAGE);
-						return;
 					}
 				}
+				//display changes!
 				repaint();
 			}
 		}
