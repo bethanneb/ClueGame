@@ -39,7 +39,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 
-public class Board extends JPanel implements MouseListener {
+public class Board extends JPanel {
 	public static final int MAX_BOARD_SIZE = 50;
 	public static final int DECK_SIZE = 25;
 	public static final int NUM_WEAPONS = 8;
@@ -101,8 +101,7 @@ public class Board extends JPanel implements MouseListener {
 	private String currentResults = "no new clue";
 	public boolean inWindow = false; 
 	public boolean isFirstTurn = true; 
-	
-	private MouseEvent event; 
+
 	//public Suggestion suggest; //CREATE CLASS LATER
 	// Functions:
 	//NOTE: Singleton pattern 
@@ -471,7 +470,7 @@ public class Board extends JPanel implements MouseListener {
 					ComputerPlayer player2 = new ComputerPlayer(name, row, column, color);
 					playersList.add(player2);
 				}
-				
+
 				//NEW
 				Card people = new Card (splits[0], CardType.PERSON);
 				peoplePile.add(people);
@@ -714,7 +713,7 @@ public class Board extends JPanel implements MouseListener {
 
 	//C21A
 	public void paintComponent (Graphics g) {
-	
+
 		super.paintComponent(g);
 
 		//draws board
@@ -724,14 +723,14 @@ public class Board extends JPanel implements MouseListener {
 			}
 		}
 		//C23A
-		
+
 		//Supposed to draw the targets found on the board
 		if (currentPlayerInGame.getPlayerName().equals("Michael Scott") && targets.size() > 0) {
 			for (BoardCell cell: targets) {
 				cell.drawTargets(g);
 			}
 		}
-		
+
 		//Supposed to be that when the human player is done selecting a location, repaint the targeted cells back to walkway color
 		if (currentPlayerInGameCount != 0) {
 			for ( BoardCell cell: targets) {
@@ -827,8 +826,8 @@ public class Board extends JPanel implements MouseListener {
 		// NOTE: need to update the original set that holds the human player
 		for (HumanPlayer human: humanPlayer)
 		{
-			if (human.getName() == player.getName())
-			{
+			if (human.getName() == player.getName()){
+				System.out.println("here");
 				// NOTE: update the "original" human player with the player's changed location
 				human.updatePosition(row, col);
 				doneWithHuman = true;	
@@ -876,17 +875,16 @@ public class Board extends JPanel implements MouseListener {
 
 	public void GamePlay() {
 		selectedBox = new BoardCell();
-		
+
 		if (currentPlayerInGame.getPlayerName().equals("Michael Scott")){
-			
 			doneWithHuman = false;
 			targetSelected = false; 
 			int row = currentPlayerInGame.getRow();
 			int col = currentPlayerInGame.getColumn();
 			calcTargets(row, col, currentDieRollValue());
 			repaint();
-			
-			mouseClicked(null);
+
+			addMouseListener(new TargetListener());
 			updateHumanPosition(selectedBox.getCol(), selectedBox.getRow(), currentDieRollValue(), currentPlayerInGame); 
 			repaint();
 		}
@@ -950,7 +948,7 @@ public class Board extends JPanel implements MouseListener {
 			else { 
 				this.currentResults = ""; 
 				this.currentGuess = ""; 
-				}
+			}
 			repaint();
 		}
 	}
@@ -1013,7 +1011,7 @@ public class Board extends JPanel implements MouseListener {
 		myFrame.setVisible(false);
 		myFrame.dispose();
 	}
-	
+
 	public boolean containsClick( int mouseX, int mouseY, int targetX, int targetY) {
 		Rectangle rect = new Rectangle( targetY, targetX, 30, 30);
 		if ( rect.contains(new Point(mouseX, mouseY))) {
@@ -1021,102 +1019,107 @@ public class Board extends JPanel implements MouseListener {
 		}
 		return false;
 	}
-	
-	//C23A
-	@Override
-	public void mouseClicked(MouseEvent event) {
-		if (targetSelected == false && inWindow == false ){
-			BoardCell whichBox = null;
-			for ( int i = 0; i < 22; i++){
-				for ( int j = 0; j < 22; j++){
-					System.out.println("help");
-					if (getCellAt(i, j).containsClick(event.getX(), event.getY())){
-						whichBox = getCellAt(i, j);
+
+	private class TargetListener implements MouseListener{
+
+		public void mousePressed(MouseEvent e) {}
+		public void mouseReleased(MouseEvent e) {}
+		public void mouseEntered(MouseEvent e) {}
+		public void mouseExited(MouseEvent e) {}
+
+		//C23A
+		@Override
+		public void mouseClicked(MouseEvent event) {
+			if (targetSelected == false && inWindow == false){
+				BoardCell whichBox = null;
+				for ( int i = 0; i < 22; i++){
+					for ( int j = 0; j < 22; j++){
+						if (getCellAt(i, j).containsClick(event.getX(), event.getY())){
+							System.out.println(i);
+							System.out.println(j);
+							whichBox = getCellAt(i, j);
+							repaint();
+							break;
+						}
+
+					}
+				}
+				// NOTE: checking to see if the clicked BoardCell was part of the targets HashSet
+				if (whichBox != null){
+					if (targets.contains(whichBox)) {
+						selectedBox = whichBox;
 						repaint();
-						break;
-					}
 
-				}
-			}
-			// NOTE: checking to see if the clicked BoardCell was part of the targets HashSet
-			if (whichBox != null){
-				if (targets.contains(whichBox)) {
-					selectedBox = whichBox;
-					repaint();
-					
-					if (whichBox.isDoorway()) {
-						inWindow = true; 
-						myFrame = new JFrame("Suggestion");
-						myFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-						try 
-						{
-							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-
-						
-						char i = whichBox.getInitial(); 
-						String currentRoom = ""; 
-						for (String temp : rooms) { 
-							if(i == temp.charAt(0)) { 
-								currentRoom = temp;
-								break;
+						if (whichBox.isDoorway()) {
+							inWindow = true; 
+							myFrame = new JFrame("Suggestion");
+							myFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+							try 
+							{
+								UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+							} catch (Exception e) {
+								e.printStackTrace();
 							}
+
+
+							char i = whichBox.getInitial(); 
+							String currentRoom = ""; 
+							for (String temp : rooms) { 
+								if(i == temp.charAt(0)) { 
+									currentRoom = temp;
+									break;
+								}
+							}
+
+
+
+							JPanel myPanel = new JPanel();
+							suggest = new Suggestion(currentRoom); 
+
+							myPanel = suggest; 
+
+
+							myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
+							myPanel.setOpaque(true);
+
+							JTextArea text = new JTextArea(15, 50);
+							text.setEditable(false);
+							text.setFont(Font.getFont(Font.SANS_SERIF));
+							JPanel input = new JPanel(); 
+							input.setLayout(new FlowLayout()); 
+							myPanel.add(input);
+
+							myFrame.getContentPane().add(BorderLayout.CENTER, myPanel); 
+							myFrame.pack();
+							myFrame.setLocationByPlatform(true);
+							myFrame.setVisible(true);
+							myFrame.setResizable(false);
+							inWindow = false; 
 						}
-						
-						
-						
-						JPanel myPanel = new JPanel();
-						suggest = new Suggestion(currentRoom); 
-
-						myPanel = suggest; 
-
-						
-						myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
-						myPanel.setOpaque(true);
-
-						JTextArea text = new JTextArea(15, 50);
-						text.setEditable(false);
-						text.setFont(Font.getFont(Font.SANS_SERIF));
-						JPanel input = new JPanel(); 
-						input.setLayout(new FlowLayout()); 
-						myPanel.add(input);
-
-						myFrame.getContentPane().add(BorderLayout.CENTER, myPanel); 
-						myFrame.pack();
-						myFrame.setLocationByPlatform(true);
-						myFrame.setVisible(true);
-						myFrame.setResizable(false);
-						inWindow = false; 
+						GamePlay();
+						targetSelected = true; 
+						return;
 					}
-					GamePlay();
-					targetSelected = true; 
-					return;
+					else {
+						JOptionPane.showMessageDialog(null, "That is not a target", "Message", JOptionPane.INFORMATION_MESSAGE);
+						repaint();
+						GamePlay();
+						return;
+					}
 				}
-				else {
+				else
+				{
 					JOptionPane.showMessageDialog(null, "That is not a target", "Message", JOptionPane.INFORMATION_MESSAGE);
+					//System.out.println("Box selected was not a box");
 					repaint();
-					GamePlay();
-					return;
 				}
-			}
-			else
-			{
-				JOptionPane.showMessageDialog(null, "That is not a target", "Message", JOptionPane.INFORMATION_MESSAGE);
-				//System.out.println("Box selected was not a box");
+				revalidate();
 				repaint();
 			}
-			revalidate();
-			repaint();
 		}
 	}
 
-	public void mousePressed(MouseEvent e) {}
-	public void mouseReleased(MouseEvent e) {}
-	public void mouseEntered(MouseEvent e) {}
-	public void mouseExited(MouseEvent e) {}
-	
+
 	public void incorrectAccusation(Solution soln) { 
 
 		String message = "Incorrect guess. " + soln.getPerson() + " " + soln.getWeapon() + " " 
@@ -1124,7 +1127,7 @@ public class Board extends JPanel implements MouseListener {
 
 		JOptionPane.showMessageDialog(null, message);
 	}
-	
+
 	public void correctAccuation(Solution soln) { 
 		String message = "You win! " + soln.getPerson() + " " + soln.getWeapon() + " " + 
 				soln.getRoom() + " was the correct answer!"; 
@@ -1132,7 +1135,7 @@ public class Board extends JPanel implements MouseListener {
 		JOptionPane.showMessageDialog(null, message);
 	}
 
-	
+
 
 
 
