@@ -109,19 +109,6 @@ public class ControlGUI extends JPanel {
 		panel.add(this.currentDie);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Die"));
 		return panel;
-		
-//		JPanel panel = new JPanel();
-//		// Use a grid layout, 1 row, 2 elements (label, text)
-//		panel.setLayout(new GridLayout(1,2));
-//
-//		JLabel nameLabel = new JLabel("Roll"); 
-//		JTextField dieNumber = new JTextField(); 
-//		dieNumber.setEditable(false);
-//
-//		panel.add(nameLabel);
-//		panel.add(dieNumber);
-//		panel.setBorder(new TitledBorder (new EtchedBorder(), "Die"));
-//		return panel;
 	}
 
 	// panel 5

@@ -721,54 +721,18 @@ public class Board extends JPanel implements MouseListener {
 			}
 		}
 		//C23A
-		//NOTE: drawing the computer players
-		for ( ComputerPlayer comp: computerPlayers) {
-			int x = comp.getCurrentRow();
-			int y = comp.getCurrentColumn();
-			Color color = comp.getColor();
-			g.setColor(color);
-			Point pixel = new Point( x * 32 + 50, y * 32 + 50);
-			g.fillOval(pixel.x, pixel.y, 30, 30);
-		}
 		
-		//NOTE: draw the human player
-		for ( HumanPlayer human: humanPlayer)
-		{
-			int x = human.getCurrentRow();
-			int y = human.getCurrentColumn();
-			Color color2 = human.getColor();
-			g.setColor(color2);
-			Point pixel = new Point( x * 32 + 50, y * 32 + 50);
-			g.fillOval(pixel.x, pixel.y, 30, 30);
-		}
-		
-		// NOTE: drawing the targets found on the board. There are highlighted in CYAN
+		//Supposed to draw the targets found on the board
 		if ( this.currentPlayerInGame.getPlayerName().equals("Michael Scott") && targets.size() > 0) {
 			for ( BoardCell cell: targets) {
 				cell.drawTargets(g);
 			}
 		}
 		
-		// NOTE: when the human player is done with selecting a location, repaint the targeted cells 
-		// back to path color
-		if (this.currentPlayerInGameCount != 0)
-		{
-			for ( BoardCell cell: targets)
-			{
+		//Supposed to be that when the human player is done selecting a location, repaint the targeted cells back to walkway color
+		if (this.currentPlayerInGameCount != 0) {
+			for ( BoardCell cell: targets) {
 				cell.reDrawTargets(g);
-			}
-		}
-		
-		if (this.currentPlayerInGame.getPlayerName().equals("Michael Scott"))
-		{
-			for ( HumanPlayer human: humanPlayer)
-			{
-				int x = human.getCurrentRow();
-				int y = human.getCurrentColumn();
-				Color color2 = human.getColor();
-				g.setColor(color2);
-				Point pixel = new Point( x * 32 + 50, y * 32 + 50);
-				g.fillOval(pixel.x, pixel.y, 30, 30);
 			}
 		}
 
