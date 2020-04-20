@@ -168,7 +168,7 @@ public class BoardCell {
 	public void drawTargets( Graphics g) {
 		this.color = Color.CYAN;
 		g.setColor(this.color);
-		g.fillRect(this.pixel.x, this.pixel.y, WIDTH, HEIGHT);
+		g.fillRect(this.pixel.y, this.pixel.x, WIDTH, HEIGHT);
 	}
 	
 	public void reDrawTargets ( Graphics g) {
@@ -176,13 +176,13 @@ public class BoardCell {
 		{		
 			this.color = Color.WHITE;
 			g.setColor(this.color);
-			g.fillRect(this.pixel.x, this.pixel.y, WIDTH, HEIGHT);
+			g.fillRect(this.pixel.y, this.pixel.x, WIDTH, HEIGHT);
 		}
-		if (this.initial == 'P') 
+		if (this.initial == 'W') 
 		{
 			this.color = Color.GRAY;
 			g.setColor(this.color);
-			g.fillRect(this.pixel.x , this.pixel.y, WIDTH, HEIGHT);
+			g.fillRect(this.pixel.y , this.pixel.x, WIDTH, HEIGHT);
 		}
 	}
 	

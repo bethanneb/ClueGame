@@ -11,6 +11,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedReader;
@@ -711,6 +712,7 @@ public class Board extends JPanel implements MouseListener {
 
 	//C21A
 	public void paintComponent (Graphics g) {
+	
 		super.paintComponent(g);
 
 		//draws board
@@ -722,26 +724,20 @@ public class Board extends JPanel implements MouseListener {
 		//C23A
 		
 		//Supposed to draw the targets found on the board
-		if ( this.currentPlayerInGame.getPlayerName().equals("Michael Scott") && targets.size() > 0) {
-			for ( BoardCell cell: targets) {
+		if (currentPlayerInGame.getPlayerName().equals("Michael Scott") && targets.size() > 0) {
+			for (BoardCell cell: targets) {
 				cell.drawTargets(g);
 			}
 		}
 		
 		//Supposed to be that when the human player is done selecting a location, repaint the targeted cells back to walkway color
-		if (this.currentPlayerInGameCount != 0) {
+		if (currentPlayerInGameCount != 0) {
 			for ( BoardCell cell: targets) {
 				cell.reDrawTargets(g);
 			}
 		}
 
-		if (( 	this.currentPlayerInGame.getPlayerName().equals("Dwight Schrute")  	|| 
-				this.currentPlayerInGame.getPlayerName().equals("Jim Halpert") 	|| 
-				this.currentPlayerInGame.getPlayerName().equals("Pam Halpert")	|| 
-				this.currentPlayerInGame.getPlayerName().equals("Kevin Malone")	||
-				this.currentPlayerInGame.getPlayerName().equals("Andy Bernard")	||
-				this.currentPlayerInGame.getPlayerName().equals("Oscar Martinez")	||
-				this.currentPlayerInGame.getPlayerName().equals("Angela Martin") ) && this.doneWithComputer)
+		if (!currentPlayerInGame.getPlayerName().equals("Michael Scott") && this.doneWithComputer)
 		{
 			for ( ComputerPlayer comp: computerPlayers)
 			{
@@ -804,12 +800,12 @@ public class Board extends JPanel implements MouseListener {
 			if (currentPlayerInGameCount == -1) {
 				currentPlayerInGame = emptyPlayer;
 			}
-			else{
+			else {
 				currentPlayerInGame = playersList.get(currentPlayerInGameCount);
 			}
 
 			dieRollValue = rollDie(); 
-			System.out.println("Next roll:" + dieRollValue);
+			//System.out.println("Next roll:" + dieRollValue);
 		}
 		else {
 			JOptionPane.showMessageDialog(null, "Take your turn", "Message", JOptionPane.INFORMATION_MESSAGE);
@@ -831,11 +827,10 @@ public class Board extends JPanel implements MouseListener {
 			if (human.getName() == player.getName())
 			{
 				// NOTE: update the "original" human player with the player's changed location
-				human.updatePosition(col, row);
+				human.updatePosition(row, col);
 				doneWithHuman = true;	
 				revalidate();
 				repaint();
-
 			}
 		}
 
@@ -877,20 +872,21 @@ public class Board extends JPanel implements MouseListener {
 	}	
 
 	public void GamePlay() {
+		selectedBox = new BoardCell();
 		
 		if (currentPlayerInGame.getPlayerName().equals("Michael Scott")){
+			
 			doneWithHuman = false;
 			targetSelected = false; 
-			int row = currentPlayerInGame.getCurrentRow();
-			int col = currentPlayerInGame.getCurrentColumn();
-			calcTargets(col, row, currentDieRollValue());
+			int row = currentPlayerInGame.getRow();
+			int col = currentPlayerInGame.getColumn();
+			calcTargets(row, col, currentDieRollValue());
 			repaint();
-
-			updateHumanPosition(selectedBox.getCol(), selectedBox.getRow(), currentDieRollValue(), currentPlayerInGame);  //ERROR
+			
+			updateHumanPosition(selectedBox.getCol(), selectedBox.getRow(), currentDieRollValue(), currentPlayerInGame); 
+			System.out.println("got here");
 			repaint();
 		}
-
-
 
 		else {
 			doneWithComputer = false;
@@ -935,12 +931,7 @@ public class Board extends JPanel implements MouseListener {
 			if (getCellAt(col, row).isDoorway())
 			{
 				System.out.println("Computer's Room location: " + getCellAt(row, col).getInitial());
-				// In the ComputerPlayer class, creatSuggestion exists: 
-				// 	- public void createSuggestion(BoardCell cell, ArrayList<Card> peopleArray, ArrayList<Card> weaponsArray, Set<String> rooms , ComputerPlayer player); 
-				// need a ComputerPlayer object to call public Solution getCreatedSoln(); and createSuggestion( ... ); 
-				// 	- Should manipulate the original set of ComputerPlayers!
-				// All of the players except this.currentPlayerInGame need to call disproveSuggestion
-				//  - Board class' handleSuggestion will run all of the above functionalities 
+
 				for (ComputerPlayer computer : computerPlayers)
 				{
 					if (computer.getPlayerName().equals(this.currentPlayerInGame.getPlayerName())) /* find the computer that matches this.currentPlayerInGame */
@@ -953,8 +944,10 @@ public class Board extends JPanel implements MouseListener {
 					}
 				}
 			}
-			else { this.currentResults = ""; this.currentGuess = ""; }
-
+			else { 
+				this.currentResults = ""; 
+				this.currentGuess = ""; 
+				}
 			repaint();
 		}
 	}
@@ -1018,19 +1011,24 @@ public class Board extends JPanel implements MouseListener {
 		myFrame.dispose();
 	}
 	
+	public boolean containsClick( int mouseX, int mouseY, int targetX, int targetY) {
+		Rectangle rect = new Rectangle( targetY, targetX, 30, 30);
+		if ( rect.contains(new Point(mouseX, mouseY))) {
+			return true;
+		}
+		return false;
+	}
+	
 	//C23A
+	@Override
 	public void mouseClicked (MouseEvent event) {
-		if ( this.targetSelected == false && inWindow == false )
-		{
+		if ( this.targetSelected == false && inWindow == false ){
 			BoardCell whichBox = null;
 			//selectedBox = null;
 			// FIXME
-			for ( int i = 0; i < 22; i++)
-			{
-				for ( int j = 0; j < 23; j++)
-				{
-					if (getCellAt(i, j).containsClick(event.getX(), event.getY()))
-					{
+			for ( int i = 0; i < 22; i++){
+				for ( int j = 0; j < 22; j++){
+					if (getCellAt(i, j).containsClick(event.getX(), event.getY())){
 						whichBox = getCellAt(i, j);
 						repaint();
 						break;
@@ -1039,18 +1037,13 @@ public class Board extends JPanel implements MouseListener {
 				}
 			}
 			// NOTE: checking to see if the clicked BoardCell was part of the targets HashSet
-			if (whichBox != null)
-			{
-				if ( targets.contains(whichBox)) 
-				{
+			if (whichBox != null){
+				if ( targets.contains(whichBox)) {
 					selectedBox = whichBox;
 					repaint();
 					
-					if (whichBox.isDoorway()) 
-					{
-
+					if (whichBox.isDoorway()) {
 						inWindow = true; 
-						
 						myFrame = new JFrame("Suggestion");
 						myFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 						try 
@@ -1099,8 +1092,7 @@ public class Board extends JPanel implements MouseListener {
 					this.targetSelected = true; 
 					return;
 				}
-				else
-				{
+				else {
 					JOptionPane.showMessageDialog(null, "That is not a target", "Message", JOptionPane.INFORMATION_MESSAGE);
 					repaint();
 					GamePlay();

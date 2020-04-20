@@ -61,7 +61,7 @@ public class ControlGUI extends JPanel {
 		// Use a grid layout, 1 row, 2 elements (label, text)
 		panel.setLayout(new GridLayout(1,2));
 		JLabel nameLabel = new JLabel("Name");
-		currentName = new JTextField(board.whoIsTheCurrentPLayer().getPlayerName());
+		currentName = new JTextField();
 		panel.add(nameLabel);
 		currentName.setEditable(false);
 		panel.add(currentName);
@@ -144,29 +144,38 @@ public class ControlGUI extends JPanel {
 	}
 
 	//We decided to implement this class within this one to make it easier to access certain variables
-	private class NextPlayerButtonListener implements ActionListener
-	{
-
+	private class NextPlayerButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//if (board.doneWithHuman) // && board.inWindow == false) 
-			//{
-
+			if (board.doneWithHuman){
 				// TODO call appropriate methods in the Board Class for processing 
 				board.nextPlayerButtonMethod();
 				// TODO need to refresh the createDiePanel and createNamePanel
 				refreshDieAndNamePanel();
 				board.GamePlay();
 				//refreshGuessResultPanels(); //ADD FUNCTION LATER?
-			//}
+			}
 		}
 	}
 
 	public void refreshDieAndNamePanel() {
-		this.currentName.setText(board.whoIsTheCurrentPLayer().getPlayerName());  
-		this.currentName.setEditable(false);
-		this.currentDie.setText(String.valueOf(board.currentDieRollValue()));
+//		currentName.setText(board.whoIsTheCurrentPLayer().getPlayerName());  
+//		currentName.setEditable(false);
+//		currentName.repaint();
+		
+//		currentDie.setText(String.valueOf(board.currentDieRollValue()));
+//		currentDie.repaint();
+//		this.currentName.setText(board.whoIsTheCurrentPLayer().getPlayerName());  
+//		this.currentName.setEditable(false);
+//		this.currentDie.setText(String.valueOf(board.currentDieRollValue()));
 		//this.currentPlayerAndDieRoll.repaint();
+		
+		currentName.setText(board.whoIsTheCurrentPLayer().getPlayerName());  
+		currentName.setEditable(false);
+		currentName.repaint();
+		
+		currentDie.setText(String.valueOf(board.currentDieRollValue()));
+		currentDie.repaint();
 	}
 
 	private class MakeAccusationButtonListener implements ActionListener
