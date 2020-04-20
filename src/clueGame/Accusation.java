@@ -126,7 +126,7 @@ public class Accusation extends JPanel {
 				board.incorrectAccusation(soln);  
 			}
 			else { 
-				board.correctAccuation(soln);
+				board.correctAccusation(soln);
 			}
 		
 			accusationFrame.dispose(); 

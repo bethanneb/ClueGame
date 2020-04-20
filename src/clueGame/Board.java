@@ -101,11 +101,9 @@ public class Board extends JPanel {
 	private String currentResults = "no new clue";
 	public boolean inWindow = false; 
 	public boolean isFirstTurn = true; 
+	
+	//private MouseEvent event; 
 
-<<<<<<< HEAD
-	private MouseEvent event; 
-=======
->>>>>>> e6a9341776b88d7351f4cb676fee414ddb93b082
 	//public Suggestion suggest; //CREATE CLASS LATER
 	// Functions:
 	//NOTE: Singleton pattern 
@@ -715,37 +713,12 @@ public class Board extends JPanel {
 		return currentPlayerInGame; // NOTE: Empty player was made to return when game first starts  
 	}
 
-<<<<<<< HEAD
-		//C21A
-		public void paintComponent (Graphics g) {
-		
-			super.paintComponent(g);
-	
-			//draws board
-			for ( int i = 21; i >= 0; i--){
-				for ( int j = 21; j >= 0; j--){
-					getCellAt(i, j).draw(g);
-				}
-			}
-			//C23A
-			
-			//Draws the targets found on the board
-			if (currentPlayerInGame.getPlayerName().equals("Michael Scott") && targets.size() > 0) {
-				for (BoardCell cell: targets) {
-					cell.drawTargets(g);
-				}
-			}
-			
-			//Supposed to be that when the human player is done selecting a location, repaint the targeted cells back to walkway color
-			if (currentPlayerInGameCount != 0) {
-				for ( BoardCell cell: targets) {
-					cell.reDrawTargets(g);
-				}
-=======
+
 	//C21A
 	public void paintComponent (Graphics g) {
 
 		super.paintComponent(g);
+		//g.setColor(Color.BLACK);
 
 		//draws board
 		for ( int i = 21; i >= 0; i--){
@@ -762,48 +735,50 @@ public class Board extends JPanel {
 			}
 		}
 
-		//Supposed to be that when the human player is done selecting a location, repaint the targeted cells back to walkway color
+		//When the human player is done selecting a location, repaint the targeted cells back to walkway color
 		if (currentPlayerInGameCount != 0) {
 			for ( BoardCell cell: targets) {
 				cell.reDrawTargets(g);
->>>>>>> e6a9341776b88d7351f4cb676fee414ddb93b082
-			}
-	
-			if (!currentPlayerInGame.getPlayerName().equals("Michael Scott") && this.doneWithComputer)
-			{
-				for ( ComputerPlayer comp: computerPlayers)
-				{
-					int x = comp.getCurrentRow();
-					int y = comp.getCurrentColumn();
-					Color color = comp.getColor();
-					g.setColor(color);
-					Point pixel = new Point( x * 32 + 50, y * 32 + 50);
-					g.fillOval(pixel.x, pixel.y, 30, 30);
-				}
-			}
-			//end of C23A additions
-	
-			//labels rooms
-			g.setColor(Color.BLACK);
-			g.drawString("Kitchen", 110, 60);
-			g.drawString("Jim's Desk", 232, 50);
-			g.drawString("Dwight's", 372, 50);
-			g.drawString("Desk", 372, 65);
-			g.drawString("Vance", 520, 50);
-			g.drawString("Refrigeration", 500, 65);
-			g.drawString("Front", 103, 195);
-			g.drawString("Desk", 103, 280);
-			g.drawString("Conference", 510, 240);
-			g.drawString("Room", 525, 255);
-			g.drawString("Michael's Office", 101, 450);
-			g.drawString("Break Room", 305, 440);
-			g.drawString("Warehouse", 500, 440);
-	
-			//draws players
-			for(Player p: playersList) {
-				p.draw(g);
 			}
 		}
+
+		if (!currentPlayerInGame.getPlayerName().equals("Michael Scott") && this.doneWithComputer)
+		{
+			for ( ComputerPlayer comp: computerPlayers)
+			{
+				int x = comp.getCurrentRow();
+				int y = comp.getCurrentColumn();
+				Color color = comp.getColor();
+				g.setColor(color);
+				Point pixel = new Point( x * 32 + 50, y * 32 + 50);
+				g.fillOval(pixel.x, pixel.y, 30, 30);
+			}
+		}
+		//end of C23A additions
+
+		//labels rooms
+		g.setColor(Color.BLACK);
+		g.drawString("Kitchen", 110, 60);
+		g.drawString("Jim's Desk", 232, 50);
+		g.drawString("Dwight's", 372, 50);
+		g.drawString("Desk", 372, 65);
+		g.drawString("Vance", 520, 50);
+		g.drawString("Refrigeration", 500, 65);
+		g.drawString("Front", 103, 195);
+		g.drawString("Desk", 103, 280);
+		g.drawString("Conference", 510, 240);
+		g.drawString("Room", 525, 255);
+		g.drawString("Michael's Office", 101, 450);
+		g.drawString("Break Room", 305, 440);
+		g.drawString("Warehouse", 500, 440);
+
+		//draws players
+		for(Player p: playersList) {
+			p.draw(g);
+		}
+
+
+	}
 
 	public Set<HumanPlayer> getHumanPlayer() {
 		return humanPlayer;
@@ -819,7 +794,7 @@ public class Board extends JPanel {
 			if (currentPlayerInGameCount == -1) {
 				currentPlayerInGameCount = 0;
 			}
-			else if (currentPlayerInGameCount == 7) {
+			else if (currentPlayerInGameCount == 8) {
 				currentPlayerInGameCount = 0;
 			}
 			else {
@@ -835,7 +810,7 @@ public class Board extends JPanel {
 			}
 
 			dieRollValue = rollDie(); 
-			targetSelected = false;
+			//targetSelected = false;
 			//System.out.println("Next roll:" + dieRollValue);
 		}
 		else {
@@ -873,8 +848,8 @@ public class Board extends JPanel {
 
 		ArrayList<BoardCell> possibleTargets = new ArrayList<BoardCell>(); 
 		// NOTE: calcTargets with refresh and populate the targets HashSet
-		calcTargets(col, row, pathlength); 
-		//System.out.println("Targets found for the computer: " + targets.size()); // TESTING
+		calcTargets(row, col, pathlength); 
+		//System.out.println("Targets found for the computer: " + targets.size()); //TESTING
 		for (BoardCell temp: targets) {
 			// NOTE: populating the temp arrayList for "dumb" AI
 			possibleTargets.add(temp); 
@@ -898,7 +873,6 @@ public class Board extends JPanel {
 			}
 		}
 		player.updatePosition(c, r);  // NOTE: probably unnecessary 
-
 		return false; 
 	}	
 
@@ -906,10 +880,6 @@ public class Board extends JPanel {
 		selectedBox = new BoardCell();
 
 		if (currentPlayerInGame.getPlayerName().equals("Michael Scott")){
-<<<<<<< HEAD
-
-=======
->>>>>>> e6a9341776b88d7351f4cb676fee414ddb93b082
 			doneWithHuman = false;
 			targetSelected = false; 
 			int row = currentPlayerInGame.getRow();
@@ -917,11 +887,7 @@ public class Board extends JPanel {
 			calcTargets(row, col, currentDieRollValue());
 			repaint();
 
-<<<<<<< HEAD
-			//mouseClicked(null);
-=======
 			addMouseListener(new TargetListener());
->>>>>>> e6a9341776b88d7351f4cb676fee414ddb93b082
 			updateHumanPosition(selectedBox.getCol(), selectedBox.getRow(), currentDieRollValue(), currentPlayerInGame); 
 			repaint();
 		}
@@ -1049,14 +1015,14 @@ public class Board extends JPanel {
 		myFrame.dispose();
 	}
 
-	public boolean containsClick( int mouseX, int mouseY, int targetX, int targetY) {
-		Rectangle rect = new Rectangle( targetY, targetX, 30, 30);
-		return (rect.contains(new Point(mouseX, mouseY)));
-		//		if ( rect.contains(new Point(mouseX, mouseY))) {
-		//			return true;
-		//		}
-		//		return false;
-	}
+//	public boolean containsClick( int mouseX, int mouseY, int targetX, int targetY) {
+//		Rectangle rect = new Rectangle( targetY, targetX, 30, 30);
+//		return (rect.contains(new Point(mouseX, mouseY)));
+//		//		if ( rect.contains(new Point(mouseX, mouseY))) {
+//		//			return true;
+//		//		}
+//		//		return false;
+//	}
 
 	private class TargetListener implements MouseListener{
 
@@ -1068,7 +1034,7 @@ public class Board extends JPanel {
 		//C23A
 		@Override
 		public void mouseClicked(MouseEvent event) {
-			if (targetSelected == false && inWindow == false){
+			if (targetSelected == false && inWindow == false) {
 				BoardCell whichBox = null;
 				for ( int i = 0; i < 22; i++){
 					for ( int j = 0; j < 22; j++){
@@ -1079,11 +1045,11 @@ public class Board extends JPanel {
 							repaint();
 							break;
 						}
-
 					}
 				}
 				// NOTE: checking to see if the clicked BoardCell was part of the targets HashSet
 				if (whichBox != null){
+					System.out.println("Box: " + whichBox);
 					if (targets.contains(whichBox)) {
 						selectedBox = whichBox;
 						repaint();
@@ -1092,8 +1058,7 @@ public class Board extends JPanel {
 							inWindow = true; 
 							myFrame = new JFrame("Suggestion");
 							myFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-							try 
-							{
+							try {
 								UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 							} catch (Exception e) {
 								e.printStackTrace();
@@ -1108,14 +1073,10 @@ public class Board extends JPanel {
 									break;
 								}
 							}
-
-
-
 							JPanel myPanel = new JPanel();
 							suggest = new Suggestion(currentRoom); 
 
 							myPanel = suggest; 
-
 
 							myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
 							myPanel.setOpaque(true);
@@ -1145,8 +1106,7 @@ public class Board extends JPanel {
 						return;
 					}
 				}
-				else
-				{
+				else {
 					JOptionPane.showMessageDialog(null, "That is not a target", "Message", JOptionPane.INFORMATION_MESSAGE);
 					//System.out.println("Box selected was not a box");
 					repaint();
