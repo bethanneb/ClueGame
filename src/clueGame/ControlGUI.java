@@ -166,7 +166,7 @@ public class ControlGUI extends JPanel {
 		this.currentName.setText(board.whoIsTheCurrentPLayer().getPlayerName());  
 		this.currentName.setEditable(false);
 		this.currentDie.setText(String.valueOf(board.currentDieRollValue()));
-		this.currentPlayerAndDieRoll.repaint();
+		//this.currentPlayerAndDieRoll.repaint();
 	}
 
 	private class MakeAccusationButtonListener implements ActionListener
