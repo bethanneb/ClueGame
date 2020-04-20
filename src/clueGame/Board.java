@@ -723,7 +723,7 @@ public class Board extends JPanel implements MouseListener {
 		}
 		//C23A
 		
-		//Supposed to draw the targets found on the board
+		//Draws the targets found on the board
 		if (currentPlayerInGame.getPlayerName().equals("Michael Scott") && targets.size() > 0) {
 			for (BoardCell cell: targets) {
 				cell.drawTargets(g);
