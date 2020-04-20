@@ -34,11 +34,11 @@ public class Player {
 	// constructors
 	public Player()
 	{
-		this.playerName = "";
-		this.currentRow = 0;
-		this.myCards = new HashSet<Card>();
-		this.seenCards = new HashSet<Card>();
-		this.colorMain = Color.white;
+		playerName = "";
+		row = 0;
+		myCards = new HashSet<Card>();
+		seenCards = new HashSet<Card>();
+		color = Color.white;
 	}
 	
 	// Player parameterized constructors
@@ -156,7 +156,7 @@ public class Player {
 		return this.playerName;
 	}
 	
-	public void updatePosition(int c, int r) { 
+	public void updatePosition(int r, int c) { 
 		previousColumn = currentColumn; 
 		currentColumn = c; 
 		previousRow = currentRow; 
