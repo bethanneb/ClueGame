@@ -159,16 +159,6 @@ public class ControlGUI extends JPanel {
 	}
 
 	public void refreshDieAndNamePanel() {
-//		currentName.setText(board.whoIsTheCurrentPLayer().getPlayerName());  
-//		currentName.setEditable(false);
-//		currentName.repaint();
-		
-//		currentDie.setText(String.valueOf(board.currentDieRollValue()));
-//		currentDie.repaint();
-//		this.currentName.setText(board.whoIsTheCurrentPLayer().getPlayerName());  
-//		this.currentName.setEditable(false);
-//		this.currentDie.setText(String.valueOf(board.currentDieRollValue()));
-		//this.currentPlayerAndDieRoll.repaint();
 		
 		currentName.setText(board.whoIsTheCurrentPLayer().getPlayerName());  
 		currentName.setEditable(false);

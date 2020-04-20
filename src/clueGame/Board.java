@@ -101,6 +101,8 @@ public class Board extends JPanel implements MouseListener {
 	private String currentResults = "no new clue";
 	public boolean inWindow = false; 
 	public boolean isFirstTurn = true; 
+	
+	private MouseEvent event; 
 	//public Suggestion suggest; //CREATE CLASS LATER
 	// Functions:
 	//NOTE: Singleton pattern 
@@ -805,6 +807,7 @@ public class Board extends JPanel implements MouseListener {
 			}
 
 			dieRollValue = rollDie(); 
+			targetSelected = false;
 			//System.out.println("Next roll:" + dieRollValue);
 		}
 		else {
@@ -883,8 +886,8 @@ public class Board extends JPanel implements MouseListener {
 			calcTargets(row, col, currentDieRollValue());
 			repaint();
 			
+			mouseClicked(null);
 			updateHumanPosition(selectedBox.getCol(), selectedBox.getRow(), currentDieRollValue(), currentPlayerInGame); 
-			System.out.println("got here");
 			repaint();
 		}
 
@@ -1021,13 +1024,12 @@ public class Board extends JPanel implements MouseListener {
 	
 	//C23A
 	@Override
-	public void mouseClicked (MouseEvent event) {
-		if ( this.targetSelected == false && inWindow == false ){
+	public void mouseClicked(MouseEvent event) {
+		if (targetSelected == false && inWindow == false ){
 			BoardCell whichBox = null;
-			//selectedBox = null;
-			// FIXME
 			for ( int i = 0; i < 22; i++){
 				for ( int j = 0; j < 22; j++){
+					System.out.println("help");
 					if (getCellAt(i, j).containsClick(event.getX(), event.getY())){
 						whichBox = getCellAt(i, j);
 						repaint();
@@ -1038,7 +1040,7 @@ public class Board extends JPanel implements MouseListener {
 			}
 			// NOTE: checking to see if the clicked BoardCell was part of the targets HashSet
 			if (whichBox != null){
-				if ( targets.contains(whichBox)) {
+				if (targets.contains(whichBox)) {
 					selectedBox = whichBox;
 					repaint();
 					
@@ -1089,7 +1091,7 @@ public class Board extends JPanel implements MouseListener {
 						inWindow = false; 
 					}
 					GamePlay();
-					this.targetSelected = true; 
+					targetSelected = true; 
 					return;
 				}
 				else {
@@ -1110,32 +1112,10 @@ public class Board extends JPanel implements MouseListener {
 		}
 	}
 
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mousePressed(MouseEvent e) {}
+	public void mouseReleased(MouseEvent e) {}
+	public void mouseEntered(MouseEvent e) {}
+	public void mouseExited(MouseEvent e) {}
 	
 	public void incorrectAccusation(Solution soln) { 
 
