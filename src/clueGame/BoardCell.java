@@ -76,7 +76,7 @@ public class BoardCell {
 	//NEW
 	public int getRow() 
 	{
-		return this.row;
+		return row;
 	}
 
 	public void setRow(int row) 
@@ -86,12 +86,12 @@ public class BoardCell {
 
 	public int getCol() 
 	{
-		return this.column;
+		return column;
 	}
 
 	public void setCol(int col) 
 	{
-		this.column = col;
+		column = col;
 	}
 
 	public void setInitial(char initial) 
@@ -108,9 +108,9 @@ public class BoardCell {
 			g.setColor(this.color);
 			g.fillRect(this.pixel.y , this.pixel.x, WIDTH, HEIGHT);
 		}
-		if (this.isRoom()) 
+		if (isRoom()) 
 		{
-			if ( isDoorway())
+			if (isDoorway())
 			{
 				if (doorDirection == DoorDirection.UP)
 				{

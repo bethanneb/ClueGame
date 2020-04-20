@@ -54,7 +54,7 @@ public class ClueGame extends JFrame {
 
 		//control panel
 		JPanel control = new JPanel();
-		ControlGUI guiControl = new ControlGUI();
+		ControlGUI guiControl = new ControlGUI(board);
 		control = guiControl;
 		add(control, BorderLayout.SOUTH);
 		

@@ -101,6 +101,9 @@ public class Board extends JPanel {
 	private String currentResults = "no new clue";
 	public boolean inWindow = false; 
 	public boolean isFirstTurn = true; 
+	
+	private int clickRow;
+	private int clickCol;
 
 	//public Suggestion suggest; //CREATE CLASS LATER
 	// Functions:
@@ -723,34 +726,12 @@ public class Board extends JPanel {
 				getCellAt(i, j).draw(g);
 			}
 		}
-		//C23A
 
-		//Supposed to draw the targets found on the board
-		if (currentPlayerInGame.getPlayerName().equals("Michael Scott") && targets.size() > 0) {
+		if(currentPlayerInGame instanceof HumanPlayer) {
 			for (BoardCell cell: targets) {
 				cell.drawTargets(g);
 			}
 		}
-
-		//Supposed to be that when the human player is done selecting a location, repaint the targeted cells back to walkway color
-		if (currentPlayerInGameCount != 0) {
-			for ( BoardCell cell: targets) {
-				cell.reDrawTargets(g);
-			}
-		}
-
-		if (!currentPlayerInGame.getPlayerName().equals("Michael Scott") && this.doneWithComputer)
-		{
-			for ( ComputerPlayer comp: computerPlayers){
-				int x = comp.getRow();
-				int y = comp.getColumn();
-				Color color = comp.getColor();
-				g.setColor(color);
-				Point pixel = new Point(x*22+15, y*22+100);
-				g.fillOval(pixel.y, pixel.x, 20, 20);
-			}
-		}
-		//end of C23A additions
 
 		//labels rooms
 		g.setColor(Color.BLACK);
@@ -806,7 +787,7 @@ public class Board extends JPanel {
 			}
 
 			dieRollValue = rollDie();
-			//System.out.println("Next roll:" + dieRollValue);
+
 		}
 		else {
 			JOptionPane.showMessageDialog(null, "Take your turn", "Message", JOptionPane.INFORMATION_MESSAGE);
@@ -814,147 +795,70 @@ public class Board extends JPanel {
 	}
 
 	public int rollDie() { 
-		// NOTE: random dice roll used to the pathLength in calcTargets
 		Random rand = new Random(); 
 		int dieRoll = rand.nextInt(6) + 1; 
 		System.out.println("Roll: " + dieRoll);
 		return dieRoll;  
 	}
 
-	public boolean updateHumanPosition(int col, int row, int pathlength, Player player) { 	
-		// NOTE: need to update the original set that holds the human player
-		for (HumanPlayer human: humanPlayer)
-		{
-			if (human.getName() == player.getName()){
-				System.out.println("here");
-				// NOTE: update the "original" human player with the player's changed location
-				human.updatePosition(row, col);
-				doneWithHuman = true;	
-				revalidate();
-				repaint();
-			}
+	public void updateHumanPosition(Player player) { 	
+		addMouseListener(new TargetListener());
+		
+		//player.updatePosition(clickRow, clickCol);
+		
+		doneWithHuman = true;	
+		revalidate();
+		repaint();
+	}
+
+
+	public void updateComputerPosition(int col, int row, int pathlength, Player player) { 
+		//if the computer was just in a room, they will not go back in
+		if(!getCellAt(row,col).isWalkway()) {
+			player.setLastRoom(getCellAt(row,col));
 		}
 
-		return false; 
-
-	}	
-
-	public boolean updateComputerPosition(int col, int row, int pathlength, Player player) { 
-
-		ArrayList<BoardCell> possibleTargets = new ArrayList<BoardCell>(); 
-		// NOTE: calcTargets with refresh and populate the targets HashSet
+		//calculate targets and then use previous function to pick a new location
 		calcTargets(row, col, pathlength); 
-		//System.out.println("Targets found for the computer: " + targets.size()); // TESTING
-		for (BoardCell temp: targets) {
-			// NOTE: populating the temp arrayList for "dumb" AI
-			possibleTargets.add(temp); 
-		}
-		// NOTE: getting a random location for "dumb" AI
-		Random rand = new Random(); 
-		int location = rand.nextInt(possibleTargets.size()); 
-		int c = possibleTargets.get(location).getCol(); 
-		int r = possibleTargets.get(location).getRow(); 
-		// NOTE: need to update the original set that holds the computer players
-		for ( ComputerPlayer computer: computerPlayers){
-			// NOTE: ONLY change the player that is passed in
-			if (player.getPlayerName().equals(computer.getPlayerName()))
-			{
-				// NOTE: update the "original" computer player with the player's changed location
-				computer.updatePosition(r, c);
-				this.doneWithComputer = true;
-				revalidate();
-				repaint(); 
-			}
-		}
-		player.updatePosition(c, r);  // NOTE: probably unnecessary 
+		BoardCell newLoc = player.pickLocation(getTargets());
 
-		return false; 
+		//update location
+		player.updatePosition(newLoc.getRow(), newLoc.getCol());
+		
+		//show it on board
+		repaint(); 
+
+		doneWithComputer = true;
 	}	
 
 	public void GamePlay() {
 		selectedBox = new BoardCell();
+		int row = currentPlayerInGame.getRow(); 
+		int col = currentPlayerInGame.getColumn();
 
-		if (currentPlayerInGame.getPlayerName().equals("Michael Scott")){
+		if (currentPlayerInGame instanceof HumanPlayer){
 			doneWithHuman = false;
 			targetSelected = false; 
-			int row = currentPlayerInGame.getRow();
-			int col = currentPlayerInGame.getColumn();
 			calcTargets(row, col, currentDieRollValue());
 			repaint();
-
-			addMouseListener(new TargetListener());
-			updateHumanPosition(selectedBox.getCol(), selectedBox.getRow(), currentDieRollValue(), currentPlayerInGame); 
+			
+			updateHumanPosition(currentPlayerInGame); 
 			repaint();
 		}
 
 		else {
 			doneWithComputer = false;
-			int row = currentPlayerInGame.getRow(); 
-			int col = currentPlayerInGame.getColumn();
-			Card returnCardAnswer = new Card(); /* = generated Card created when handleSuggestion is called */
-
-
-			repaint();
 			updateComputerPosition(col, row, currentDieRollValue(), currentPlayerInGame);
-			// TODO
-			if (compReadyMakeAccusation && !compSuggestionDisproved)
-			{
-				// make an accusation, the accusation will be the previous suggestion 
-				for (ComputerPlayer computer : computerPlayers)
-				{
-					if (computer.getPlayerName().equals(currentPlayerInGame.getPlayerName())) /* find the computer that matches this.currentPlayerInGame */
-					{
-						// create one string that will be used in the JOptionPane
-						Solution computerAnswer = new Solution();
-						computerAnswer = computer.getAccusation();
-						String compAnswer = computerAnswer.getPerson() + ", " + computerAnswer.getRoom() + "room, " + computerAnswer.getWeapon();
-						// check computerAnser against the store answerKey
-						if ( computerAnswer.getPerson().equals(answerKey.getPerson()) && 
-								computerAnswer.getRoom().equals(answerKey.getRoom()) && 
-								computerAnswer.getWeapon().equals(answerKey.getWeapon()) )
-						{
-							JOptionPane.showMessageDialog(null, "Computer Player: " + computer.getPlayerName() + " won the game. Answer was: "
-									+ compAnswer, "Message", JOptionPane.INFORMATION_MESSAGE);
-						}
-						else
-						{
-							JOptionPane.showMessageDialog(null, "Computer Player: " + computer.getPlayerName() + " was wrong. Solution given was: "
-									+ compAnswer, "Message", JOptionPane.INFORMATION_MESSAGE);
-						}
-					}
-				}
-
-
-			}
-			// suggestions can only be made when a player is in a room
-			if (getCellAt(col, row).isDoorway())
-			{
-				System.out.println("Computer's Room location: " + getCellAt(row, col).getInitial());
-
-				for (ComputerPlayer computer : computerPlayers)
-				{
-					if (computer.getPlayerName().equals(this.currentPlayerInGame.getPlayerName())) /* find the computer that matches this.currentPlayerInGame */
-					{
-						// public Card handleSuggestion(ComputerPlayer computerPlayer);
-						returnCardAnswer = handleSuggestion(computer);
-						// TODO: if returnCardAnswer = null , then that means that the suggestion was not disproved. You need to update the ControlPanel with the results. 
-						// making sure room, weapon, and person of computer.accusation is set to something before being able to make an accusation.
-						this.compReadyMakeAccusation = computer.isAccusationReady();
-					}
-				}
-			}
-			else { 
-				this.currentResults = ""; 
-				this.currentGuess = ""; 
-			}
 			repaint();
+
 		}
+
 	}
 
 	public Card handleSuggestion(ComputerPlayer computerPlayer) {
 
-		int row = computerPlayer.getCurrentRow(); 
-		int col = computerPlayer.getCurrentColumn();
+		int row = computerPlayer.getRow(); 
+		int col = computerPlayer.getColumn();
 
 		// createSuggestions saves the generated suggestion in ComputerPlayer's creadSoln (which is of type Solution)
 		computerPlayer.createSuggestion(board[col][row], possiblePeople, possibleWeapons, legend, computerPlayer); 
@@ -1010,31 +914,27 @@ public class Board extends JPanel {
 		myFrame.dispose();
 	}
 
-	public boolean containsClick(int mouseX, int mouseY, int targetX, int targetY) {
-		Rectangle rect = new Rectangle( targetY, targetX, 30, 30);
-		if ( rect.contains(new Point(mouseX, mouseY))) {
+	public boolean containsClick(int mouseX, int mouseY) {
+		Rectangle rect = new Rectangle(0, 0, 700, 800);
+		if (rect.contains(new Point(mouseX, mouseY))) {
 			return true;
 		}
+		
 		return false;
 	}
 
 	private class TargetListener implements MouseListener{
 
-		public void mousePressed(MouseEvent e) {}
+		public void mouseClicked(MouseEvent e) {}
 		public void mouseReleased(MouseEvent e) {}
 		public void mouseEntered(MouseEvent e) {}
 		public void mouseExited(MouseEvent e) {}
-
-		//C23A
-		@Override
-		public void mouseClicked(MouseEvent event) {
+		public void mousePressed(MouseEvent e) {
 			if (targetSelected == false && inWindow == false){
 				BoardCell whichBox = null;
 				for (int i = 0; i < 22; i++){
 					for (int j = 0; j < 22; j++){
-						if (getCellAt(i,j).containsClick(event.getX(), event.getY())){
-							System.out.println(i);
-							System.out.println(j);
+						if (getCellAt(i,j).containsClick(e.getX(), e.getY())){
 							whichBox = getCellAt(i, j);
 							repaint();
 							break;
@@ -1046,70 +946,21 @@ public class Board extends JPanel {
 				if (whichBox != null){
 					if (targets.contains(whichBox)) {
 						selectedBox = whichBox;
-						repaint();
-
-						if (whichBox.isDoorway()) {
-							inWindow = true; 
-							myFrame = new JFrame("Suggestion");
-							myFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-							try 
-							{
-								UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-
-
-							char i = whichBox.getInitial(); 
-							String currentRoom = ""; 
-							for (String temp : rooms) { 
-								if(i == temp.charAt(0)) { 
-									currentRoom = temp;
-									break;
-								}
-							}
-
-
-
-							JPanel myPanel = new JPanel();
-							suggest = new Suggestion(currentRoom); 
-
-							myPanel = suggest; 
-
-
-							myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
-							myPanel.setOpaque(true);
-
-							JTextArea text = new JTextArea(15, 50);
-							text.setEditable(false);
-							text.setFont(Font.getFont(Font.SANS_SERIF));
-							JPanel input = new JPanel(); 
-							input.setLayout(new FlowLayout()); 
-							myPanel.add(input);
-
-							myFrame.getContentPane().add(BorderLayout.CENTER, myPanel); 
-							myFrame.pack();
-							myFrame.setLocationByPlatform(true);
-							myFrame.setVisible(true);
-							myFrame.setResizable(false);
-							inWindow = false; 
-						}
-						GamePlay();
+						clickRow = selectedBox.getRow();
+						clickCol = selectedBox.getCol();
+						System.out.println("you selected a propper target");
 						targetSelected = true; 
 						return;
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "That is not a target", "Message", JOptionPane.INFORMATION_MESSAGE);
-						repaint();
-						GamePlay();
 						return;
 					}
 				}
 				else
 				{
 					JOptionPane.showMessageDialog(null, "That is not a target", "Message", JOptionPane.INFORMATION_MESSAGE);
-					//System.out.println("Box selected was not a box");
-					repaint();
+
 				}
 				revalidate();
 				repaint();

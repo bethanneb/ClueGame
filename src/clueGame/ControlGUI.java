@@ -32,13 +32,10 @@ public class ControlGUI extends JPanel {
 	Suggestion suggestionHuman = new Suggestion("");
 
 
-	public ControlGUI() {
-		board = Board.getInstance();
-		// set the file names to use my config files
-		board.setConfigFiles("OurClueLayout.csv", "OurClueLegend.txt");	
-		board.setCardFiles("Players.txt", "Cards.txt");
-		board.initialize();
+	public ControlGUI(Board board) {
 
+		this.board = board; 
+		
 		setLayout(new GridLayout(2,0));
 		JPanel panel1 = createNamePanel();
 		JPanel panel2 = createNextPlayerButtonPanel(); 
@@ -205,7 +202,7 @@ public class ControlGUI extends JPanel {
 		frame.setTitle("Clue Game");
 		frame.setSize(800, 200);	
 		// Create the JPanel and add it to the JFrame
-		ControlGUI gui = new ControlGUI();
+		ControlGUI gui = new ControlGUI(null);
 		frame.add(gui, BorderLayout.CENTER);
 		// Now let's view it
 		frame.setVisible(true);

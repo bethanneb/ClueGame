@@ -44,8 +44,8 @@ public class Player {
 	// Player parameterized constructors
 	public Player( String name, String color, int r, int c ) {
 		this.playerName = name;
-		this.currentRow = r;
-		this.currentColumn = c;
+		this.row = r;
+		this.column = c;
 		this.colorMain = convertColor(color);
 		this.myCards = new HashSet<Card>();
 		this.seenCards = new HashSet<Card>();
@@ -132,6 +132,12 @@ public class Player {
 		return null;
 	}
 	
+	public BoardCell pickLocation(Set<BoardCell> targets) {
+		return current;
+	}
+	
+	public void setLastRoom(BoardCell cell) {}
+	
 	// draws players using their given color and starting location
 	public void draw(Graphics g) {
 		g.setColor(color);
@@ -161,6 +167,7 @@ public class Player {
 		column = c; 
 		previousRow = row; 
 		row = r; 
+		pixel = new Point (this.row * 22 + 15, this.column * 22 + 100);
 	}
 	
 	public int getPreviousColumn() {
@@ -184,12 +191,6 @@ public class Player {
 		return seenCards; 
 	}
 
-	public int getCurrentRow() {
-		return currentRow; 
-	}
-	public int getCurrentColumn() {
-		return currentColumn; 
-	}
 	
 	public String getColorString()
 	{

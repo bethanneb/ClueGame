@@ -34,6 +34,7 @@ public class ComputerPlayer extends Player {
 		super(name, color, r, c);
 	}
 
+	@Override
 	public BoardCell pickLocation(Set<BoardCell> targets) {
 
 		ArrayList<BoardCell> availablePaths = new ArrayList<BoardCell>();
@@ -73,10 +74,11 @@ public class ComputerPlayer extends Player {
 		}
 	} 
 	
-
+	@Override
 	public void setLastRoom(BoardCell cell) {
 		lastRoom = cell.getInitial();
 	}
+	
 	public char getLastRoom() {
 		return lastRoom;
 	}
@@ -216,6 +218,7 @@ public class ComputerPlayer extends Player {
 	public boolean isComputer() {
 		return true;
 	}
+	
 	//I also commented this out because we don't know what this is suppose to do yet
 	//	public createSuggestion(TBD) {
 	//		
