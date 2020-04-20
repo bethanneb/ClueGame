@@ -93,18 +93,35 @@ public class ControlGUI extends JPanel {
 
 	//panel 4
 	private JPanel createDiePanel() {
+		currentDie = new JTextField(String.valueOf(board.currentDieRollValue()));
+		JTextField name; 
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
 		panel.setLayout(new GridLayout(1,2));
-
 		JLabel nameLabel = new JLabel("Roll"); 
-		JTextField dieNumber = new JTextField(); 
-		dieNumber.setEditable(false);
-
+		String die = String.valueOf(dieRoll);
+		name = new JTextField(die);
+		this.currentDie.setEditable(false);
+		name.setEditable(false);
 		panel.add(nameLabel);
-		panel.add(dieNumber);
+		//panel.add(name);
+		System.out.println("Current die: " + currentDie);
+		panel.add(this.currentDie);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Die"));
 		return panel;
+		
+//		JPanel panel = new JPanel();
+//		// Use a grid layout, 1 row, 2 elements (label, text)
+//		panel.setLayout(new GridLayout(1,2));
+//
+//		JLabel nameLabel = new JLabel("Roll"); 
+//		JTextField dieNumber = new JTextField(); 
+//		dieNumber.setEditable(false);
+//
+//		panel.add(nameLabel);
+//		panel.add(dieNumber);
+//		panel.setBorder(new TitledBorder (new EtchedBorder(), "Die"));
+//		return panel;
 	}
 
 	// panel 5

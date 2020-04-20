@@ -720,6 +720,76 @@ public class Board extends JPanel implements MouseListener {
 				getCellAt(i, j).draw(g);
 			}
 		}
+		//C23A
+		//NOTE: drawing the computer players
+		for ( ComputerPlayer comp: computerPlayers) {
+			int x = comp.getCurrentRow();
+			int y = comp.getCurrentColumn();
+			Color color = comp.getColor();
+			g.setColor(color);
+			Point pixel = new Point( x * 32 + 50, y * 32 + 50);
+			g.fillOval(pixel.x, pixel.y, 30, 30);
+		}
+		
+		//NOTE: draw the human player
+		for ( HumanPlayer human: humanPlayer)
+		{
+			int x = human.getCurrentRow();
+			int y = human.getCurrentColumn();
+			Color color2 = human.getColor();
+			g.setColor(color2);
+			Point pixel = new Point( x * 32 + 50, y * 32 + 50);
+			g.fillOval(pixel.x, pixel.y, 30, 30);
+		}
+		
+		// NOTE: drawing the targets found on the board. There are highlighted in CYAN
+		if ( this.currentPlayerInGame.getPlayerName().equals("Michael Scott") && targets.size() > 0) {
+			for ( BoardCell cell: targets) {
+				cell.drawTargets(g);
+			}
+		}
+		
+		// NOTE: when the human player is done with selecting a location, repaint the targeted cells 
+		// back to path color
+		if (this.currentPlayerInGameCount != 0)
+		{
+			for ( BoardCell cell: targets)
+			{
+				cell.reDrawTargets(g);
+			}
+		}
+		
+		if (this.currentPlayerInGame.getPlayerName().equals("Michael Scott"))
+		{
+			for ( HumanPlayer human: humanPlayer)
+			{
+				int x = human.getCurrentRow();
+				int y = human.getCurrentColumn();
+				Color color2 = human.getColor();
+				g.setColor(color2);
+				Point pixel = new Point( x * 32 + 50, y * 32 + 50);
+				g.fillOval(pixel.x, pixel.y, 30, 30);
+			}
+		}
+
+		if (( 	this.currentPlayerInGame.getPlayerName().equals("Dwight Schrute")  	|| 
+				this.currentPlayerInGame.getPlayerName().equals("Jim Halpert") 	|| 
+				this.currentPlayerInGame.getPlayerName().equals("Pam Halpert")	|| 
+				this.currentPlayerInGame.getPlayerName().equals("Kevin Malone")	||
+				this.currentPlayerInGame.getPlayerName().equals("Andy Bernard")	||
+				this.currentPlayerInGame.getPlayerName().equals("Oscar Martinez")	||
+				this.currentPlayerInGame.getPlayerName().equals("Angela Martin") ) && this.doneWithComputer)
+		{
+			for ( ComputerPlayer comp: computerPlayers)
+			{
+				int x = comp.getCurrentRow();
+				int y = comp.getCurrentColumn();
+				Color color = comp.getColor();
+				g.setColor(color);
+				Point pixel = new Point( x * 32 + 50, y * 32 + 50);
+				g.fillOval(pixel.x, pixel.y, 30, 30);
+			}
+		}
 
 		//labels rooms
 		g.setColor(Color.BLACK);
@@ -785,6 +855,7 @@ public class Board extends JPanel implements MouseListener {
 		// NOTE: random dice roll used to the pathLength in calcTargets
 		Random rand = new Random(); 
 		int dieRoll = rand.nextInt(6) + 1; 
+		System.out.println("Roll: " + dieRoll);
 		return dieRoll;  
 	}
 
