@@ -33,6 +33,7 @@ public class ControlGUI extends JPanel {
 
 
 	public ControlGUI() {
+		dieRoll = 0;
 		board = Board.getInstance();
 		// set the file names to use my config files
 		board.setConfigFiles("OurClueLayout.csv", "OurClueLegend.txt");	
@@ -162,10 +163,10 @@ public class ControlGUI extends JPanel {
 		
 		currentName.setText(board.whoIsTheCurrentPLayer().getPlayerName());  
 		currentName.setEditable(false);
-		currentName.repaint();
+		//currentName.repaint(); //NECESSARY???
 		
 		currentDie.setText(String.valueOf(board.currentDieRollValue()));
-		currentDie.repaint();
+		//currentDie.repaint(); //NECESSARY???
 	}
 
 	private class MakeAccusationButtonListener implements ActionListener

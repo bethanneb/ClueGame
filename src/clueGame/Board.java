@@ -101,7 +101,7 @@ public class Board extends JPanel implements MouseListener {
 	private String currentResults = "no new clue";
 	public boolean inWindow = false; 
 	public boolean isFirstTurn = true; 
-	
+
 	private MouseEvent event; 
 	//public Suggestion suggest; //CREATE CLASS LATER
 	// Functions:
@@ -471,7 +471,7 @@ public class Board extends JPanel implements MouseListener {
 					ComputerPlayer player2 = new ComputerPlayer(name, row, column, color);
 					playersList.add(player2);
 				}
-				
+
 				//NEW
 				Card people = new Card (splits[0], CardType.PERSON);
 				peoplePile.add(people);
@@ -712,70 +712,68 @@ public class Board extends JPanel implements MouseListener {
 		return currentPlayerInGame; // NOTE: Empty player was made to return when game first starts  
 	}
 
-	//C21A
-	public void paintComponent (Graphics g) {
+		//C21A
+		public void paintComponent (Graphics g) {
+		
+			super.paintComponent(g);
 	
-		super.paintComponent(g);
-
-		//draws board
-		for ( int i = 21; i >= 0; i--){
-			for ( int j = 21; j >= 0; j--){
-				getCellAt(i, j).draw(g);
+			//draws board
+			for ( int i = 21; i >= 0; i--){
+				for ( int j = 21; j >= 0; j--){
+					getCellAt(i, j).draw(g);
+				}
 			}
-		}
-		//C23A
-		
-		//Draws the targets found on the board
-		if (currentPlayerInGame.getPlayerName().equals("Michael Scott") && targets.size() > 0) {
-			for (BoardCell cell: targets) {
-				cell.drawTargets(g);
+			//C23A
+			
+			//Draws the targets found on the board
+			if (currentPlayerInGame.getPlayerName().equals("Michael Scott") && targets.size() > 0) {
+				for (BoardCell cell: targets) {
+					cell.drawTargets(g);
+				}
 			}
-		}
-		
-		//Supposed to be that when the human player is done selecting a location, repaint the targeted cells back to walkway color
-		if (currentPlayerInGameCount != 0) {
-			for ( BoardCell cell: targets) {
-				cell.reDrawTargets(g);
+			
+			//Supposed to be that when the human player is done selecting a location, repaint the targeted cells back to walkway color
+			if (currentPlayerInGameCount != 0) {
+				for ( BoardCell cell: targets) {
+					cell.reDrawTargets(g);
+				}
 			}
-		}
-
-		if (!currentPlayerInGame.getPlayerName().equals("Michael Scott") && this.doneWithComputer)
-		{
-			for ( ComputerPlayer comp: computerPlayers)
+	
+			if (!currentPlayerInGame.getPlayerName().equals("Michael Scott") && this.doneWithComputer)
 			{
-				int x = comp.getCurrentRow();
-				int y = comp.getCurrentColumn();
-				Color color = comp.getColor();
-				g.setColor(color);
-				Point pixel = new Point( x * 32 + 50, y * 32 + 50);
-				g.fillOval(pixel.x, pixel.y, 30, 30);
+				for ( ComputerPlayer comp: computerPlayers)
+				{
+					int x = comp.getCurrentRow();
+					int y = comp.getCurrentColumn();
+					Color color = comp.getColor();
+					g.setColor(color);
+					Point pixel = new Point( x * 32 + 50, y * 32 + 50);
+					g.fillOval(pixel.x, pixel.y, 30, 30);
+				}
+			}
+			//end of C23A additions
+	
+			//labels rooms
+			g.setColor(Color.BLACK);
+			g.drawString("Kitchen", 110, 60);
+			g.drawString("Jim's Desk", 232, 50);
+			g.drawString("Dwight's", 372, 50);
+			g.drawString("Desk", 372, 65);
+			g.drawString("Vance", 520, 50);
+			g.drawString("Refrigeration", 500, 65);
+			g.drawString("Front", 103, 195);
+			g.drawString("Desk", 103, 280);
+			g.drawString("Conference", 510, 240);
+			g.drawString("Room", 525, 255);
+			g.drawString("Michael's Office", 101, 450);
+			g.drawString("Break Room", 305, 440);
+			g.drawString("Warehouse", 500, 440);
+	
+			//draws players
+			for(Player p: playersList) {
+				p.draw(g);
 			}
 		}
-		//end of C23A additions
-
-		//labels rooms
-		g.setColor(Color.BLACK);
-		g.drawString("Kitchen", 110, 60);
-		g.drawString("Jim's Desk", 232, 50);
-		g.drawString("Dwight's", 372, 50);
-		g.drawString("Desk", 372, 65);
-		g.drawString("Vance", 520, 50);
-		g.drawString("Refrigeration", 500, 65);
-		g.drawString("Front", 103, 195);
-		g.drawString("Desk", 103, 280);
-		g.drawString("Conference", 510, 240);
-		g.drawString("Room", 525, 255);
-		g.drawString("Michael's Office", 101, 450);
-		g.drawString("Break Room", 305, 440);
-		g.drawString("Warehouse", 500, 440);
-
-		//draws players
-		for(Player p: playersList) {
-			p.draw(g);
-		}
-
-
-	}
 
 	public Set<HumanPlayer> getHumanPlayer() {
 		return humanPlayer;
@@ -876,17 +874,17 @@ public class Board extends JPanel implements MouseListener {
 
 	public void GamePlay() {
 		selectedBox = new BoardCell();
-		
+
 		if (currentPlayerInGame.getPlayerName().equals("Michael Scott")){
-			
+
 			doneWithHuman = false;
 			targetSelected = false; 
 			int row = currentPlayerInGame.getRow();
 			int col = currentPlayerInGame.getColumn();
 			calcTargets(row, col, currentDieRollValue());
 			repaint();
-			
-			mouseClicked(null);
+
+			//mouseClicked(null);
 			updateHumanPosition(selectedBox.getCol(), selectedBox.getRow(), currentDieRollValue(), currentPlayerInGame); 
 			repaint();
 		}
@@ -950,7 +948,7 @@ public class Board extends JPanel implements MouseListener {
 			else { 
 				this.currentResults = ""; 
 				this.currentGuess = ""; 
-				}
+			}
 			repaint();
 		}
 	}
@@ -1013,15 +1011,16 @@ public class Board extends JPanel implements MouseListener {
 		myFrame.setVisible(false);
 		myFrame.dispose();
 	}
-	
+
 	public boolean containsClick( int mouseX, int mouseY, int targetX, int targetY) {
 		Rectangle rect = new Rectangle( targetY, targetX, 30, 30);
-		if ( rect.contains(new Point(mouseX, mouseY))) {
-			return true;
-		}
-		return false;
+		return (rect.contains(new Point(mouseX, mouseY)));
+		//		if ( rect.contains(new Point(mouseX, mouseY))) {
+		//			return true;
+		//		}
+		//		return false;
 	}
-	
+
 	//C23A
 	@Override
 	public void mouseClicked(MouseEvent event) {
@@ -1029,8 +1028,9 @@ public class Board extends JPanel implements MouseListener {
 			BoardCell whichBox = null;
 			for ( int i = 0; i < 22; i++){
 				for ( int j = 0; j < 22; j++){
-					System.out.println("help");
+					//System.out.println("help");
 					if (getCellAt(i, j).containsClick(event.getX(), event.getY())){
+						System.out.println("Click is within cell");
 						whichBox = getCellAt(i, j);
 						repaint();
 						break;
@@ -1043,7 +1043,7 @@ public class Board extends JPanel implements MouseListener {
 				if (targets.contains(whichBox)) {
 					selectedBox = whichBox;
 					repaint();
-					
+
 					if (whichBox.isDoorway()) {
 						inWindow = true; 
 						myFrame = new JFrame("Suggestion");
@@ -1055,7 +1055,7 @@ public class Board extends JPanel implements MouseListener {
 							e.printStackTrace();
 						}
 
-						
+
 						char i = whichBox.getInitial(); 
 						String currentRoom = ""; 
 						for (String temp : rooms) { 
@@ -1064,15 +1064,15 @@ public class Board extends JPanel implements MouseListener {
 								break;
 							}
 						}
-						
-						
-						
+
+
+
 						JPanel myPanel = new JPanel();
 						suggest = new Suggestion(currentRoom); 
 
 						myPanel = suggest; 
 
-						
+
 						myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
 						myPanel.setOpaque(true);
 
@@ -1116,7 +1116,7 @@ public class Board extends JPanel implements MouseListener {
 	public void mouseReleased(MouseEvent e) {}
 	public void mouseEntered(MouseEvent e) {}
 	public void mouseExited(MouseEvent e) {}
-	
+
 	public void incorrectAccusation(Solution soln) { 
 
 		String message = "Incorrect guess. " + soln.getPerson() + " " + soln.getWeapon() + " " 
@@ -1124,7 +1124,7 @@ public class Board extends JPanel implements MouseListener {
 
 		JOptionPane.showMessageDialog(null, message);
 	}
-	
+
 	public void correctAccuation(Solution soln) { 
 		String message = "You win! " + soln.getPerson() + " " + soln.getWeapon() + " " + 
 				soln.getRoom() + " was the correct answer!"; 
@@ -1132,7 +1132,7 @@ public class Board extends JPanel implements MouseListener {
 		JOptionPane.showMessageDialog(null, message);
 	}
 
-	
+
 
 
 
