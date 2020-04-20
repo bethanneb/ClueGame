@@ -101,7 +101,7 @@ public class Board extends JPanel {
 	private String currentResults = "no new clue";
 	public boolean inWindow = false; 
 	public boolean isFirstTurn = true; 
-	
+
 	private int clickRow;
 	private int clickCol;
 
@@ -803,9 +803,9 @@ public class Board extends JPanel {
 
 	public void updateHumanPosition(Player player) { 	
 		addMouseListener(new TargetListener());
+
 		
-		//player.updatePosition(clickRow, clickCol);
-		
+
 		doneWithHuman = true;	
 		revalidate();
 		repaint();
@@ -824,7 +824,7 @@ public class Board extends JPanel {
 
 		//update location
 		player.updatePosition(newLoc.getRow(), newLoc.getCol());
-		
+
 		//show it on board
 		repaint(); 
 
@@ -841,7 +841,7 @@ public class Board extends JPanel {
 			targetSelected = false; 
 			calcTargets(row, col, currentDieRollValue());
 			repaint();
-			
+
 			updateHumanPosition(currentPlayerInGame); 
 			repaint();
 		}
@@ -919,7 +919,7 @@ public class Board extends JPanel {
 		if (rect.contains(new Point(mouseX, mouseY))) {
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -934,7 +934,7 @@ public class Board extends JPanel {
 				BoardCell whichBox = null;
 				for (int i = 0; i < 22; i++){
 					for (int j = 0; j < 22; j++){
-						if (getCellAt(i,j).containsClick(e.getX(), e.getY())){
+						if (getCellAt(i,j).containsClick(e.getY(), e.getX())){
 							whichBox = getCellAt(i, j);
 							repaint();
 							break;
@@ -948,7 +948,7 @@ public class Board extends JPanel {
 						selectedBox = whichBox;
 						clickRow = selectedBox.getRow();
 						clickCol = selectedBox.getCol();
-						System.out.println("you selected a propper target");
+						currentPlayerInGame.updatePosition(clickRow, clickCol);
 						targetSelected = true; 
 						return;
 					}
@@ -957,12 +957,6 @@ public class Board extends JPanel {
 						return;
 					}
 				}
-				else
-				{
-					JOptionPane.showMessageDialog(null, "That is not a target", "Message", JOptionPane.INFORMATION_MESSAGE);
-
-				}
-				revalidate();
 				repaint();
 			}
 		}
