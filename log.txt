@@ -1,3 +1,153 @@
+commit c14e338a2480a125c3318671c0986275fc3070b9
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Apr 20 15:50:08 2020 -0600
+
+    Fixed null pointer error
+
+commit e1f618fa90a327c45b8f55299bc5582d277cb05a
+Merge: 81a8241 248ca21
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Apr 20 15:42:36 2020 -0600
+
+    Resolved merging issues
+
+commit 248ca2140f51319857a37af0b275da9e8cbaf7ad
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Mon Apr 20 15:21:12 2020 -0600
+
+    everything works correctly. added comments. sometimes the error message makes you click ok multiple times, don't know why
+
+commit 7ba391d727a5ce599b39f833ee7e9c06289b5537
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Mon Apr 20 15:03:42 2020 -0600
+
+    fixed mouse press and human player picks targets and moves correctly. there are still some weird things happening that i can try to fix but main components all work now
+
+commit 2437f5c6ee283f5d533beaf8c052c40b2be40d47
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Mon Apr 20 14:51:40 2020 -0600
+
+    computer players move and display correctly. target selection for human works sometimes. working on that fix
+
+commit 81a82410a70b88d580558e9a5c68f11d1ee5c4aa
+Merge: ee4b32c ab5f1bd
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Apr 20 00:30:01 2020 -0600
+
+    merged board class
+
+commit ee4b32c088425e20340855dfe0f0d1e563a8e17e
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Mon Apr 20 00:28:24 2020 -0600
+
+    trying to fix code
+
+commit ab5f1bd24a06962b98988b379d35c5dcb445d0ae
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Sun Apr 19 23:59:52 2020 -0600
+
+    tried to fix display
+
+commit f1f55800ab90a8266faeef991a3db8cf43c47794
+Merge: f558da4 e6a9341
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Apr 19 22:40:48 2020 -0600
+
+    Resolved mouse listener meging
+
+commit f558da4b0ede24f7fb63491f59e07132c5e83067
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Apr 19 22:37:38 2020 -0600
+
+    Still trying to figure out why mouse isn't listening for targets
+
+commit e6a9341776b88d7351f4cb676fee414ddb93b082
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Sun Apr 19 22:35:17 2020 -0600
+
+    got mouselistener to listen to clicks but it still is not processing corectly
+
+commit d539f707ec79ca6068644f932724f66b1a3131d9
+Merge: 213f3b5 7097273
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Apr 19 22:00:52 2020 -0600
+
+    Merge branch 'master' of https://github.com/bethanneb/ClueGame
+
+commit 213f3b5646008f69b450d0f866532d7d341a2974
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Apr 19 22:00:47 2020 -0600
+
+    Wsa trying to fix mouse clicking errors
+
+commit 70972732c5595890e42814a1027668d8ec8a288d
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Sun Apr 19 21:59:33 2020 -0600
+
+    tried to figure out mouseclick; it is now throwning an error
+
+commit 98c40cd1f9706ed9b8b9f2638e9727b72f79ee9f
+Merge: e8dbf61 80895c8
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Apr 19 21:19:24 2020 -0600
+
+    Got rid of null point errors, but clicking targets still doesn't work
+
+commit e8dbf611507b5ceac34817c3a17ea32992b5d1bd
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Apr 19 20:47:22 2020 -0600
+
+    Trying to fix drawing target cells
+
+commit 80895c8299201b79b9bd1025b06ba3e425807afc
+Merge: 9bdddb7 edbb5ab
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Sun Apr 19 20:43:44 2020 -0600
+
+    trying to merge
+
+commit 9bdddb7c6a5cafadbeef160004f624c64d34e2c0
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Sun Apr 19 20:37:12 2020 -0600
+
+    got refresh function to work and also got targets to print
+
+commit edbb5ab59f5674239f2c0cde83eed0bfdff81945
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Apr 19 19:56:55 2020 -0600
+
+    Now tells user to take their turn if they haven't chosen a place to move yet
+
+commit ac8aae1570262c581eadb08f44de5cc359c9fb54
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Apr 19 18:38:28 2020 -0600
+
+    Player names and die roll changes correctly; but in the process of implementing painted targets and not ending the turn before human players choose a target to move to
+
+commit ddf50af91a83784a16b268e7582376fa5d5abc88
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Apr 19 18:16:38 2020 -0600
+
+    Added some print outs, but value of die does now show up; why?
+
+commit 180d6b039582e400d170332de5bb07427675309f
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Apr 19 18:13:55 2020 -0600
+
+    Tried to add die to GUI but always shows up as -1
+
+commit bdeed3bac208a32d69f905e62f10d3d73debc2f7
+Author: Elizabeth Bauch <ebauch@mymail.mines.edu>
+Date:   Sun Apr 19 17:40:27 2020 -0600
+
+    Needed to repaint names in order for them to update when next player is pressed
+
+commit 805ade57be7f19bc644e095b256eaa7e1f993368
+Author: dbunavi <dbunavi@mymail.mines.edu>
+Date:   Sun Apr 19 16:40:09 2020 -0600
+
+    tried to fix next player button, names are fixed but functionality is pretty bad still
+
 commit c24468aa33dc1b84e9c98ecc198ed9f8f220f865
 Author: dbunavi <dbunavi@mymail.mines.edu>
 Date:   Sun Apr 19 15:29:37 2020 -0600

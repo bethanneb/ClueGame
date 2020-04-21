@@ -92,14 +92,7 @@ public class ComputerPlayer extends Player {
 		weapons = weaponsArray;
 		char roomInitial = cell.getInitial();
 		String room = legend.get(roomInitial);
-		//System.out.println("room size" + rooms.size());
-		//for (String r : rooms)
-		//{
-			//if (roomInitial == r.charAt(0))
-			//{
-				//room = r;
-			//} 
-		//}
+
 		Card person = new Card("", CardType.PERSON);
 		Card weapon = new Card("", CardType.PERSON);
 		Set<Card> seen = new HashSet<Card>();
@@ -121,7 +114,6 @@ public class ComputerPlayer extends Player {
 				weapon = weapons.get(select);
 			}
 			else weapon = null;
-			//Hello
 
 			// handle looking at seenCards and making sure to not 
 			if ( seen.contains(person)) people.remove(person);
@@ -129,7 +121,7 @@ public class ComputerPlayer extends Player {
 			if ( seen.contains(weapon)) weapons.remove(weapon);
 			else exit = false;
 
-			if ( seen.size() == 12)
+			if (seen.size() == 12)
 			{
 				//you can't pick a card you have already seen and there are only 12 cards total
 				createdSoln.setAnswerKeyRoom(room);
