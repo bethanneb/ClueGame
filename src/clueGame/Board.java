@@ -89,6 +89,7 @@ public class Board extends JPanel {
 	// NOTE: Game logic variables 
 	public boolean doneWithHuman = true;
 	public boolean targetSelected = true;
+	public boolean hasNotAccused = true;
 	private boolean doneWithComputer = false;
 	private Player currentPlayerInGame;
 	public int currentPlayerInGameCount = -1;
@@ -773,11 +774,9 @@ public class Board extends JPanel {
 	public void nextPlayerButtonMethod() {
 		if (targetSelected) {
 			// this method will be called when the "Next Player" button is clicked on
-			if (currentPlayerInGameCount == -1) {
+			if (currentPlayerInGameCount == -1 || currentPlayerInGameCount == 7) {
 				currentPlayerInGameCount = 0;
-			}
-			else if (currentPlayerInGameCount == 7) {
-				currentPlayerInGameCount = 0;
+				hasNotAccused = true;
 			}
 			else {
 				currentPlayerInGameCount ++; 
@@ -808,10 +807,6 @@ public class Board extends JPanel {
 	public void updateHumanPosition(Player player) { 
 		//pick target
 		addMouseListener(new TargetListener());
-
-		if(getCellAt(player.getRow(), player.getColumn()).isRoom()) {
-			GuessPanel makeGuess = new GuessPanel();
-		}
 
 		//done with turn
 		doneWithHuman = true;
@@ -954,6 +949,7 @@ private class TargetListener implements MouseListener{
 			if (whichBox != null){
 				//if it is, update location and end turn
 				if (targets.contains(whichBox)) {
+					hasNotAccused = false;
 					selectedBox = whichBox;
 					clickRow = selectedBox.getRow();
 					clickCol = selectedBox.getCol();

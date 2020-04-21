@@ -9,6 +9,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
@@ -35,7 +36,7 @@ public class ControlGUI extends JPanel {
 	public ControlGUI(Board board) {
 
 		this.board = board; 
-		
+
 		setLayout(new GridLayout(2,0));
 		JPanel panel1 = createNamePanel();
 		JPanel panel2 = createNextPlayerButtonPanel(); 
@@ -115,7 +116,7 @@ public class ControlGUI extends JPanel {
 		//JTextField name = new JTextField(20);
 		//name.setEditable(false);
 		currentGuess.setEnabled(false);
-		
+
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
 		panel.setLayout(new GridLayout(2,6));
@@ -126,7 +127,7 @@ public class ControlGUI extends JPanel {
 
 		panel.add(nameLabel);
 		//panel.add(guess);
-		
+
 		//C24A
 		panel.add(currentGuess);
 		//panel.setBorder(new TitledBorder (new EtchedBorder(), "Guess"));
@@ -164,10 +165,10 @@ public class ControlGUI extends JPanel {
 			}
 		}
 	}
-	
+
 	public void refreshGuessResultPanels() {
-		
-		if (board.whoIsTheCurrentPLayer().getPlayerName().equals("CompSci"))
+
+		if (board.whoIsTheCurrentPLayer() instanceof HumanPlayer)
 		{
 			suggestionHuman = board.passCurrentSuggestionState();
 			System.out.println(suggestionHuman.getCurrentHumanGuess());
@@ -184,42 +185,47 @@ public class ControlGUI extends JPanel {
 	}
 
 	public void refreshDieAndNamePanel() {
-		
+
 		currentName.setText(board.whoIsTheCurrentPLayer().getPlayerName());  
 		currentName.setEditable(false);
 		//currentName.repaint(); //NECESSARY???
-		
+
 		currentDie.setText(String.valueOf(board.currentDieRollValue()));
 		//currentDie.repaint(); //NECESSARY???
 	}
 
 	private class MakeAccusationButtonListener implements ActionListener
 	{
-		public void actionPerformed(ActionEvent event)
-		{
+		public void actionPerformed(ActionEvent event){
+			if(board.whoIsTheCurrentPLayer() instanceof HumanPlayer && board.hasNotAccused) {
+				accusationWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				try
+				{
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
 
-			accusationWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			try
-			{
-				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				JPanel accusationPanel = new JPanel();
+
+				accusationPanel = accusationClass;
+				accusationPanel.setLayout(new BoxLayout(accusationPanel, BoxLayout.Y_AXIS));
+				accusationPanel.setOpaque(true);
+
+				accusationWindow.getContentPane().add(BorderLayout.CENTER, accusationPanel);
+				accusationWindow.pack();
+				accusationWindow.setLocationByPlatform(true);
+				accusationWindow.setVisible(true);
+				accusationWindow.setResizable(true);
+				accusationClass.passFrame(accusationWindow);
+				
+				board.hasNotAccused = false;
 			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
+			else {
+				JOptionPane.showMessageDialog(null, "Cannot make accusation now.", "Message", JOptionPane.INFORMATION_MESSAGE);
 			}
-
-			JPanel accusationPanel = new JPanel();
-
-			accusationPanel = accusationClass;
-			accusationPanel.setLayout(new BoxLayout(accusationPanel, BoxLayout.Y_AXIS));
-			accusationPanel.setOpaque(true);
-
-			accusationWindow.getContentPane().add(BorderLayout.CENTER, accusationPanel);
-			accusationWindow.pack();
-			accusationWindow.setLocationByPlatform(true);
-			accusationWindow.setVisible(true);
-			accusationWindow.setResizable(true);
-			accusationClass.passFrame(accusationWindow);
 		}
 	}
 
