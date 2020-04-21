@@ -3,11 +3,6 @@ package clueGame;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
@@ -35,12 +30,10 @@ public class Suggestion extends JPanel {
 	public Suggestion(String r) { 
 
 		board = Board.getInstance();
-		//board.setConfigFiles("C14 Layout.csv", "C12 Layout.txt");
-		//board.setWeaponsConfigFile("WeaponsConfig.txt");
-		//board.setPeopleConfigFile("PeopleConfig.txt");
-		//board.initialize();
+//		board.setConfigFiles("OurClueLayout.csv", "OurClueLegend.txt");
+//		board.setCardFiles("Players.txt", "Cards.txt");
+//		board.initialize();
 		//board.buildGamePlayers();
-
 
 		roomName = r; // Get current room from board 
 
@@ -53,6 +46,9 @@ public class Suggestion extends JPanel {
 		JPanel panel = peopleGuess();
 		JPanel panel1 = weaponsGuess();
 		JPanel panel2 = roomsGuess(); 
+		panel.setPreferredSize(new Dimension(400, 100));
+		panel1.setPreferredSize(new Dimension(400, 100));
+		panel2.setPreferredSize(new Dimension(400, 100));
 
 		add(panel);
 		add(panel1);		
@@ -67,23 +63,32 @@ public class Suggestion extends JPanel {
 	}
 	
 	private JPanel peopleGuess() {
-
+		JComboBox peopleList = new JComboBox(people); 
 		JPanel panel = new JPanel();
 		panel.add(peopleList);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "People Guess"));
 		return panel;
+
+//		JPanel panel = new JPanel();
+//		panel.add(peopleList);
+//		panel.setBorder(new TitledBorder (new EtchedBorder(), "People Guess"));
+//		return panel;
 	}
 
 	private JPanel weaponsGuess() { 
-
+		JComboBox weaponsList = new JComboBox(weapons); 
 		JPanel panel = new JPanel();
 		panel.add(weaponsList);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Weapon Guess"));
 		return panel; 
+
+//		JPanel panel = new JPanel();
+//		panel.add(weaponsList);
+//		panel.setBorder(new TitledBorder (new EtchedBorder(), "Weapon Guess"));
+//		return panel; 
 	}
 
 	private JPanel roomsGuess() {
-
 		JPanel panel = new JPanel();
 
 		JTextField textName = new JTextField(roomName); 
