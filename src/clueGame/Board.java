@@ -99,7 +99,7 @@ public class Board extends JPanel {
 	private boolean compReadyMakeAccusation = false;
 	private boolean compSuggestionDisproved = true;
 	private String currentGuess = "";
-	private String currentResults = "NO NEW CLUE";
+	private String currentResults = "no new clue";
 	public boolean inWindow = false; 
 	public boolean isFirstTurn = true; 
 
@@ -713,8 +713,6 @@ public class Board extends JPanel {
 		}
 		return null;
 	}
-	
-	
 
 	public Player whoIsTheCurrentPLayer() { 
 		return currentPlayerInGame; // NOTE: Empty player was made to return when game first starts  
@@ -773,9 +771,10 @@ public class Board extends JPanel {
 
 	public void nextPlayerButtonMethod() {
 		if (targetSelected) {
-			// this method will be called when the "Next Player" button is clicked on
+			//cycles through players starting with the human player
 			if (currentPlayerInGameCount == -1 || currentPlayerInGameCount == 7) {
 				currentPlayerInGameCount = 0;
+				//allows them to accuse at the beginning of their turn
 				hasNotAccused = true;
 			}
 			else {
@@ -864,184 +863,188 @@ public class Board extends JPanel {
 			//update position
 			updateComputerPosition(col, row, currentDieRollValue(), currentPlayerInGame);
 			repaint();
+
 		}
+
 	}
 
-public Card handleSuggestion(ComputerPlayer computerPlayer) {
+	public Card handleSuggestion(ComputerPlayer computerPlayer) {
 
-	int row = computerPlayer.getRow(); 
-	int col = computerPlayer.getColumn();
+		int row = computerPlayer.getRow(); 
+		int col = computerPlayer.getColumn();
 
-	// createSuggestions saves the generated suggestion in ComputerPlayer's creadSoln (which is of type Solution)
-	computerPlayer.createSuggestion(board[col][row], possiblePeople, possibleWeapons, legend, computerPlayer); 
-	this.currentGuess = (computerPlayer.getPlayerName() + ": " + computerPlayer.getCreatedSoln().getPerson() + ", " + computerPlayer.getCreatedSoln().getRoom() + ", " + computerPlayer.getCreatedSoln().getWeapon()) ;
-	ArrayList<Card> foundCards = new ArrayList<Card>(); 
+		// createSuggestions saves the generated suggestion in ComputerPlayer's creadSoln (which is of type Solution)
+		computerPlayer.createSuggestion(board[col][row], possiblePeople, possibleWeapons, legend, computerPlayer); 
+		this.currentGuess = (computerPlayer.getPlayerName() + ": " + computerPlayer.getCreatedSoln().getPerson() + ", " + computerPlayer.getCreatedSoln().getRoom() + ", " + computerPlayer.getCreatedSoln().getWeapon()) ;
+		ArrayList<Card> foundCards = new ArrayList<Card>(); 
 
-	for(ComputerPlayer tempPlayer: computerPlayers) {
-		if (tempPlayer == computerPlayer) {
-			continue;  
+		for(ComputerPlayer tempPlayer: computerPlayers) {
+			if (tempPlayer == computerPlayer) {
+				continue;  
+			}
+			else { 
+				// if a card is found by another player, the card is added to the ArrayList of cards
+				Card temp = tempPlayer.disproveSuggestion(computerPlayer.createdSoln); 
+				if ( temp == null) {}
+				else { foundCards.add(temp); }
+
+			}
+		}
+
+		// selecting a random number for selecting a found Card
+		Random rand = new Random(); 
+		int location = rand.nextInt(foundCards.size()); 
+
+		if (foundCards.size() == 0) { /* if the size of FoundCards = 0, that means not cards were found to disprove the suggestion */
+			// store the suggestion that was found to be the next accusation. 
+			computerPlayer.setAccusation(computerPlayer.getCreatedSoln());
+			this.compSuggestionDisproved = false;
+			this.currentResults = "no new clue";
+			return null;
 		}
 		else { 
-			// if a card is found by another player, the card is added to the ArrayList of cards
-			Card temp = tempPlayer.disproveSuggestion(computerPlayer.createdSoln); 
-			if ( temp == null) {}
-			else { foundCards.add(temp); }
-
-		}
-	}
-
-	// selecting a random number for selecting a found Card
-	Random rand = new Random(); 
-	System.out.println("foundCards: " + foundCards.size());
-	int location = rand.nextInt(foundCards.size()); 
-
-	if (foundCards.size() == 0) { /* if the size of FoundCards = 0, that means not cards were found to disprove the suggestion */
-		// store the suggestion that was found to be the next accusation. 
-		computerPlayer.setAccusation(computerPlayer.getCreatedSoln());
-		this.compSuggestionDisproved = false;
-		this.currentResults = "no new clue";
-		return null;
-	}
-	else { 
-		computerPlayer.addSeen(foundCards.get(location));
-		this.compSuggestionDisproved = true;
-		if (foundCards.get(location) != null) {
-			this.currentResults = foundCards.get(location).getCardName();
-			return foundCards.get(location); 
-		}
-		else
-		{
-			// if null, need to choose another location to go to
+			computerPlayer.addSeen(foundCards.get(location));
 			this.compSuggestionDisproved = true;
-			this.currentResults = "no new clue";
-			return null; 
+			//System.out.println("Found other cards that disprove the suggestion. ArrayList size: " + foundCards.size() );
+			if (foundCards.get(location) != null)
+			{
+				this.currentResults = foundCards.get(location).getCardName();
+				return foundCards.get(location); 
+			}
+			else
+			{
+				// if null, need to choose another location to go to
+				this.compSuggestionDisproved = true;
+				this.currentResults = "no new clue";
+				return null; 
+			}
 		}
+
 	}
 
-}
+	public void closeMyFrame() { 
+		myFrame.setVisible(false);
+		myFrame.dispose();
+	}
 
-public void closeMyFrame() { 
-	myFrame.setVisible(false);
-	myFrame.dispose();
-}
+	private class TargetListener implements MouseListener{
 
-private class TargetListener implements MouseListener{
+		public void mouseClicked(MouseEvent e) {}
+		public void mouseReleased(MouseEvent e) {}
+		public void mouseEntered(MouseEvent e) {}
+		public void mouseExited(MouseEvent e) {}
+		public void mousePressed(MouseEvent e) {
 
-	public void mouseClicked(MouseEvent e) {}
-	public void mouseReleased(MouseEvent e) {}
-	public void mouseEntered(MouseEvent e) {}
-	public void mouseExited(MouseEvent e) {}
-	public void mousePressed(MouseEvent e) {
-
-		if (targetSelected == false && inWindow == false){
-			//puts the cell that was clicked in whichbox
-			BoardCell whichBox = null;
-			for (int i = 0; i < 22; i++){
-				for (int j = 0; j < 22; j++){
-					if (getCellAt(i,j).containsClick(e.getY(), e.getX())){
-						whichBox = getCellAt(i, j);
-						break;
-					}
-
-				}
-			}
-			//checks to see if the box is a target
-			if (whichBox != null){
-				//if it is, update location and end turn
-				if (targets.contains(whichBox)) {
-					hasNotAccused = false;
-					selectedBox = whichBox;
-					clickRow = selectedBox.getRow();
-					clickCol = selectedBox.getCol();
-					currentPlayerInGame.updatePosition(clickRow, clickCol);
-					targetSelected = true;
-
-					//C24A
-					if (whichBox.isDoorway()) {
-
-						inWindow = true; 
-
-						myFrame = new JFrame("Make a Guess");
-						myFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-						try {
-							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-						} catch (Exception exc) {
-							exc.printStackTrace();
+			if (targetSelected == false && inWindow == false){
+				//puts the cell that was clicked in whichbox
+				BoardCell whichBox = null;
+				for (int i = 0; i < 22; i++){
+					for (int j = 0; j < 22; j++){
+						if (getCellAt(i,j).containsClick(e.getY(), e.getX())){
+							whichBox = getCellAt(i, j);
+							break;
 						}
 
+					}
+				}
+				//checks to see if the box is a target
+				if (whichBox != null){
+					//if it is, update location and end turn
+					if (targets.contains(whichBox)) {
+						//can only make accusation at the beginning of your turn
+						hasNotAccused = false;
+						selectedBox = whichBox;
+						clickRow = selectedBox.getRow();
+						clickCol = selectedBox.getCol();
+						currentPlayerInGame.updatePosition(clickRow, clickCol);
+						targetSelected = true;
 
-						char i = whichBox.getInitial(); 
-						String currentRoom = ""; 
-						for (String temp : rooms) { 
-							if(i == temp.charAt(0)) { 
-								currentRoom = temp;
-								break;
+						//C24A
+						if (whichBox.isDoorway()) {
+
+							inWindow = true; 
+
+							myFrame = new JFrame("Make a Guess");
+							myFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+							
+							try {
+								UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+							} catch (Exception exc) {
+								exc.printStackTrace();
 							}
+
+
+							char i = whichBox.getInitial(); 
+							String currentRoom = ""; 
+							for (String temp : rooms) { 
+								if(i == temp.charAt(0)) { 
+									currentRoom = temp;
+									break;
+								}
+							}
+							JPanel myPanel = new JPanel();
+							suggest = new Suggestion(currentRoom); 
+							
+							myPanel = suggest; 
+
+
+							myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
+							myPanel.setOpaque(true);
+
+							JTextArea text = new JTextArea(15, 50);
+							text.setEditable(false);
+							text.setFont(Font.getFont(Font.SANS_SERIF));
+							JPanel input = new JPanel(); 
+							input.setLayout(new FlowLayout()); 
+							myPanel.add(input);
+
+							myFrame.getContentPane().add(BorderLayout.CENTER, myPanel); 
+							myFrame.pack();
+							myFrame.setLocationByPlatform(true);
+							myFrame.setVisible(true);
+							myFrame.setResizable(false);
+							inWindow = false;
 						}
-						JPanel myPanel = new JPanel();
-						suggest = new Suggestion(currentRoom); 
 
-						myPanel = suggest; 
-
-
-						myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
-						myPanel.setOpaque(true);
-
-						JTextArea text = new JTextArea(15, 50);
-						text.setEditable(false);
-						text.setFont(Font.getFont(Font.SANS_SERIF));
-						JPanel input = new JPanel(); 
-						input.setLayout(new FlowLayout()); 
-						myPanel.add(input);
-
-						myFrame.getContentPane().add(BorderLayout.CENTER, myPanel); 
-						myFrame.pack();
-						myFrame.setLocationByPlatform(true);
-						myFrame.setVisible(true);
-						myFrame.setResizable(false);
-						inWindow = false;
 					}
-
+					//otherwise error message
+					//this message pops up multiple times sometimes, not sure why
+					else {
+						JOptionPane.showMessageDialog(null, "That is not a target", "Message", JOptionPane.INFORMATION_MESSAGE);
+					}
+					//display changes!
+					repaint();
 				}
-				//otherwise error message
-				//this message pops up multiple times sometimes, not sure why
-				else {
-					JOptionPane.showMessageDialog(null, "That is not a target", "Message", JOptionPane.INFORMATION_MESSAGE);
-				}
-				//display changes!
-				repaint();
 			}
 		}
 	}
-}
 
-public void incorrectAccusation(Solution soln) { 
+	public void incorrectAccusation(Solution soln) { 
 
-	String message = "Incorrect guess. " + soln.getPerson() + " " + soln.getWeapon() + " " 
-			+ soln.getRoom() + " was not the answer. "; 
+		String message = "Incorrect guess. " + soln.getPerson() + " " + soln.getWeapon() + " " 
+				+ soln.getRoom() + " was not the answer. "; 
 
-	JOptionPane.showMessageDialog(null, message);
-}
+		JOptionPane.showMessageDialog(null, message);
+	}
 
-public void correctAccusation(Solution soln) { 
-	String message = "You win! " + soln.getPerson() + " " + soln.getWeapon() + " " + 
-			soln.getRoom() + " was the correct answer!"; 
+	public void correctAccusation(Solution soln) { 
+		String message = "You win! " + soln.getPerson() + " " + soln.getWeapon() + " " + 
+				soln.getRoom() + " was the correct answer!"; 
 
-	JOptionPane.showMessageDialog(null, message);
-}
+		JOptionPane.showMessageDialog(null, message);
+	}
 
-//C24A
-public String whatIsTheCurrentGuess() { 
-	return this.currentGuess; 
-}
+	//C24A
+	public String whatIsTheCurrentGuess() { 
+		return this.currentGuess; 
+	}
 
-public Suggestion passCurrentSuggestionState() { 
-	return this.suggest; 
-}
+	public Suggestion passCurrentSuggestionState() { 
+		return this.suggest; 
+	}
 
-public String whatIsTheCurrentResult() { 
-	return this.currentResults; 
-}
-
+	public String whatIsTheCurrentResult() { 
+		return this.currentResults; 
+	}
 
 }
