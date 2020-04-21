@@ -984,6 +984,7 @@ public class Board extends JPanel {
 							}
 							JPanel myPanel = new JPanel();
 							suggest = new Suggestion(currentRoom); 
+							System.out.println("SUGGEST: " + suggest);
 							
 							myPanel = suggest; 
 
@@ -991,7 +992,7 @@ public class Board extends JPanel {
 							myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
 							myPanel.setOpaque(true);
 
-							JTextArea text = new JTextArea(15, 50);
+							JTextArea text = new JTextArea(20, 5);
 							text.setEditable(false);
 							text.setFont(Font.getFont(Font.SANS_SERIF));
 							JPanel input = new JPanel(); 

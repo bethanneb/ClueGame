@@ -121,9 +121,9 @@ public class ComputerPlayer extends Player {
 			if ( seen.contains(weapon)) weapons.remove(weapon);
 			else exit = false;
 
-			if (seen.size() == 12)
+			if (seen.size() == 25)
 			{
-				//you can't pick a card you have already seen and there are only 12 cards total
+				//you can't pick a card you have already seen and there are 25 cards total
 				createdSoln.setAnswerKeyRoom(room);
 				createdSoln.setAnswerKeyPerson(null);
 				createdSoln.setAnswerKeyWeapon(null);
@@ -181,8 +181,7 @@ public class ComputerPlayer extends Player {
 
 	}
 
-	public void setAccusation(Solution nextAccusation)
-	{
+	public void setAccusation(Solution nextAccusation) {
 		this.accusation.setAnswerKeyPerson(nextAccusation.getPerson());
 		this.accusation.setAnswerKeyRoom(nextAccusation.getRoom());
 		this.accusation.setAnswerKeyWeapon(nextAccusation.getWeapon());
