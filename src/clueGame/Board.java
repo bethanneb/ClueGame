@@ -966,7 +966,7 @@ public class Board extends JPanel {
 
 							inWindow = true; 
 
-							myFrame = new JFrame("Suggestion");
+							myFrame = new JFrame("Make a Guess");
 							myFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 							try {
 								UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

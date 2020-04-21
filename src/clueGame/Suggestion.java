@@ -28,8 +28,8 @@ public class Suggestion extends JPanel {
 	private String roomAnswer = "";
 	private String weaponAnswer = "";
 	private String currentResults;
-	String[] people = {"CompSci", "MechE", "ChemE", "Mining", "Geology", "Physics"};
-	String[] weapons = {"Keyboard", "MatLab", "Chemical", "Pickaxe", "Rock", "Exams"};
+	String[] people = {"Michael Scott", "Dwight Schrute", "Jim Halpert", "Pam Halpert", "Kevin Malone", "Andy Bernard", "Oscar Martinez", "Angela Martin"};
+	String[] weapons = {"Poison Dart", "Knife", "Taser", "Boomerang", "Samurai Sword", "Pepper Spray", "Crossbow", "Nunchucks"};
 	Solution humanSuggestedSolution = new Solution();
 
 	public Suggestion(String r) { 
