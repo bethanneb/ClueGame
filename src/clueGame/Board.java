@@ -806,6 +806,10 @@ public class Board extends JPanel {
 	public void updateHumanPosition(Player player) { 
 		//pick target
 		addMouseListener(new TargetListener());
+		
+		if(getCellAt(player.getRow(), player.getColumn()).isRoom()) {
+			GuessPanel makeGuess = new GuessPanel();
+		}
 
 		//done with turn
 		doneWithHuman = true;
