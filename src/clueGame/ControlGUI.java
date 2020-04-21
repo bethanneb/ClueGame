@@ -135,6 +135,7 @@ public class ControlGUI extends JPanel {
 
 	// panel 6
 	private JPanel createGuessResultPanel() {
+		currentResult = new JTextField(board.whatIsTheCurrentResult());
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
 		panel.setLayout(new GridLayout(1,2));
@@ -144,7 +145,7 @@ public class ControlGUI extends JPanel {
 		response.setEditable(false);
 
 		panel.add(nameLabel);
-		panel.add(response);
+		panel.add(currentResult);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Guess Result"));
 		return panel;
 	}
@@ -159,7 +160,7 @@ public class ControlGUI extends JPanel {
 				// TODO need to refresh the createDiePanel and createNamePanel
 				refreshDieAndNamePanel();
 				board.GamePlay();
-				//refreshGuessResultPanels(); //ADD FUNCTION LATER?
+				refreshGuessResultPanels();
 			}
 		}
 	}
