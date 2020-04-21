@@ -30,7 +30,7 @@ public class ControlGUI extends JPanel {
 	private JTextField currentResult;
 	JFrame accusationWindow = new JFrame("Accusation");
 	Accusation accusationClass = new Accusation();
-	Suggestion suggestionHuman = new Suggestion("");
+	Suggestion humanSuggestion = new Suggestion("");
 
 
 	public ControlGUI(Board board) {
@@ -167,13 +167,14 @@ public class ControlGUI extends JPanel {
 	}
 
 	public void refreshGuessResultPanels() {
+		humanSuggestion = board.passCurrentSuggestionState();
 
 		if (board.whoIsTheCurrentPLayer() instanceof HumanPlayer)
 		{
-			suggestionHuman = board.passCurrentSuggestionState();
-			System.out.println(suggestionHuman.getCurrentHumanGuess());
-			this.currentGuess.setText(suggestionHuman.getCurrentHumanGuess());
-			this.currentResult.setText(suggestionHuman.getCurrentHumanResult());
+			humanSuggestion = board.passCurrentSuggestionState();
+			System.out.println(humanSuggestion.getCurrentHumanGuess());
+			this.currentGuess.setText(humanSuggestion.getCurrentHumanGuess());
+			this.currentResult.setText(humanSuggestion.getCurrentHumanResult());
 		}
 		else
 		{
