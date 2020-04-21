@@ -83,59 +83,59 @@ public class ComputerPlayer extends Player {
 		return lastRoom;
 	}
 
-
-	public void createSuggestion(BoardCell cell, ArrayList<Card> peopleArray, ArrayList<Card> weaponsArray, Map<Character, String> legend, ComputerPlayer player) {
+	@Override
+	public void createSuggestion(BoardCell cell, ArrayList<Card> peopleArray, ArrayList<Card> weaponsArray, Map<Character, String> legend, Player player) {
 		//selecting the room suggestion based on the current location of the player
-		ArrayList<Card> people = new ArrayList<Card>();
-		ArrayList<Card> weapons = new ArrayList<Card>();
-		people = peopleArray;
-		weapons = weaponsArray;
 		char roomInitial = cell.getInitial();
 		String room = legend.get(roomInitial);
 
-		Card person = new Card("", CardType.PERSON);
-		Card weapon = new Card("", CardType.PERSON);
+		Card person;// = new Card("", CardType.PERSON);
+		Card weapon;// = new Card("", CardType.PERSON);
 		Set<Card> seen = new HashSet<Card>();
 		seen = player.getSeenCards();
 		boolean exit = true;
 		while (exit)
 		{
 			Random rand = new Random();
-			if (people.size() > 0)
-			{
-				int select = rand.nextInt(people.size());
-				person = people.get(select);
+			if(peopleArray.size() > 0){
+				int select = rand.nextInt(peopleArray.size());
+				person = peopleArray.get(select);
+				createdSoln.setPerson(person.getCardName());
 			}
 			else person = null;
 
-			if ( weapons.size() > 0)
-			{
-				int select = rand.nextInt(weapons.size());
-				weapon = weapons.get(select);
+			if(weaponsArray.size() > 0){
+				int select = rand.nextInt(weaponsArray.size());
+				weapon = weaponsArray.get(select);
+				createdSoln.setWeapon(weapon.getCardName());
 			}
 			else weapon = null;
 
 			// handle looking at seenCards and making sure to not 
-			if ( seen.contains(person)) people.remove(person);
+			if(seen.contains(person)) {
+				peopleArray.remove(person);
+			}
 			else exit = false;
-			if ( seen.contains(weapon)) weapons.remove(weapon);
+			if(seen.contains(weapon)) {
+				weaponsArray.remove(weapon);
+			}
 			else exit = false;
 
-			if (seen.size() == 12)
+			if (seen.size() == 16)
 			{
 				//you can't pick a card you have already seen and there are only 12 cards total
-				createdSoln.setAnswerKeyRoom(room);
-				createdSoln.setAnswerKeyPerson(null);
-				createdSoln.setAnswerKeyWeapon(null);
+				createdSoln.setRoom(room);
+				createdSoln.setPerson(null);
+				createdSoln.setWeapon(null);
 			}
 		}
 		// make the suggestion using the Solution class
-		if ( person != null) createdSoln.setAnswerKeyPerson(person.getCardName());
-		else  createdSoln.setAnswerKeyPerson(null);
-		if (weapon != null ) createdSoln.setAnswerKeyWeapon(weapon.getCardName());
-		else createdSoln.setAnswerKeyWeapon(null);
-		createdSoln.setAnswerKeyRoom(room);
-		String done = " done";
+		//if ( person != null) c
+		//else  createdSoln.setAnswerKeyPerson(null);
+		//if (weapon != null ) 
+		//else createdSoln.setAnswerKeyWeapon(null);
+		createdSoln.setRoom(room);
+		//String done = " done";
 		//System.out.println(done);
 	}
 	
@@ -183,13 +183,14 @@ public class ComputerPlayer extends Player {
 
 	public void setAccusation(Solution nextAccusation)
 	{
-		this.accusation.setAnswerKeyPerson(nextAccusation.getPerson());
-		this.accusation.setAnswerKeyRoom(nextAccusation.getRoom());
-		this.accusation.setAnswerKeyWeapon(nextAccusation.getWeapon());
+		this.accusation.setPerson(nextAccusation.getPerson());
+		this.accusation.setRoom(nextAccusation.getRoom());
+		this.accusation.setWeapon(nextAccusation.getWeapon());
 	}
 
 	public Solution getAccusation() { return this.accusation; }
 	
+	@Override
 	public Solution getCreatedSoln() { 
 		return createdSoln; 
 	}

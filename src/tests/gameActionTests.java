@@ -157,26 +157,26 @@ public class gameActionTests {
 		Solution accusation = new Solution();
 
 		// Solution that is correct 
-		accusation.setAnswerKeyPerson(ansP);
-		accusation.setAnswerKeyWeapon(ansW); 
-		accusation.setAnswerKeyRoom(ansR); 
+		accusation.setPerson(ansP);
+		accusation.setWeapon(ansW); 
+		accusation.setRoom(ansR); 
 
 		assertTrue(board.checkAccusation(accusation));
 
 		// Solution with wrong person 
-		accusation.setAnswerKeyPerson("wrong");
+		accusation.setPerson("wrong");
 
 		assertFalse(board.checkAccusation(accusation));
 
 		// Solution with wrong weapon 
-		accusation.setAnswerKeyPerson(ansP);
-		accusation.setAnswerKeyWeapon("wrong");
+		accusation.setPerson(ansP);
+		accusation.setWeapon("wrong");
 
 		assertFalse(board.checkAccusation(accusation)); 
 
 		// Solution with wrong room 
-		accusation.setAnswerKeyWeapon(ansW);
-		accusation.setAnswerKeyRoom("wrong");
+		accusation.setWeapon(ansW);
+		accusation.setRoom("wrong");
 
 		assertFalse(board.checkAccusation(accusation)); 
 

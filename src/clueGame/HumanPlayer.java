@@ -49,9 +49,9 @@ public class HumanPlayer extends Player {
 
 	public void setAccusation( String room, String person, String weapon)
 	{
-		accusation.setAnswerKeyPerson(person);
-		accusation.setAnswerKeyRoom(room);
-		accusation.setAnswerKeyWeapon(weapon);
+		accusation.setPerson(person);
+		accusation.setRoom(room);
+		accusation.setWeapon(weapon);
 	}
 
 

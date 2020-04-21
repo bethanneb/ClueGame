@@ -83,7 +83,6 @@ public class ControlGUI extends JPanel {
 		JButton accusation = new JButton("Make an accusation");
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1,0));
-		// TODO accusation need to addActionListener
 		accusation.addActionListener(new MakeAccusationButtonListener());
 		panel.add(accusation); 
 		return panel;
@@ -111,26 +110,16 @@ public class ControlGUI extends JPanel {
 
 	// panel 5
 	private JPanel createGuessPanel() {
-		currentGuess = new JTextField(board.whatIsTheCurrentGuess());
-		//C24A
-		//JTextField name = new JTextField(20);
-		//name.setEditable(false);
-		currentGuess.setEnabled(false);
+		currentGuess = new JTextField();
+		currentGuess.setEditable(false);
 
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
-		panel.setLayout(new GridLayout(2,6));
-
-		JLabel nameLabel = new JLabel("Guess");
-		JTextField guess = new JTextField(); 
-		guess.setEditable(false);
-
-		panel.add(nameLabel);
-		//panel.add(guess);
+		panel.setLayout(new GridLayout(1,6));
 
 		//C24A
 		panel.add(currentGuess);
-		//panel.setBorder(new TitledBorder (new EtchedBorder(), "Guess"));
+		panel.setBorder(new TitledBorder (new EtchedBorder(), "Guess"));
 		return panel;
 	}
 
@@ -167,18 +156,21 @@ public class ControlGUI extends JPanel {
 
 	public void refreshGuessResultPanels() {
 
-		if (board.whoIsTheCurrentPLayer() instanceof HumanPlayer)
-		{
-			suggestionHuman = board.passCurrentSuggestionState();
-			System.out.println(suggestionHuman.getCurrentHumanGuess());
-			this.currentGuess.setText(suggestionHuman.getCurrentHumanGuess());
-			this.currentResult.setText(suggestionHuman.getCurrentHumanResult());
+		if (board.whoIsTheCurrentPLayer() instanceof HumanPlayer) {
+			currentGuess.setText("bob");
 		}
-		else
-		{
-			this.currentGuess.setText(board.whatIsTheCurrentGuess());
+		//{
+			//suggestionHuman = board.passCurrentSuggestionState();
+			//System.out.println(suggestionHuman.getCurrentHumanGuess());
+			//currentGuess.setText(suggestionHuman.getCurrentHumanGuess());
+			//currentResult.setText(suggestionHuman.getCurrentHumanResult());
+		//}
+		//else
+		//{
+		if(board.whoIsTheCurrentPLayer() instanceof ComputerPlayer) {
+			currentGuess.setText(board.whatIsTheCurrentGuess());
 			//this.currentGuess.setEditable(false);
-			this.currentResult.setText(board.whatIsTheCurrentResult());
+			currentResult.setText(board.whatIsTheCurrentResult());
 			//this.currentResult.setEditable(false);
 		}
 	}

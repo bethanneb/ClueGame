@@ -5,7 +5,7 @@ V, Vance Refrigeration, Card
 B, Break Room, Card
 K, Kitchen, Card
 J, Jim’s Desk, Card
-M, Michael’s House, Card
+M, Michael’s Office, Card
 D, Dwight’s Desk, Card
 X, Closet, Other
 W, Walkway, Other

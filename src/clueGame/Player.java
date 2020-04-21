@@ -11,6 +11,7 @@ import java.awt.Point;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -30,6 +31,7 @@ public class Player {
 	// handling the the previous and current BoardCell for pickLocation for ComputerPlayer 
 	private BoardCell current;
 	private BoardCell previous;
+	private Solution solution;
 
 	// constructors
 	public Player()
@@ -161,6 +163,10 @@ public class Player {
 	{
 		return this.playerName;
 	}
+	
+	public Solution getCreatedSoln() {return solution;}
+	
+	public void createSuggestion(BoardCell cell, ArrayList<Card> peopleArray, ArrayList<Card> weaponsArray, Map<Character, String> legend, Player player) {}
 	
 	public void updatePosition(int r, int c) { 
 		previousColumn = column; 

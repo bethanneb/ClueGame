@@ -49,18 +49,6 @@ public class Solution {
 		this.weapon = weapon;
 	}
 
-	//NEW
-	public void setAnswerKeyPerson (String answerPerson) {
-		this.person = answerPerson;
-	}
-	
-	public void setAnswerKeyRoom ( String answerRoom ) {
-		this.room = answerRoom;
-	}
-	
-	public void setAnswerKeyWeapon ( String answerWeapon ) {
-		this.weapon = answerWeapon;
-	}
 
 	
 }

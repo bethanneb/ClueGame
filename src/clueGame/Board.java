@@ -511,6 +511,7 @@ public class Board extends JPanel {
 		for(int i = 0; i < NUM_PEOPLE; i++){
 			temp = in.nextLine();
 			currentCard = new Card(CardType.PERSON, temp);
+			possiblePeople.add(currentCard);
 			cards[i] = new Card(CardType.PERSON, temp);
 		}
 		for(int i = 0; i < NUM_WEAPONS; i++){
@@ -518,6 +519,7 @@ public class Board extends JPanel {
 			//NEW
 			Card weapon = new Card (temp, CardType.WEAPON);
 			weaponsPile.add(weapon);
+			possibleWeapons.add(weapon);
 			currentCard = new Card(CardType.WEAPON, temp);
 			cards[i+NUM_PEOPLE] = new Card(CardType.WEAPON, temp);
 		}
@@ -543,9 +545,9 @@ public class Board extends JPanel {
 	//	//not sure if this is working correctly
 	private void dealCards() {
 		//answerKey = new Solution();
-		possiblePeople.clear();
-		possibleWeapons.clear(); 
-		possibleRooms.clear(); 		
+		//possiblePeople.clear();
+		//possibleWeapons.clear(); 
+		//possibleRooms.clear(); 		
 		Card[] backup = new Card[cards.length];
 		for(int i = 0; i < DECK_SIZE; i++){
 			backup[i] = cards[i];
@@ -828,6 +830,13 @@ public class Board extends JPanel {
 		//update location
 		player.updatePosition(newLoc.getRow(), newLoc.getCol());
 
+		if(newLoc.isDoorway()) {
+			player.createSuggestion(newLoc, possiblePeople, possibleWeapons, legend, player);
+			currentGuess = (player.getCreatedSoln().getPerson() + ", " + player.getCreatedSoln().getRoom() + ", " + player.getCreatedSoln().getWeapon());
+			System.out.println(player.getName() + " made guess: " + currentGuess);
+			//ControlGUI.currentGuess.setText(currentGuess);
+		}
+		
 		//show it on board
 		repaint(); 
 
@@ -868,7 +877,7 @@ public class Board extends JPanel {
 
 	}
 
-	public Card handleSuggestion(ComputerPlayer computerPlayer) {
+	public void handleSuggestion(ComputerPlayer computerPlayer) {
 
 		int row = computerPlayer.getRow(); 
 		int col = computerPlayer.getColumn();
@@ -900,7 +909,7 @@ public class Board extends JPanel {
 			computerPlayer.setAccusation(computerPlayer.getCreatedSoln());
 			this.compSuggestionDisproved = false;
 			this.currentResults = "no new clue";
-			return null;
+			//return null;
 		}
 		else { 
 			computerPlayer.addSeen(foundCards.get(location));
@@ -909,14 +918,14 @@ public class Board extends JPanel {
 			if (foundCards.get(location) != null)
 			{
 				this.currentResults = foundCards.get(location).getCardName();
-				return foundCards.get(location); 
+				//return foundCards.get(location); 
 			}
 			else
 			{
 				// if null, need to choose another location to go to
 				this.compSuggestionDisproved = true;
 				this.currentResults = "no new clue";
-				return null; 
+				//return null; 
 			}
 		}
 
@@ -1036,7 +1045,7 @@ public class Board extends JPanel {
 
 	//C24A
 	public String whatIsTheCurrentGuess() { 
-		return this.currentGuess; 
+		return currentGuess; 
 	}
 
 	public Suggestion passCurrentSuggestionState() { 

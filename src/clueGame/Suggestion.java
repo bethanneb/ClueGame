@@ -49,6 +49,7 @@ public class Suggestion extends JPanel {
 
 		setBorder(new TitledBorder (new EtchedBorder(), "Suggestion"));
 		setLayout(new GridLayout(4,1));
+		
 		JPanel panel = peopleGuess();
 		JPanel panel1 = weaponsGuess();
 		JPanel panel2 = roomsGuess(); 
