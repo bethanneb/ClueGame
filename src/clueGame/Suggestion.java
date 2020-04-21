@@ -187,7 +187,7 @@ public class Suggestion extends JPanel {
 
 	public String getCurrentHumanGuess() {
 		//System.out.println(this.humanSuggestedSolution.getPerson() + ", " + this.humanSuggestedSolution + ", " + this.humanSuggestedSolution);
-		System.out.println("Answer Found: " + peopleAnswer + ", " + roomName + " room, " + weaponAnswer);
+		System.out.println("Answer Found: " + peopleAnswer + ", " + roomName + " " + weaponAnswer);
 		return  peopleAnswer + ", " + roomName + " room, " + weaponAnswer;
 	}
 
