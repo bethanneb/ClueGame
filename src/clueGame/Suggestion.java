@@ -35,10 +35,9 @@ public class Suggestion extends JPanel {
 	public Suggestion(String r) { 
 
 		board = Board.getInstance();
-		//board.setConfigFiles("C14 Layout.csv", "C12 Layout.txt");
-		//board.setWeaponsConfigFile("WeaponsConfig.txt");
-		//board.setPeopleConfigFile("PeopleConfig.txt");
-		//board.initialize();
+//		board.setConfigFiles("OurClueLayout.csv", "OurClueLegend.txt");
+//		board.setCardFiles("Players.txt", "Cards.txt");
+//		board.initialize();
 		//board.buildGamePlayers();
 
 
