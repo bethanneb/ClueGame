@@ -30,7 +30,7 @@ public class ControlGUI extends JPanel {
 	private JTextField currentResult;
 	JFrame accusationWindow = new JFrame("Accusation");
 	Accusation accusationClass = new Accusation();
-	Suggestion humanSuggestion = new Suggestion("");
+	Suggestion suggestionHuman = new Suggestion("");
 
 
 	public ControlGUI(Board board) {
@@ -136,7 +136,6 @@ public class ControlGUI extends JPanel {
 
 	// panel 6
 	private JPanel createGuessResultPanel() {
-		currentResult = new JTextField(board.whatIsTheCurrentResult());
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
 		panel.setLayout(new GridLayout(1,2));
@@ -146,7 +145,7 @@ public class ControlGUI extends JPanel {
 		response.setEditable(false);
 
 		panel.add(nameLabel);
-		panel.add(currentResult);
+		panel.add(response);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Guess Result"));
 		return panel;
 	}
@@ -161,20 +160,19 @@ public class ControlGUI extends JPanel {
 				// TODO need to refresh the createDiePanel and createNamePanel
 				refreshDieAndNamePanel();
 				board.GamePlay();
-				refreshGuessResultPanels();
+				//refreshGuessResultPanels(); //ADD FUNCTION LATER?
 			}
 		}
 	}
 
 	public void refreshGuessResultPanels() {
-		humanSuggestion = board.passCurrentSuggestionState();
 
 		if (board.whoIsTheCurrentPLayer() instanceof HumanPlayer)
 		{
-			humanSuggestion = board.passCurrentSuggestionState();
-			System.out.println(humanSuggestion.getCurrentHumanGuess());
-			this.currentGuess.setText(humanSuggestion.getCurrentHumanGuess());
-			this.currentResult.setText(humanSuggestion.getCurrentHumanResult());
+			suggestionHuman = board.passCurrentSuggestionState();
+			System.out.println(suggestionHuman.getCurrentHumanGuess());
+			this.currentGuess.setText(suggestionHuman.getCurrentHumanGuess());
+			this.currentResult.setText(suggestionHuman.getCurrentHumanResult());
 		}
 		else
 		{
@@ -222,6 +220,7 @@ public class ControlGUI extends JPanel {
 				accusationWindow.setResizable(true);
 				accusationClass.passFrame(accusationWindow);
 				
+				//can only accuse once
 				board.hasNotAccused = false;
 			}
 			else {
