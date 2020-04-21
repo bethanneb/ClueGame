@@ -110,6 +110,12 @@ public class ControlGUI extends JPanel {
 
 	// panel 5
 	private JPanel createGuessPanel() {
+		currentGuess = new JTextField(board.whatIsTheCurrentGuess());
+		//C24A
+		//JTextField name = new JTextField(20);
+		//name.setEditable(false);
+		currentGuess.setEnabled(false);
+		
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
 		panel.setLayout(new GridLayout(2,6));
@@ -119,8 +125,11 @@ public class ControlGUI extends JPanel {
 		guess.setEditable(false);
 
 		panel.add(nameLabel);
-		panel.add(guess);
-		panel.setBorder(new TitledBorder (new EtchedBorder(), "Guess"));
+		//panel.add(guess);
+		
+		//C24A
+		panel.add(currentGuess);
+		//panel.setBorder(new TitledBorder (new EtchedBorder(), "Guess"));
 		return panel;
 	}
 
@@ -152,6 +161,24 @@ public class ControlGUI extends JPanel {
 				board.GamePlay();
 				//refreshGuessResultPanels(); //ADD FUNCTION LATER?
 			}
+		}
+	}
+	
+	public void refreshGuessResultPanels() {
+		
+		if (board.whoIsTheCurrentPLayer().getPlayerName().equals("CompSci"))
+		{
+			suggestionHuman = board.passCurrentSuggestionState();
+			System.out.println(suggestionHuman.getCurrentHumanGuess());
+			this.currentGuess.setText(suggestionHuman.getCurrentHumanGuess());
+			this.currentResult.setText(suggestionHuman.getCurrentHumanResult());
+		}
+		else
+		{
+			this.currentGuess.setText(board.whatIsTheCurrentGuess());
+			//this.currentGuess.setEditable(false);
+			this.currentResult.setText(board.whatIsTheCurrentResult());
+			//this.currentResult.setEditable(false);
 		}
 	}
 

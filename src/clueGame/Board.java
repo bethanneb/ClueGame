@@ -101,7 +101,7 @@ public class Board extends JPanel {
 	private String currentResults = "no new clue";
 	public boolean inWindow = false; 
 	public boolean isFirstTurn = true; 
-	
+
 	//private MouseEvent event; 
 
 	private int clickRow;
@@ -719,46 +719,46 @@ public class Board extends JPanel {
 
 
 	//C21A
-		public void paintComponent (Graphics g) {
+	public void paintComponent (Graphics g) {
 
-			super.paintComponent(g);
+		super.paintComponent(g);
 
-			//draws board
-			for ( int i = 21; i >= 0; i--){
-				for ( int j = 21; j >= 0; j--){
-					getCellAt(i, j).draw(g);
-				}
+		//draws board
+		for ( int i = 21; i >= 0; i--){
+			for ( int j = 21; j >= 0; j--){
+				getCellAt(i, j).draw(g);
 			}
-
-			if(currentPlayerInGame instanceof HumanPlayer) {
-				for (BoardCell cell: targets) {
-					cell.drawTargets(g);
-				}
-			}
-
-			//labels rooms
-			g.setColor(Color.BLACK);
-			g.drawString("Kitchen", 110, 60);
-			g.drawString("Jim's Desk", 232, 50);
-			g.drawString("Dwight's", 372, 50);
-			g.drawString("Desk", 372, 65);
-			g.drawString("Vance", 520, 50);
-			g.drawString("Refrigeration", 500, 65);
-			g.drawString("Front", 103, 195);
-			g.drawString("Desk", 103, 280);
-			g.drawString("Conference", 510, 240);
-			g.drawString("Room", 525, 255);
-			g.drawString("Michael's Office", 101, 450);
-			g.drawString("Break Room", 305, 440);
-			g.drawString("Warehouse", 500, 440);
-
-			//draws players
-			for(Player p: playersList) {
-				p.draw(g);
-			}
-
-
 		}
+
+		if(currentPlayerInGame instanceof HumanPlayer) {
+			for (BoardCell cell: targets) {
+				cell.drawTargets(g);
+			}
+		}
+
+		//labels rooms
+		g.setColor(Color.BLACK);
+		g.drawString("Kitchen", 110, 60);
+		g.drawString("Jim's Desk", 232, 50);
+		g.drawString("Dwight's", 372, 50);
+		g.drawString("Desk", 372, 65);
+		g.drawString("Vance", 520, 50);
+		g.drawString("Refrigeration", 500, 65);
+		g.drawString("Front", 103, 195);
+		g.drawString("Desk", 103, 280);
+		g.drawString("Conference", 510, 240);
+		g.drawString("Room", 525, 255);
+		g.drawString("Michael's Office", 101, 450);
+		g.drawString("Break Room", 305, 440);
+		g.drawString("Warehouse", 500, 440);
+
+		//draws players
+		for(Player p: playersList) {
+			p.draw(g);
+		}
+
+
+	}
 
 	public Set<HumanPlayer> getHumanPlayer() {
 		return humanPlayer;
@@ -806,7 +806,7 @@ public class Board extends JPanel {
 	public void updateHumanPosition(Player player) { 
 		//pick target
 		addMouseListener(new TargetListener());
-		
+
 		if(getCellAt(player.getRow(), player.getColumn()).isRoom()) {
 			GuessPanel makeGuess = new GuessPanel();
 		}
@@ -960,15 +960,62 @@ public class Board extends JPanel {
 						clickCol = selectedBox.getCol();
 						currentPlayerInGame.updatePosition(clickRow, clickCol);
 						targetSelected = true;
+
+						//C24A
+						if (whichBox.isDoorway()) {
+
+							inWindow = true; 
+
+							myFrame = new JFrame("Suggestion");
+							myFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+							try {
+								UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+							} catch (Exception exc) {
+								exc.printStackTrace();
+							}
+
+
+							char i = whichBox.getInitial(); 
+							String currentRoom = ""; 
+							for (String temp : rooms) { 
+								if(i == temp.charAt(0)) { 
+									currentRoom = temp;
+									break;
+								}
+							}
+							JPanel myPanel = new JPanel();
+							suggest = new Suggestion(currentRoom); 
+
+							myPanel = suggest; 
+
+
+							myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
+							myPanel.setOpaque(true);
+
+							JTextArea text = new JTextArea(15, 50);
+							text.setEditable(false);
+							text.setFont(Font.getFont(Font.SANS_SERIF));
+							JPanel input = new JPanel(); 
+							input.setLayout(new FlowLayout()); 
+							myPanel.add(input);
+
+							myFrame.getContentPane().add(BorderLayout.CENTER, myPanel); 
+							myFrame.pack();
+							myFrame.setLocationByPlatform(true);
+							myFrame.setVisible(true);
+							myFrame.setResizable(false);
+							inWindow = false;
+						}
+
 					}
 					//otherwise error message
 					//this message pops up multiple times sometimes, not sure why
 					else {
 						JOptionPane.showMessageDialog(null, "That is not a target", "Message", JOptionPane.INFORMATION_MESSAGE);
 					}
+					//display changes!
+					repaint();
 				}
-				//display changes!
-				repaint();
 			}
 		}
 	}
@@ -987,17 +1034,18 @@ public class Board extends JPanel {
 
 		JOptionPane.showMessageDialog(null, message);
 	}
-	
+
 	//C24A
 	public String whatIsTheCurrentGuess() { 
 		return this.currentGuess; 
 	}
 
+	public Suggestion passCurrentSuggestionState() { 
+		return this.suggest; 
+	}
 
-
-
-
-
-
+	public String whatIsTheCurrentResult() { 
+		return this.currentResults; 
+	}
 
 }
