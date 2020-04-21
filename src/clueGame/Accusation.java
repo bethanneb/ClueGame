@@ -118,7 +118,7 @@ public class Accusation extends JPanel {
 			weaponAnswer = weapons[foundW];
 			int foundR = roomsList.getSelectedIndex();
 			roomAnswer = rooms[foundR]; 
-			System.out.println("Answer Found: " + peopleAnswer + ", " + roomAnswer + " room, " + weaponAnswer);
+			System.out.println("Answer Found: " + peopleAnswer + ", " + roomAnswer + " " + weaponAnswer);
 			
 			Solution soln = new Solution(peopleAnswer, weaponAnswer, roomAnswer);
 			

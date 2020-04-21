@@ -983,6 +983,11 @@ public class Board extends JPanel {
 
 		JOptionPane.showMessageDialog(null, message);
 	}
+	
+	//C24A
+	public String whatIsTheCurrentGuess() { 
+		return this.currentGuess; 
+	}
 
 
 

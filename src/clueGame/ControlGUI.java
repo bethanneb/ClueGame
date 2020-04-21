@@ -83,7 +83,7 @@ public class ControlGUI extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1,0));
 		// TODO accusation need to addActionListener
-		//accusation.addActionListener(new MakeAccusationButtonListener());
+		accusation.addActionListener(new MakeAccusationButtonListener());
 		panel.add(accusation); 
 		return panel;
 	}
