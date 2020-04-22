@@ -115,7 +115,7 @@ public class ControlGUI extends JPanel {
 
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
-		panel.setLayout(new GridLayout(1,6));
+		panel.setLayout(new GridLayout(1,0));
 
 		//C24A
 		panel.add(currentGuess);
@@ -125,16 +125,19 @@ public class ControlGUI extends JPanel {
 
 	// panel 6
 	private JPanel createGuessResultPanel() {
+		currentResult = new JTextField();
+		currentResult.setEditable(false);
+		
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
 		panel.setLayout(new GridLayout(1,2));
 
-		JLabel nameLabel = new JLabel("Response");
-		JTextField response = new JTextField();
-		response.setEditable(false);
+		JLabel nameLabel = new JLabel("Disproved:");
+		//JTextField response = new JTextField();
+		//response.setEditable(false);
 
 		panel.add(nameLabel);
-		panel.add(response);
+		panel.add(currentResult);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Guess Result"));
 		return panel;
 	}
@@ -149,18 +152,16 @@ public class ControlGUI extends JPanel {
 			if (board.doneWithHuman){
 				// TODO call appropriate methods in the Board Class for processing 
 				board.nextPlayerButtonMethod();
-				// TODO need to refresh the createDiePanel and createNamePanel
 				refreshGuessResultPanels();
 				refreshDieAndNamePanel();
-				
-				//board.GamePlay();
-				//refreshGuessResultPanels(); //ADD FUNCTION LATER?
+
 			}
 		}
 	}
 
 	public void refreshGuessResultPanels() {
 		currentGuess.setText(board.whoIsTheCurrentPLayer().getGuess());
+		currentResult.setText(board.whoIsTheCurrentPLayer().getResult());
 	}
 
 	public void refreshDieAndNamePanel() {

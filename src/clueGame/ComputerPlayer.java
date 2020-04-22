@@ -89,8 +89,8 @@ public class ComputerPlayer extends Player {
 		char roomInitial = cell.getInitial();
 		String room = legend.get(roomInitial);
 
-		Card person;// = new Card("", CardType.PERSON);
-		Card weapon;// = new Card("", CardType.PERSON);
+		Card person;
+		Card weapon;
 		Set<Card> seen = new HashSet<Card>();
 		seen = player.getSeenCards();
 		boolean exit = true;
@@ -130,14 +130,8 @@ public class ComputerPlayer extends Player {
 				createdSoln.setWeapon(null);
 			}
 		}
-		// make the suggestion using the Solution class
-		//if ( person != null) c
-		//else  createdSoln.setAnswerKeyPerson(null);
-		//if (weapon != null ) 
-		//else createdSoln.setAnswerKeyWeapon(null);
 		createdSoln.setRoom(room);
-		//String done = " done";
-		//System.out.println(done);
+
 	}
 	
 	@Override
@@ -182,12 +176,12 @@ public class ComputerPlayer extends Player {
 
 	}
 
-
+	@Override
 	public void setAccusation(Solution nextAccusation)
 	{
-		this.accusation.setPerson(nextAccusation.getPerson());
-		this.accusation.setRoom(nextAccusation.getRoom());
-		this.accusation.setWeapon(nextAccusation.getWeapon());
+		accusation.setPerson(nextAccusation.getPerson());
+		accusation.setRoom(nextAccusation.getRoom());
+		accusation.setWeapon(nextAccusation.getWeapon());
 	}
 
 
@@ -200,7 +194,9 @@ public class ComputerPlayer extends Player {
 	
 	public boolean isAccusationReady()
 	{
-		if( accusation.getRoom() != "" && accusation.getPerson() != "" && accusation.getWeapon() != "") { return true; }
+		if(accusation.getRoom() != "" && accusation.getPerson() != "" && accusation.getWeapon() != "") { 
+			return true; 
+		}
 		return false;
 	}
 

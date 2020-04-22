@@ -792,13 +792,13 @@ public class Board extends JPanel {
 			}
 
 			dieRollValue = rollDie();
-			
+
 			//play game
 			GamePlay();
-			
+
 		}
-		
-		
+
+
 		else {
 			JOptionPane.showMessageDialog(null, "Take your turn", "Message", JOptionPane.INFORMATION_MESSAGE);
 		}
@@ -838,10 +838,9 @@ public class Board extends JPanel {
 		if(newLoc.isDoorway()) {
 			player.createSuggestion(newLoc, possiblePeople, possibleWeapons, legend, player);
 			player.updateGuess(player.getCreatedSoln().getPerson() + ", " + player.getCreatedSoln().getRoom() + ", " + player.getCreatedSoln().getWeapon());
-			System.out.println(player.getName() + " made guess: " + player.getGuess());
-			//ControlGUI.currentGuess.setText(currentGuess);
+			handleSuggestion(player);
 		}
-		
+
 		//show it on board
 		repaint(); 
 
@@ -873,7 +872,11 @@ public class Board extends JPanel {
 		else {
 			//must take turn
 			doneWithComputer = false;
+
+			//resets guess so it will not keep displaying previous guess
 			currentPlayerInGame.updateGuess("no guess");
+			currentPlayerInGame.updateResult("no result");
+
 			//update position
 			updateComputerPosition(col, row, currentDieRollValue(), currentPlayerInGame);
 			repaint();
@@ -882,14 +885,7 @@ public class Board extends JPanel {
 
 	}
 
-	public void handleSuggestion(ComputerPlayer computerPlayer) {
-
-		int row = computerPlayer.getRow(); 
-		int col = computerPlayer.getColumn();
-
-		// createSuggestions saves the generated suggestion in ComputerPlayer's creadSoln (which is of type Solution)
-		computerPlayer.createSuggestion(board[col][row], possiblePeople, possibleWeapons, legend, computerPlayer); 
-		this.currentGuess = (computerPlayer.getPlayerName() + ": " + computerPlayer.getCreatedSoln().getPerson() + ", " + computerPlayer.getCreatedSoln().getRoom() + ", " + computerPlayer.getCreatedSoln().getWeapon()) ;
+	public void handleSuggestion(Player computerPlayer) {
 		ArrayList<Card> foundCards = new ArrayList<Card>(); 
 
 		for(ComputerPlayer tempPlayer: computerPlayers) {
@@ -898,40 +894,25 @@ public class Board extends JPanel {
 			}
 			else { 
 				// if a card is found by another player, the card is added to the ArrayList of cards
-				Card temp = tempPlayer.disproveSuggestion(computerPlayer.createdSoln); 
-				if ( temp == null) {}
-				else { foundCards.add(temp); }
-
+				Card temp = tempPlayer.disproveSuggestion(computerPlayer.getCreatedSoln()); 
+				if(temp != null) {
+					foundCards.add(temp);
+				}
 			}
 		}
 
-		// selecting a random number for selecting a found Card
+		//selecting a random number for selecting a found Card
 		Random rand = new Random(); 
 		int location = rand.nextInt(foundCards.size()); 
 
-		if (foundCards.size() == 0) { /* if the size of FoundCards = 0, that means not cards were found to disprove the suggestion */
-			// store the suggestion that was found to be the next accusation. 
+		if (foundCards.size() == 0) { 
 			computerPlayer.setAccusation(computerPlayer.getCreatedSoln());
-			this.compSuggestionDisproved = false;
-			this.currentResults = "no new clue";
-			//return null;
+			computerPlayer.updateResult("no new clue");
+			
 		}
 		else { 
 			computerPlayer.addSeen(foundCards.get(location));
-			this.compSuggestionDisproved = true;
-			//System.out.println("Found other cards that disprove the suggestion. ArrayList size: " + foundCards.size() );
-			if (foundCards.get(location) != null)
-			{
-				this.currentResults = foundCards.get(location).getCardName();
-				//return foundCards.get(location); 
-			}
-			else
-			{
-				// if null, need to choose another location to go to
-				this.compSuggestionDisproved = true;
-				this.currentResults = "no new clue";
-				//return null; 
-			}
+			computerPlayer.updateResult(foundCards.get(location).getCardName());
 		}
 
 	}
@@ -980,7 +961,7 @@ public class Board extends JPanel {
 
 							myFrame = new JFrame("Make a Guess");
 							myFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-							
+
 							try {
 								UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 							} catch (Exception exc) {
@@ -999,7 +980,7 @@ public class Board extends JPanel {
 							JPanel myPanel = new JPanel();
 							suggest = new Suggestion(currentRoom); 
 							System.out.println("SUGGEST: " + suggest);
-							
+
 							myPanel = suggest; 
 
 
@@ -1055,11 +1036,11 @@ public class Board extends JPanel {
 	}
 
 	public Suggestion passCurrentSuggestionState() { 
-		return this.suggest; 
+		return suggest; 
 	}
 
 	public String whatIsTheCurrentResult() { 
-		return this.currentResults; 
+		return currentResults; 
 	}
 
 }
