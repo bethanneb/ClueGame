@@ -31,7 +31,7 @@ public class Player {
 	// handling the the previous and current BoardCell for pickLocation for ComputerPlayer 
 	private BoardCell current;
 	private BoardCell previous;
-	private Solution solution;
+	private Solution suggestion = new Solution();
 	public String guess;
 	public String result;
 
@@ -118,27 +118,31 @@ public class Player {
 	}
 
 	public Card disproveSuggestion(Solution suggestion){
-		ArrayList<Card> possibilities = new ArrayList<Card>();
+		Set<Card> myCards = new HashSet<Card>(); 
+		myCards = getMyCards(); 
+		ArrayList<Card> cardsFound = new ArrayList<Card>();
 
-		for(Card c : myCards){
-			if(suggestion.getPerson().equals(c.getCardName()))
-				System.out.println("Person");
-				possibilities.add(c);
-			if(suggestion.getWeapon().equals(c.getCardName()))
-				System.out.println("Weapon");
-				possibilities.add(c);
-			if(suggestion.getRoom().equals(c.getCardName()))
-				System.out.println("Room");
-				possibilities.add(c);
+		for (Card found: myCards) {
+			if (suggestion.getPerson().equals(found.getCardName())) {
+				cardsFound.add(found); 
+			}
+			if (suggestion.getWeapon().equals(found.getCardName())) {
+				cardsFound.add(found); 
+			}
+			if (suggestion.getRoom().equals(found.getCardName())) {
+				cardsFound.add(found); 
+			}
+
 		}
 
-		if(possibilities.size() > 0){
-			Random rand = new Random();
-			int randCard = rand.nextInt(possibilities.size());
-			return possibilities.get(randCard);
+		if (cardsFound.size() == 0) {
+			return null;
 		}
-
-		return null;
+		else {
+			Random rand = new Random(); 
+			int position = rand.nextInt(cardsFound.size());
+			return cardsFound.get(position); 
+		}
 	}
 	
 	public BoardCell pickLocation(Set<BoardCell> targets) {
@@ -158,10 +162,6 @@ public class Player {
 		return myCards.size();
 	}
 	
-	public void addCard(Card card) {
-		myCards.add(card);
-	} 
-	
 	public void clearCards() { 
 		myCards.clear(); 
 	}
@@ -171,9 +171,11 @@ public class Player {
 		return this.playerName;
 	}
 	
-	public Solution getCreatedSoln() {return solution;}
+	public Solution getCreatedSoln() {return suggestion;}
 	
 	public void createSuggestion(BoardCell cell, ArrayList<Card> peopleArray, ArrayList<Card> weaponsArray, Map<Character, String> legend, Player player) {}
+	
+	public boolean isAccusationReady(){return false;}
 	
 	public void updatePosition(int r, int c) { 
 		previousColumn = column; 
@@ -191,9 +193,6 @@ public class Player {
 		return previousRow; 
 	}
 	
-	public void addSeen(Card card) {
-		seenCards.add(card); 
-	}
 	
 	public void clearSeenCards ()
 	{
@@ -241,8 +240,6 @@ public class Player {
 		this.playerName = i;
 	}
 	
-	private Solution suggestion = new Solution();
-	
 	public Solution getSuggestion() {
 		return suggestion;
 	}
@@ -271,5 +268,9 @@ public class Player {
 	
 	public void updateResult(String newResult) {
 		result = newResult;
+	}
+
+	public Solution getAccusation() {
+		return null;
 	}
 }

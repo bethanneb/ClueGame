@@ -20,6 +20,6 @@ Front Desk
 Vance Refrigeration
 Break Room
 Kitchen
-Jimâ€™s Desk
-Michaelâ€™s Office
-Dwightâ€™s Desk
+Jim’s Desk
+Michael’s Office
+Dwight’s Desk

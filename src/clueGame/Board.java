@@ -649,19 +649,22 @@ public class Board extends JPanel {
 		r = accusation.getRoom(); 
 
 		// check person 
-		if (!answerKey.getPerson().equals(p)) {
+		if (!solution.getPerson().equals(p)) {
 			return false; 
 		}
 		// check weapon 
-		if (!answerKey.getWeapon().equals(w)) {
+		if (!solution.getWeapon().equals(w)) {
 			return false; 
 		}
 		// check room 
-		if (!answerKey.getRoom().equals(r)) {
+		if (!solution.getRoom().equals(r)) {
 			return false; 
 		}
 
 		gameFinished = true; 
+		if(gameFinished) {
+			JOptionPane.showMessageDialog(null, "Game Over!", "Message", JOptionPane.INFORMATION_MESSAGE);
+		}
 
 		// If no differences exist then returns true 
 		return true;
@@ -812,7 +815,7 @@ public class Board extends JPanel {
 
 	public void updateHumanPosition(Player player) { 
 		//pick target
-		addMouseListener(new TargetListener());
+		
 
 		//done with turn
 		doneWithHuman = true;
@@ -852,7 +855,7 @@ public class Board extends JPanel {
 	public void GamePlay() {
 		int row = currentPlayerInGame.getRow(); 
 		int col = currentPlayerInGame.getColumn();
-
+		
 		//if human player turn
 		if (currentPlayerInGame instanceof HumanPlayer){
 			//must take turn
@@ -862,9 +865,12 @@ public class Board extends JPanel {
 			//find targets and then show them
 			calcTargets(row, col, currentDieRollValue());
 			repaint();
+			
+			addMouseListener(new TargetListener());
 
 			//update position
 			updateHumanPosition(currentPlayerInGame); 
+			ControlGUI.refreshGuessResultPanels();
 			repaint();
 		}
 
@@ -872,10 +878,20 @@ public class Board extends JPanel {
 		else {
 			//must take turn
 			doneWithComputer = false;
-
+			
 			//resets guess so it will not keep displaying previous guess
 			currentPlayerInGame.updateGuess("no guess");
 			currentPlayerInGame.updateResult("no result");
+			
+			if(currentPlayerInGame.isAccusationReady()) {
+				if (checkAccusation(currentPlayerInGame.getAccusation()) == false ) { 
+					incorrectAccusation(currentPlayerInGame.getAccusation());  
+				}
+				else { 
+					correctAccusation(currentPlayerInGame.getAccusation());
+				}
+			}
+			
 
 			//update position
 			updateComputerPosition(col, row, currentDieRollValue(), currentPlayerInGame);
@@ -885,16 +901,16 @@ public class Board extends JPanel {
 
 	}
 
-	public void handleSuggestion(Player computerPlayer) {
+	public void handleSuggestion(Player player) {
 		ArrayList<Card> foundCards = new ArrayList<Card>(); 
 
-		for(ComputerPlayer tempPlayer: computerPlayers) {
-			if (tempPlayer == computerPlayer) {
+		for(Player tempPlayer: getPlayerList()) {
+			if (tempPlayer == player) {
 				continue;  
 			}
 			else { 
 				// if a card is found by another player, the card is added to the ArrayList of cards
-				Card temp = tempPlayer.disproveSuggestion(computerPlayer.getCreatedSoln()); 
+				Card temp = tempPlayer.disproveSuggestion(player.getCreatedSoln()); 
 				if(temp != null) {
 					foundCards.add(temp);
 				}
@@ -903,16 +919,16 @@ public class Board extends JPanel {
 
 		//selecting a random number for selecting a found Card
 		Random rand = new Random(); 
-		int location = rand.nextInt(foundCards.size()); 
 
 		if (foundCards.size() == 0) { 
-			computerPlayer.setAccusation(computerPlayer.getCreatedSoln());
-			computerPlayer.updateResult("no new clue");
+			player.setAccusation(player.getCreatedSoln());
+			player.updateResult("no new clue");
 			
 		}
 		else { 
-			computerPlayer.addSeen(foundCards.get(location));
-			computerPlayer.updateResult(foundCards.get(location).getCardName());
+			int location = rand.nextInt(foundCards.size()); 
+			player.giveCard(foundCards.get(location));
+			player.updateResult(foundCards.get(location).getCardName());
 		}
 
 	}
@@ -956,7 +972,7 @@ public class Board extends JPanel {
 
 						//C24A
 						if (whichBox.isDoorway()) {
-
+							doneWithHuman = false;
 							inWindow = true; 
 
 							myFrame = new JFrame("Make a Guess");
@@ -979,7 +995,6 @@ public class Board extends JPanel {
 							}
 							JPanel myPanel = new JPanel();
 							suggest = new Suggestion(currentRoom); 
-							System.out.println("SUGGEST: " + suggest);
 
 							myPanel = suggest; 
 
@@ -999,6 +1014,7 @@ public class Board extends JPanel {
 							myFrame.setLocationByPlatform(true);
 							myFrame.setVisible(true);
 							myFrame.setResizable(false);
+							
 							inWindow = false;
 						}
 
@@ -1016,17 +1032,13 @@ public class Board extends JPanel {
 	}
 
 	public void incorrectAccusation(Solution soln) { 
-
-		String message = "Incorrect guess. " + soln.getPerson() + " " + soln.getWeapon() + " " 
-				+ soln.getRoom() + " was not the answer. "; 
+		String message = "Accusation made. Incorrect guess. " + soln.getPerson() + ", " + soln.getWeapon() + ", " + soln.getRoom() + " was not the answer. "; 
 
 		JOptionPane.showMessageDialog(null, message);
 	}
 
 	public void correctAccusation(Solution soln) { 
-		String message = "You win! " + soln.getPerson() + " " + soln.getWeapon() + " " + 
-				soln.getRoom() + " was the correct answer!"; 
-
+		String message = "Accusation made. You win! " + soln.getPerson() + ", " + soln.getWeapon() + ", " + soln.getRoom() + " was the correct answer!"; 
 		JOptionPane.showMessageDialog(null, message);
 	}
 

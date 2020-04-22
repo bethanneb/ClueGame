@@ -234,11 +234,11 @@ public class gameActionTests {
 		computerPlayer.clearSeenCards();
 		for ( Card seen : people0)
 		{
-			computerPlayer.addSeen(seen);
+			computerPlayer.giveCard(seen);
 		}
 		for ( Card seen : weapons0)
 		{
-			computerPlayer.addSeen(seen);
+			computerPlayer.giveCard(seen);
 		}
 		computerPlayer.createSuggestion(board.getCellAt(19, 18), people0, weapons0, board.getLegend(), computerPlayer);
 		sol = computerPlayer.getCreatedSoln();
@@ -250,21 +250,21 @@ public class gameActionTests {
 
 		ArrayList<Card> weapons = new ArrayList<Card>();
 		ArrayList<Card> people = new ArrayList<Card>();
-		computerPlayer.addSeen(card);
-		computerPlayer.addSeen(card2);
-		computerPlayer.addSeen(card3);
-		computerPlayer.addSeen(card4);
-		computerPlayer.addSeen(card5);
-		computerPlayer.addSeen(card6);
-		computerPlayer.addSeen(card7);
-		computerPlayer.addSeen(card8);
-		computerPlayer.addSeen(card9);
-		computerPlayer.addSeen(card10);
-		computerPlayer.addSeen(card11);
-		computerPlayer.addSeen(card12);
-		computerPlayer.addSeen(card13);
-		computerPlayer.addSeen(card14);
-		computerPlayer.addSeen(card15);
+		computerPlayer.giveCard(card);
+		computerPlayer.giveCard(card2);
+		computerPlayer.giveCard(card3);
+		computerPlayer.giveCard(card4);
+		computerPlayer.giveCard(card5);
+		computerPlayer.giveCard(card6);
+		computerPlayer.giveCard(card7);
+		computerPlayer.giveCard(card8);
+		computerPlayer.giveCard(card9);
+		computerPlayer.giveCard(card10);
+		computerPlayer.giveCard(card11);
+		computerPlayer.giveCard(card12);
+		computerPlayer.giveCard(card13);
+		computerPlayer.giveCard(card14);
+		computerPlayer.giveCard(card15);
 
 		weapons.add(card);
 		weapons.add(card2);
@@ -295,21 +295,21 @@ public class gameActionTests {
 
 		ArrayList<Card> weapons2 = new ArrayList<Card>();
 		ArrayList<Card> people2 = new ArrayList<Card>();
-		computerPlayer.addSeen(card2);
-		computerPlayer.addSeen(card3);
-		computerPlayer.addSeen(card4);
-		computerPlayer.addSeen(card5);
-		computerPlayer.addSeen(card6);
-		computerPlayer.addSeen(card7);
-		computerPlayer.addSeen(card8);
-		computerPlayer.addSeen(card9);
-		computerPlayer.addSeen(card10);
-		computerPlayer.addSeen(card11);
-		computerPlayer.addSeen(card12);
-		computerPlayer.addSeen(card13);
-		computerPlayer.addSeen(card14);
-		computerPlayer.addSeen(card15);
-		computerPlayer.addSeen(card16);
+		computerPlayer.giveCard(card2);
+		computerPlayer.giveCard(card3);
+		computerPlayer.giveCard(card4);
+		computerPlayer.giveCard(card5);
+		computerPlayer.giveCard(card6);
+		computerPlayer.giveCard(card7);
+		computerPlayer.giveCard(card8);
+		computerPlayer.giveCard(card9);
+		computerPlayer.giveCard(card10);
+		computerPlayer.giveCard(card11);
+		computerPlayer.giveCard(card12);
+		computerPlayer.giveCard(card13);
+		computerPlayer.giveCard(card14);
+		computerPlayer.giveCard(card15);
+		computerPlayer.giveCard(card16);
 
 		weapons2.add(card);
 		weapons2.add(card2);
@@ -341,18 +341,18 @@ public class gameActionTests {
 
 		ArrayList<Card> weapons3 = new ArrayList<Card>();
 		ArrayList<Card> people3 = new ArrayList<Card>();
-		computerPlayer.addSeen(card2);
-		computerPlayer.addSeen(card3);
-		computerPlayer.addSeen(card4);
-		computerPlayer.addSeen(card5);
-		computerPlayer.addSeen(card6);
-		computerPlayer.addSeen(card7);
-		computerPlayer.addSeen(card8);
-		computerPlayer.addSeen(card9);
-		computerPlayer.addSeen(card10);
-		computerPlayer.addSeen(card11);
-		computerPlayer.addSeen(card12);
-		computerPlayer.addSeen(card13);
+		computerPlayer.giveCard(card2);
+		computerPlayer.giveCard(card3);
+		computerPlayer.giveCard(card4);
+		computerPlayer.giveCard(card5);
+		computerPlayer.giveCard(card6);
+		computerPlayer.giveCard(card7);
+		computerPlayer.giveCard(card8);
+		computerPlayer.giveCard(card9);
+		computerPlayer.giveCard(card10);
+		computerPlayer.giveCard(card11);
+		computerPlayer.giveCard(card12);
+		computerPlayer.giveCard(card13);
 
 		weapons3.add(card);
 		weapons3.add(card2);
@@ -384,18 +384,18 @@ public class gameActionTests {
 		ArrayList<Card> weapons4 = new ArrayList<Card>();
 		ArrayList<Card> people4 = new ArrayList<Card>();
 
-		computerPlayer.addSeen(card5);
-		computerPlayer.addSeen(card6);
-		computerPlayer.addSeen(card7);
-		computerPlayer.addSeen(card8);
-		computerPlayer.addSeen(card9);
-		computerPlayer.addSeen(card10);
-		computerPlayer.addSeen(card11);
-		computerPlayer.addSeen(card12);
-		computerPlayer.addSeen(card13);
-		computerPlayer.addSeen(card14);
-		computerPlayer.addSeen(card15);
-		computerPlayer.addSeen(card16);
+		computerPlayer.giveCard(card5);
+		computerPlayer.giveCard(card6);
+		computerPlayer.giveCard(card7);
+		computerPlayer.giveCard(card8);
+		computerPlayer.giveCard(card9);
+		computerPlayer.giveCard(card10);
+		computerPlayer.giveCard(card11);
+		computerPlayer.giveCard(card12);
+		computerPlayer.giveCard(card13);
+		computerPlayer.giveCard(card14);
+		computerPlayer.giveCard(card15);
+		computerPlayer.giveCard(card16);
 
 		weapons4.add(card);
 		weapons4.add(card2);
@@ -461,9 +461,9 @@ public class gameActionTests {
 		String r1 = s1.getRoom(); 
 		Card cr1 = new Card(r1, CardType.ROOM);
 
-		testPlayer.addCard(cp1);
-		testPlayer.addCard(cw1);
-		testPlayer.addCard(cr1);
+		testPlayer.giveCard(cp1);
+		testPlayer.giveCard(cw1);
+		testPlayer.giveCard(cr1);
 
 		String p2 = "wrong"; 
 		String w2 = w1; 
@@ -541,15 +541,15 @@ public class gameActionTests {
 		Player nardDog = new ComputerPlayer();
 		nardDog.setName("Andy Bernard");
 
-		kevin.addCard(weapon1);
-		kevin.addCard(room1);
-		kevin.addCard(person1);
-		jim.addCard(weapon2);
-		jim.addCard(room2);
-		jim.addCard(person2);
-		pam.addCard(weapon3);
-		pam.addCard(room3);
-		pam.addCard(person3);
+		kevin.giveCard(weapon1);
+		kevin.giveCard(room1);
+		kevin.giveCard(person1);
+		jim.giveCard(weapon2);
+		jim.giveCard(room2);
+		jim.giveCard(person2);
+		pam.giveCard(weapon3);
+		pam.giveCard(room3);
+		pam.giveCard(person3);
 
 		ArrayList<Player> List = new ArrayList<>();
 		List.add(nardDog);
@@ -565,7 +565,7 @@ public class gameActionTests {
 
 		//Add matching cards for the accuser and then test for null
 		Card match = new Card("Oscar Martinez", CardType.PERSON);
-		nardDog.addCard(match);
+		nardDog.giveCard(match);
 		tempCard = board.handleSuggestion(List, nardDog.getSuggestion(), nardDog);
 		//System.out.println(tempCard);
 		assertEquals(tempCard,null);
@@ -573,7 +573,7 @@ public class gameActionTests {
 		//Tests that the human player will return a card when they are the only one with a match
 		Solution humanHasMatch = new Solution("Michael Scott", "Pepper Spray", "Boomerang");
 		Card humanMatch = new Card("Pepper Spray", CardType.WEAPON);
-		jim.addCard(humanMatch);
+		jim.giveCard(humanMatch);
 		tempCard = board.handleSuggestion(List, humanHasMatch, nardDog);
 		assertEquals(tempCard, humanMatch);
 
@@ -588,14 +588,14 @@ public class gameActionTests {
 		jim.setSuggestion(new Solution());
 		nardDog.setSuggestion(solution);
 		Card humanMatch2 = new Card("Break Room", CardType.ROOM);
-		pam.addCard(humanMatch2);
+		pam.giveCard(humanMatch2);
 		assertEquals(board.handleSuggestion(List, nardDog.getSuggestion(), nardDog), humanMatch);
 
 
 		//Tests the same as before except the computer player before the human player has the match instead. 
 		//Checks to see if the computer is chosen first
 		pam.setCards(new ArrayList<Card>());
-		kevin.addCard(humanMatch2);
+		kevin.giveCard(humanMatch2);
 		assertEquals(board.handleSuggestion(List, nardDog.getSuggestion(), nardDog), humanMatch2);	
 	}
 }

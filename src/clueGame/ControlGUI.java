@@ -105,9 +105,7 @@ public class ControlGUI extends JPanel {
 		this.currentDie.setEditable(false);
 		name.setEditable(false);
 		panel.add(nameLabel);
-		//panel.setPreferredSize(new Dimension(20, 5));
-		//panel.add(name);
-		System.out.println("Current die: " + board.currentDieRollValue());
+
 		panel.add(this.currentDie);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Die"));
 		return panel;
@@ -158,12 +156,12 @@ public class ControlGUI extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//refreshGuessResultPanels();
-			if (board.doneWithHuman){
+			if (board.doneWithHuman && !board.gameFinished){
 				// TODO call appropriate methods in the Board Class for processing 
 				board.nextPlayerButtonMethod();
-				refreshGuessResultPanels();
+				
 				refreshDieAndNamePanel();
-
+				refreshGuessResultPanels();
 			}
 		}
 	}

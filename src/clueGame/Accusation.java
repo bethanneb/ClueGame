@@ -107,10 +107,8 @@ public class Accusation extends JPanel {
 		this.accusationFrame = accusationFrame;
 	}
 	
-	private class submitButtonListener implements ActionListener
-	{
-		public void actionPerformed(ActionEvent e)
-		{
+	private class submitButtonListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
 
 			int foundP = peopleList.getSelectedIndex();
 			peopleAnswer = people[foundP]; 
