@@ -217,17 +217,4 @@ public class ControlGUI extends JPanel {
 		}
 	}
 
-	public static void main(String[] args) {
-		// Create a JFrame with all the normal functionality
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("Clue Game");
-		frame.setSize(800, 200);	
-		// Create the JPanel and add it to the JFrame
-		ControlGUI gui = new ControlGUI(null);
-		frame.add(gui, BorderLayout.CENTER);
-		// Now let's view it
-		frame.setVisible(true);
-	}
-
 }
