@@ -904,6 +904,7 @@ public class Board extends JPanel {
 		//selecting a random number for selecting a found Card
 		Random rand = new Random(); 
 		int location = rand.nextInt(foundCards.size()); 
+		System.out.println("Found Cards: " + foundCards.size() + ", Location: " + location);
 
 		if (foundCards.size() == 0) { 
 			computerPlayer.setAccusation(computerPlayer.getCreatedSoln());

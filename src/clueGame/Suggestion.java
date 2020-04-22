@@ -1,7 +1,11 @@
 package clueGame;
 
+import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.plaf.metal.MetalIconFactory;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -35,7 +39,9 @@ public class Suggestion extends JPanel {
 		peopleList = new JComboBox(people);
 		weaponsList = new JComboBox(weapons);
 
-		setBorder(new TitledBorder (new EtchedBorder(), "Suggestion"));
+		//JTextField suggestion = new JTextField();
+		//setBorder(new TitledBorder (new EtchedBorder(), "Suggestion"));
+		setBorder(BorderFactory.createTitledBorder(null, "Suggestion", TitledBorder.CENTER, TitledBorder.TOP, new Font("Lucida Grande",Font.PLAIN,16), Color.black));
 		setLayout(new GridLayout(4,1));
 		
 		JPanel panel = peopleGuess();
@@ -61,7 +67,11 @@ public class Suggestion extends JPanel {
 		peopleList.setFont(new java.awt.Font("Lucida Grande", Font.PLAIN, 20));
 		JPanel panel = new JPanel();
 		panel.add(peopleList);
-		panel.setBorder(new TitledBorder (new EtchedBorder(), "People Guess"));
+		//panel.setBorder(new TitledBorder (new EtchedBorder(), "People Guess"));
+		
+		//panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWEED), "People Guess"));
+		panel.setBorder(BorderFactory.createTitledBorder(null, "People Guess", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande",Font.PLAIN,16), Color.black));
+		
 		return panel;
 	}
 
@@ -69,7 +79,8 @@ public class Suggestion extends JPanel {
 		weaponsList.setFont(new java.awt.Font("Lucida Grande", Font.PLAIN, 20));
 		JPanel panel = new JPanel();
 		panel.add(weaponsList);
-		panel.setBorder(new TitledBorder (new EtchedBorder(), "Weapon Guess"));
+		//panel.setBorder(new TitledBorder (new EtchedBorder(), "Weapon Guess"));
+		panel.setBorder(BorderFactory.createTitledBorder(null, "Weapon Guess", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande",Font.PLAIN,16), Color.black));
 		return panel; 
 	}
 
@@ -78,7 +89,9 @@ public class Suggestion extends JPanel {
 		JTextField textName = new JTextField(roomName); 
 		textName.setFont(new java.awt.Font("Lucida Grande", Font.PLAIN, 20));
 		textName.setEditable(false);
-		panel.setBorder(new TitledBorder (new EtchedBorder(), "Room Guess"));
+		//panel.setBorder(new TitledBorder (new EtchedBorder(), "Room Guess"));
+		panel.setBorder(BorderFactory.createTitledBorder(null, "Room Guess", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande",Font.PLAIN,16), Color.black));
+		
 		panel.add(textName);
 		return panel; 		
 	}
@@ -185,5 +198,5 @@ public class Suggestion extends JPanel {
 	public String getCurrentHumanResult() {
 		return this.currentResults;
 	}
-
+	
 }

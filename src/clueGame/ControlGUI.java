@@ -123,10 +123,9 @@ public class ControlGUI extends JPanel {
 
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
-		panel.setLayout(new GridLayout(1,0));
-		//panel.setLayout(new GridLayout(2,4));
+		//panel.setLayout(new GridLayout(1,0));
+		panel.setLayout(new GridLayout(2,4));
 		//panel.setPreferredSize(new Dimension(100, 100));
-
 		//C24A
 		panel.add(currentGuess);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Guess"));
