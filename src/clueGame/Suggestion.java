@@ -106,7 +106,7 @@ public class Suggestion extends JPanel {
 
 	private class cancelButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) { 
-			System.out.println("Canceling suggestion class "); 
+			System.out.println("Canceling suggestion class"); 
 			board.closeMyFrame();
 
 		}

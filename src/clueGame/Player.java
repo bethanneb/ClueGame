@@ -33,6 +33,7 @@ public class Player {
 	private BoardCell previous;
 	private Solution solution;
 	public String guess;
+	public String result;
 
 	// constructors
 	public Player()
@@ -42,7 +43,8 @@ public class Player {
 		myCards = new HashSet<Card>();
 		seenCards = new HashSet<Card>();
 		color = Color.white;
-		guess = "no guess yet";
+		guess = "no guess";
+		result = "no result";
 	}
 	
 	// Player parameterized constructors
@@ -55,8 +57,8 @@ public class Player {
 		this.seenCards = new HashSet<Card>();
 		// can draw with correct scaling 
 		pixel = new Point (this.row * 22 + 15, this.column * 22 + 100);
-		guess = "no guess yet";
-		
+		guess = "no guess";
+		result = "no result";
 	}
 	
 	public Player(String playerName, int row, int column, Color color) {
@@ -69,7 +71,8 @@ public class Player {
 		seenCards = new HashSet<Card>();
 		// can draw with correct scaling 
 		pixel = new Point (this.row * 22 + 15, this.column * 22 + 100);
-		guess = "no guess yet";
+		guess = "no guess";
+		result = "no result";
 	}
 
 	public Color convertColor (String strColor) {
@@ -247,6 +250,8 @@ public class Player {
 		this.suggestion = suggestion;
 	}
 	
+	public void setAccusation(Solution nextAccusation) {}
+	
 	public ArrayList<Card> cards;
 	public void setCards(ArrayList<Card> cards) {
 		this.cards = cards;
@@ -260,4 +265,11 @@ public class Player {
 		guess = newGuess;
 	}
 
+	public String getResult(){
+		return result;
+	}
+	
+	public void updateResult(String newResult) {
+		result = newResult;
+	}
 }
