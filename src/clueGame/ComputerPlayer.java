@@ -121,6 +121,7 @@ public class ComputerPlayer extends Player {
 			}
 			else exit = false;
 
+
 			if (seen.size() == 16)
 			{
 				//you can't pick a card you have already seen and there are only 12 cards total
@@ -181,11 +182,14 @@ public class ComputerPlayer extends Player {
 
 	}
 
-	public void setAccusation(Solution nextAccusation) {
+
+	public void setAccusation(Solution nextAccusation)
+	{
 		this.accusation.setPerson(nextAccusation.getPerson());
 		this.accusation.setRoom(nextAccusation.getRoom());
 		this.accusation.setWeapon(nextAccusation.getWeapon());
 	}
+
 
 	public Solution getAccusation() { return this.accusation; }
 	

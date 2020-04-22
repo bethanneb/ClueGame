@@ -98,7 +98,7 @@ public class Board extends JPanel {
 	private int dieRollValue = -1;
 	private boolean compReadyMakeAccusation = false;
 	private boolean compSuggestionDisproved = true;
-	private String currentGuess = "";
+	private String currentGuess = "no guess yet";
 	private String currentResults = "no new clue";
 	public boolean inWindow = false; 
 	public boolean isFirstTurn = true; 
@@ -792,8 +792,13 @@ public class Board extends JPanel {
 			}
 
 			dieRollValue = rollDie();
-
+			
+			//play game
+			GamePlay();
+			
 		}
+		
+		
 		else {
 			JOptionPane.showMessageDialog(null, "Take your turn", "Message", JOptionPane.INFORMATION_MESSAGE);
 		}
@@ -832,8 +837,8 @@ public class Board extends JPanel {
 
 		if(newLoc.isDoorway()) {
 			player.createSuggestion(newLoc, possiblePeople, possibleWeapons, legend, player);
-			currentGuess = (player.getCreatedSoln().getPerson() + ", " + player.getCreatedSoln().getRoom() + ", " + player.getCreatedSoln().getWeapon());
-			System.out.println(player.getName() + " made guess: " + currentGuess);
+			player.updateGuess(player.getCreatedSoln().getPerson() + ", " + player.getCreatedSoln().getRoom() + ", " + player.getCreatedSoln().getWeapon());
+			System.out.println(player.getName() + " made guess: " + player.getGuess());
 			//ControlGUI.currentGuess.setText(currentGuess);
 		}
 		
@@ -868,7 +873,7 @@ public class Board extends JPanel {
 		else {
 			//must take turn
 			doneWithComputer = false;
-
+			currentPlayerInGame.updateGuess("no guess");
 			//update position
 			updateComputerPosition(col, row, currentDieRollValue(), currentPlayerInGame);
 			repaint();
