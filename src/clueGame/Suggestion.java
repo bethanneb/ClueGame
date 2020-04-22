@@ -63,11 +63,6 @@ public class Suggestion extends JPanel {
 		panel.add(peopleList);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "People Guess"));
 		return panel;
-
-//		JPanel panel = new JPanel();
-//		panel.add(peopleList);
-//		panel.setBorder(new TitledBorder (new EtchedBorder(), "People Guess"));
-//		return panel;
 	}
 
 	private JPanel weaponsGuess() { 
@@ -76,11 +71,6 @@ public class Suggestion extends JPanel {
 		panel.add(weaponsList);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Weapon Guess"));
 		return panel; 
-
-//		JPanel panel = new JPanel();
-//		panel.add(weaponsList);
-//		panel.setBorder(new TitledBorder (new EtchedBorder(), "Weapon Guess"));
-//		return panel; 
 	}
 
 	private JPanel roomsGuess() {

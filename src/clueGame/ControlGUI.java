@@ -119,6 +119,7 @@ public class ControlGUI extends JPanel {
 		currentGuess.setPreferredSize(new Dimension(20, 20));
 		currentGuess.setEditable(false);
 		currentGuess.setFont(new java.awt.Font("Lucida Grande", Font.PLAIN, 10));
+		System.out.println("Current Guess: " + board.whoIsTheCurrentPLayer().getGuess());
 
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
@@ -163,7 +164,7 @@ public class ControlGUI extends JPanel {
 				refreshDieAndNamePanel();
 				
 				//board.GamePlay();
-				//refreshGuessResultPanels(); //ADD FUNCTION LATER?
+				refreshGuessResultPanels();
 			}
 		}
 	}
@@ -173,13 +174,9 @@ public class ControlGUI extends JPanel {
 	}
 
 	public void refreshDieAndNamePanel() {
-
 		currentName.setText(board.whoIsTheCurrentPLayer().getPlayerName());  
 		currentName.setEditable(false);
-		//currentName.repaint(); //NECESSARY???
-
 		currentDie.setText(String.valueOf(board.currentDieRollValue()));
-		//currentDie.repaint(); //NECESSARY???
 	}
 
 	private class MakeAccusationButtonListener implements ActionListener
