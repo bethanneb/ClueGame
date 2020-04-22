@@ -815,7 +815,7 @@ public class Board extends JPanel {
 
 	public void updateHumanPosition(Player player) { 
 		//pick target
-		
+		addMouseListener(new TargetListener());
 
 		//done with turn
 		doneWithHuman = true;
@@ -865,12 +865,10 @@ public class Board extends JPanel {
 			//find targets and then show them
 			calcTargets(row, col, currentDieRollValue());
 			repaint();
-			
-			addMouseListener(new TargetListener());
 
 			//update position
 			updateHumanPosition(currentPlayerInGame); 
-			ControlGUI.refreshGuessResultPanels();
+
 			repaint();
 		}
 
@@ -892,7 +890,6 @@ public class Board extends JPanel {
 				}
 			}
 			
-
 			//update position
 			updateComputerPosition(col, row, currentDieRollValue(), currentPlayerInGame);
 			repaint();
@@ -919,11 +916,6 @@ public class Board extends JPanel {
 
 		//selecting a random number for selecting a found Card
 		Random rand = new Random(); 
-<<<<<<< HEAD
-=======
-		int location = rand.nextInt(foundCards.size()); 
-		System.out.println("Found Cards: " + foundCards.size() + ", Location: " + location);
->>>>>>> refs/remotes/origin/master
 
 		if (foundCards.size() == 0) { 
 			player.setAccusation(player.getCreatedSoln());
@@ -1038,7 +1030,6 @@ public class Board extends JPanel {
 
 	public void incorrectAccusation(Solution soln) { 
 		String message = "Accusation made. Incorrect guess. " + soln.getPerson() + ", " + soln.getWeapon() + ", " + soln.getRoom() + " was not the answer. "; 
-
 		JOptionPane.showMessageDialog(null, message);
 	}
 

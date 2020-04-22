@@ -117,7 +117,6 @@ public class ControlGUI extends JPanel {
 		currentGuess.setPreferredSize(new Dimension(20, 20));
 		currentGuess.setEditable(false);
 		currentGuess.setFont(new java.awt.Font("Lucida Grande", Font.PLAIN, 10));
-		System.out.println("Current Guess: " + board.whoIsTheCurrentPLayer().getGuess());
 
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
@@ -161,13 +160,9 @@ public class ControlGUI extends JPanel {
 				board.nextPlayerButtonMethod();
 				
 				refreshDieAndNamePanel();
-<<<<<<< HEAD
+
 				refreshGuessResultPanels();
-=======
-				
-				//board.GamePlay();
-				//refreshGuessResultPanels();
->>>>>>> refs/remotes/origin/master
+
 			}
 		}
 	}

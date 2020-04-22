@@ -64,7 +64,7 @@ public class Suggestion extends JPanel {
 	}
 	
 	private JPanel peopleGuess() { 
-		peopleList.setFont(new java.awt.Font("Lucida Grande", Font.PLAIN, 20));
+		peopleList.setFont(new java.awt.Font("Lucida Grande", Font.PLAIN, 16));
 		JPanel panel = new JPanel();
 		panel.add(peopleList);
 		//panel.setBorder(new TitledBorder (new EtchedBorder(), "People Guess"));
@@ -73,29 +73,21 @@ public class Suggestion extends JPanel {
 		panel.setBorder(BorderFactory.createTitledBorder(null, "People Guess", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande",Font.PLAIN,16), Color.black));
 		
 		return panel;
-<<<<<<< HEAD
-
-=======
->>>>>>> refs/remotes/origin/master
 	}
 
 	private JPanel weaponsGuess() { 
-		weaponsList.setFont(new java.awt.Font("Lucida Grande", Font.PLAIN, 20));
+		weaponsList.setFont(new java.awt.Font("Lucida Grande", Font.PLAIN, 16));
 		JPanel panel = new JPanel();
 		panel.add(weaponsList);
 		//panel.setBorder(new TitledBorder (new EtchedBorder(), "Weapon Guess"));
 		panel.setBorder(BorderFactory.createTitledBorder(null, "Weapon Guess", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande",Font.PLAIN,16), Color.black));
 		return panel; 
-<<<<<<< HEAD
-
-=======
->>>>>>> refs/remotes/origin/master
 	}
 
 	private JPanel roomsGuess() {
 		JPanel panel = new JPanel();
 		JTextField textName = new JTextField(roomName); 
-		textName.setFont(new java.awt.Font("Lucida Grande", Font.PLAIN, 20));
+		textName.setFont(new java.awt.Font("Lucida Grande", Font.PLAIN, 16));
 		textName.setEditable(false);
 		//panel.setBorder(new TitledBorder (new EtchedBorder(), "Room Guess"));
 		panel.setBorder(BorderFactory.createTitledBorder(null, "Room Guess", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande",Font.PLAIN,16), Color.black));
@@ -154,12 +146,12 @@ public class Suggestion extends JPanel {
 	}
 
 	public String getCurrentHumanGuess() {
-		return  peopleAnswer + ", " + roomName + " room, " + weaponAnswer;
+		return  peopleAnswer + ", " + roomName + ", " + weaponAnswer;
 	}
 
 
 	public String getCurrentHumanResult() {
-		return this.currentResults;
+		return currentResults;
 	}
 	
 }

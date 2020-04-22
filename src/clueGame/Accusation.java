@@ -94,9 +94,7 @@ public class Accusation extends JPanel {
 	
 	private class cancelButtonListener implements ActionListener
 	{
-		public void actionPerformed(ActionEvent e)
-		{ 
-			System.out.println("Canceling suggestion class "); 
+		public void actionPerformed(ActionEvent e){ 
 			accusationFrame.setVisible(false);
 			accusationFrame.dispose();
 		}
@@ -116,7 +114,6 @@ public class Accusation extends JPanel {
 			weaponAnswer = weapons[foundW];
 			int foundR = roomsList.getSelectedIndex();
 			roomAnswer = rooms[foundR]; 
-			System.out.println("Answer Found: " + peopleAnswer + ", " + roomAnswer + ", " + weaponAnswer);
 			
 			Solution soln = new Solution(peopleAnswer, weaponAnswer, roomAnswer);
 			
