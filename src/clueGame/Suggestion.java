@@ -64,6 +64,8 @@ public class Suggestion extends JPanel {
 	
 	private JPanel peopleGuess() {
 		JComboBox peopleList = new JComboBox(people); 
+		int font = peopleList.getFont().getSize();
+		System.out.println("Font: " + font);
 		JPanel panel = new JPanel();
 		panel.add(peopleList);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "People Guess"));

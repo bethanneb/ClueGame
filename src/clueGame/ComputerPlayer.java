@@ -121,21 +121,12 @@ public class ComputerPlayer extends Player {
 			}
 			else exit = false;
 
-<<<<<<< HEAD
 			if (seen.size() == 16)
 			{
 				//you can't pick a card you have already seen and there are only 12 cards total
 				createdSoln.setRoom(room);
 				createdSoln.setPerson(null);
 				createdSoln.setWeapon(null);
-=======
-			if (seen.size() == 25)
-			{
-				//you can't pick a card you have already seen and there are 25 cards total
-				createdSoln.setAnswerKeyRoom(room);
-				createdSoln.setAnswerKeyPerson(null);
-				createdSoln.setAnswerKeyWeapon(null);
->>>>>>> eb1dfa0662bdffcbe0f4c7dfbde288b80e3b6cc3
 			}
 		}
 		// make the suggestion using the Solution class
@@ -190,18 +181,10 @@ public class ComputerPlayer extends Player {
 
 	}
 
-<<<<<<< HEAD
-	public void setAccusation(Solution nextAccusation)
-	{
+	public void setAccusation(Solution nextAccusation) {
 		this.accusation.setPerson(nextAccusation.getPerson());
 		this.accusation.setRoom(nextAccusation.getRoom());
 		this.accusation.setWeapon(nextAccusation.getWeapon());
-=======
-	public void setAccusation(Solution nextAccusation) {
-		this.accusation.setAnswerKeyPerson(nextAccusation.getPerson());
-		this.accusation.setAnswerKeyRoom(nextAccusation.getRoom());
-		this.accusation.setAnswerKeyWeapon(nextAccusation.getWeapon());
->>>>>>> eb1dfa0662bdffcbe0f4c7dfbde288b80e3b6cc3
 	}
 
 	public Solution getAccusation() { return this.accusation; }
