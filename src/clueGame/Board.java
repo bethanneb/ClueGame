@@ -919,6 +919,11 @@ public class Board extends JPanel {
 
 		//selecting a random number for selecting a found Card
 		Random rand = new Random(); 
+<<<<<<< HEAD
+=======
+		int location = rand.nextInt(foundCards.size()); 
+		System.out.println("Found Cards: " + foundCards.size() + ", Location: " + location);
+>>>>>>> refs/remotes/origin/master
 
 		if (foundCards.size() == 0) { 
 			player.setAccusation(player.getCreatedSoln());

@@ -117,13 +117,13 @@ public class ControlGUI extends JPanel {
 		currentGuess.setPreferredSize(new Dimension(20, 20));
 		currentGuess.setEditable(false);
 		currentGuess.setFont(new java.awt.Font("Lucida Grande", Font.PLAIN, 10));
+		System.out.println("Current Guess: " + board.whoIsTheCurrentPLayer().getGuess());
 
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
-
+		//panel.setLayout(new GridLayout(1,0));
 		panel.setLayout(new GridLayout(2,4));
 		//panel.setPreferredSize(new Dimension(100, 100));
-		
 		//C24A
 		panel.add(currentGuess);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Guess"));
@@ -161,7 +161,13 @@ public class ControlGUI extends JPanel {
 				board.nextPlayerButtonMethod();
 				
 				refreshDieAndNamePanel();
+<<<<<<< HEAD
 				refreshGuessResultPanels();
+=======
+				
+				//board.GamePlay();
+				//refreshGuessResultPanels();
+>>>>>>> refs/remotes/origin/master
 			}
 		}
 	}
@@ -172,13 +178,9 @@ public class ControlGUI extends JPanel {
 	}
 
 	public void refreshDieAndNamePanel() {
-
 		currentName.setText(board.whoIsTheCurrentPLayer().getPlayerName());  
 		currentName.setEditable(false);
-		//currentName.repaint(); //NECESSARY???
-
 		currentDie.setText(String.valueOf(board.currentDieRollValue()));
-		//currentDie.repaint(); //NECESSARY???
 	}
 
 	private class MakeAccusationButtonListener implements ActionListener
@@ -215,19 +217,6 @@ public class ControlGUI extends JPanel {
 				JOptionPane.showMessageDialog(null, "Cannot make accusation now.", "Message", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
-	}
-
-	public static void main(String[] args) {
-		// Create a JFrame with all the normal functionality
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("Clue Game");
-		frame.setSize(800, 200);	
-		// Create the JPanel and add it to the JFrame
-		ControlGUI gui = new ControlGUI(null);
-		frame.add(gui, BorderLayout.CENTER);
-		// Now let's view it
-		frame.setVisible(true);
 	}
 
 }
