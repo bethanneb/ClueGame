@@ -141,38 +141,26 @@ public class ControlGUI extends JPanel {
 
 	//We decided to implement this class within this one to make it easier to access certain variables
 	private class NextPlayerButtonListener implements ActionListener{
+
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			//refreshGuessResultPanels();
 			if (board.doneWithHuman){
 				// TODO call appropriate methods in the Board Class for processing 
 				board.nextPlayerButtonMethod();
 				// TODO need to refresh the createDiePanel and createNamePanel
+				refreshGuessResultPanels();
 				refreshDieAndNamePanel();
-				board.GamePlay();
+				
+				//board.GamePlay();
 				//refreshGuessResultPanels(); //ADD FUNCTION LATER?
 			}
 		}
 	}
 
 	public void refreshGuessResultPanels() {
-
-		if (board.whoIsTheCurrentPLayer() instanceof HumanPlayer) {
-			currentGuess.setText("bob");
-		}
-		//{
-			//suggestionHuman = board.passCurrentSuggestionState();
-			//System.out.println(suggestionHuman.getCurrentHumanGuess());
-			//currentGuess.setText(suggestionHuman.getCurrentHumanGuess());
-			//currentResult.setText(suggestionHuman.getCurrentHumanResult());
-		//}
-		//else
-		//{
-		if(board.whoIsTheCurrentPLayer() instanceof ComputerPlayer) {
-			currentGuess.setText(board.whatIsTheCurrentGuess());
-			//this.currentGuess.setEditable(false);
-			currentResult.setText(board.whatIsTheCurrentResult());
-			//this.currentResult.setEditable(false);
-		}
+		currentGuess.setText(board.whoIsTheCurrentPLayer().getGuess());
 	}
 
 	public void refreshDieAndNamePanel() {
@@ -211,7 +199,7 @@ public class ControlGUI extends JPanel {
 				accusationWindow.setVisible(true);
 				accusationWindow.setResizable(true);
 				accusationClass.passFrame(accusationWindow);
-				
+
 				//can only accuse once
 				board.hasNotAccused = false;
 			}
