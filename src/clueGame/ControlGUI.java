@@ -1,6 +1,8 @@
 
 package clueGame;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -57,11 +59,13 @@ public class ControlGUI extends JPanel {
 	public JPanel createNamePanel() {
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
-		panel.setLayout(new GridLayout(1,2));
+		panel.setLayout(new GridLayout(1,1));
 		JLabel nameLabel = new JLabel("Name");
 		currentName = new JTextField();
 		panel.add(nameLabel);
 		currentName.setEditable(false);
+		//panel.setPreferredSize(new Dimension(20, 5));
+		//System.out.println("Current font: " + currentName.getFont());
 		panel.add(currentName);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Whose turn?"));
 		return panel;
@@ -94,13 +98,14 @@ public class ControlGUI extends JPanel {
 		JTextField name; 
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
-		panel.setLayout(new GridLayout(1,2));
+		panel.setLayout(new GridLayout(1,1));
 		JLabel nameLabel = new JLabel("Roll"); 
 		String die = String.valueOf(dieRoll);
 		name = new JTextField(die);
 		this.currentDie.setEditable(false);
 		name.setEditable(false);
 		panel.add(nameLabel);
+		//panel.setPreferredSize(new Dimension(20, 5));
 		//panel.add(name);
 		System.out.println("Current die: " + board.currentDieRollValue());
 		panel.add(this.currentDie);
@@ -111,11 +116,19 @@ public class ControlGUI extends JPanel {
 	// panel 5
 	private JPanel createGuessPanel() {
 		currentGuess = new JTextField();
+		currentGuess.setPreferredSize(new Dimension(20, 20));
 		currentGuess.setEditable(false);
+		currentGuess.setFont(new java.awt.Font("Lucida Grande", Font.PLAIN, 10));
 
 		JPanel panel = new JPanel();
 		// Use a grid layout, 1 row, 2 elements (label, text)
+<<<<<<< HEAD
 		panel.setLayout(new GridLayout(1,0));
+=======
+		panel.setLayout(new GridLayout(2,4));
+		//panel.setPreferredSize(new Dimension(100, 100));
+		
+>>>>>>> d9274c59484711cd47b6f89ae34f6c9169949001
 
 		//C24A
 		panel.add(currentGuess);

@@ -1,16 +1,11 @@
 package clueGame;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
-import java.awt.BorderLayout;
-import java.awt.ItemSelectable;
 
 public class Suggestion extends JPanel {
 
@@ -62,8 +57,8 @@ public class Suggestion extends JPanel {
 		this.roomName = r; 
 	}
 	
-	private JPanel peopleGuess() {
-		JComboBox peopleList = new JComboBox(people); 
+	private JPanel peopleGuess() { 
+		peopleList.setFont(new java.awt.Font("Lucida Grande", Font.PLAIN, 20));
 		JPanel panel = new JPanel();
 		panel.add(peopleList);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "People Guess"));
@@ -76,7 +71,7 @@ public class Suggestion extends JPanel {
 	}
 
 	private JPanel weaponsGuess() { 
-		JComboBox weaponsList = new JComboBox(weapons); 
+		weaponsList.setFont(new java.awt.Font("Lucida Grande", Font.PLAIN, 20));
 		JPanel panel = new JPanel();
 		panel.add(weaponsList);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Weapon Guess"));
@@ -90,12 +85,11 @@ public class Suggestion extends JPanel {
 
 	private JPanel roomsGuess() {
 		JPanel panel = new JPanel();
-
 		JTextField textName = new JTextField(roomName); 
+		textName.setFont(new java.awt.Font("Lucida Grande", Font.PLAIN, 20));
 		textName.setEditable(false);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Room Guess"));
 		panel.add(textName);
-
 		return panel; 		
 	}
 
