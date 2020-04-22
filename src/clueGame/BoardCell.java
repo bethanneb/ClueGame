@@ -101,44 +101,35 @@ public class BoardCell {
 	
 	//C21A
 	public void draw (Graphics g ) {
-		// set color 
-		if (this.initial == 'W') 
-		{
+		//walkways are grey
+		if (this.initial == 'W') {
 			this.color = Color.GRAY;
 			g.setColor(this.color);
 			g.fillRect(this.pixel.y , this.pixel.x, WIDTH, HEIGHT);
 		}
-		if (isRoom()) 
-		{
-			if (isDoorway())
-			{
-				if (doorDirection == DoorDirection.UP)
-				{
-					this.color = Color.WHITE;
+		if (isRoom()) {
+			//display where doors are
+			if (isDoorway()){
+				this.color = Color.WHITE;
+				if (doorDirection == DoorDirection.UP){
 					g.setColor(this.color);
 					g.fillRect(this.pixel.y, this.pixel.x, WIDTH, HEIGHT);
 					g.setColor(Color.BLUE);
 					g.fillRect(this.pixel.y, this.pixel.x, WIDTH, 4);
 				}
-				else if (doorDirection == DoorDirection.DOWN)
-				{
-					this.color = Color.WHITE;
+				else if (doorDirection == DoorDirection.DOWN){
 					g.setColor(this.color);
 					g.fillRect(this.pixel.y, this.pixel.x, WIDTH, HEIGHT);
 					g.setColor(Color.BLUE);
 					g.fillRect(this.pixel.y, this.pixel.x + 15, WIDTH, 4);
 				}
-				else if (doorDirection == DoorDirection.LEFT)
-				{
-					this.color = Color.WHITE;
+				else if (doorDirection == DoorDirection.LEFT){
 					g.setColor(this.color);
 					g.fillRect(this.pixel.y, this.pixel.x, WIDTH, HEIGHT);
 					g.setColor(Color.BLUE);
 					g.fillRect(this.pixel.y, this.pixel.x, 4,HEIGHT);
 				}
-				else if (doorDirection == DoorDirection.RIGHT)
-				{
-					this.color = Color.WHITE;
+				else if (doorDirection == DoorDirection.RIGHT){
 					g.setColor(this.color);
 					g.fillRect(this.pixel.y, this.pixel.x, WIDTH, HEIGHT);
 					g.setColor(Color.BLUE);
@@ -146,8 +137,7 @@ public class BoardCell {
 				}
 
 			}
-			else
-			{
+			else{
 				this.color = Color.WHITE;
 				g.setColor(this.color);
 				g.fillRect(this.pixel.y, this.pixel.x, WIDTH, HEIGHT);
@@ -155,8 +145,8 @@ public class BoardCell {
 
 
 		}
-		if (this.initial == 'X') 
-		{
+		//closet is green
+		if (this.initial == 'X') {
 			this.color = Color.GREEN;
 			g.setColor(this.color);
 			g.fillRect(this.pixel.y, this.pixel.x, WIDTH, HEIGHT);
@@ -165,36 +155,20 @@ public class BoardCell {
 
 	}
 	
+	//targets are different color
 	public void drawTargets( Graphics g) {
 		this.color = Color.CYAN;
 		g.setColor(this.color);
 		g.fillRect(this.pixel.y, this.pixel.x, WIDTH, HEIGHT);
 	}
 	
-	public void reDrawTargets ( Graphics g) {
-		if ( isDoorway())
-		{		
-			this.color = Color.WHITE;
-			g.setColor(this.color);
-			g.fillRect(this.pixel.y, this.pixel.x, WIDTH, HEIGHT);
-		}
-		if (this.initial == 'W') 
-		{
-			this.color = Color.GRAY;
-			g.setColor(this.color);
-			g.fillRect(this.pixel.y , this.pixel.x, WIDTH, HEIGHT);
-		}
-	}
-	
-	//C22A
+
 	public boolean containsClick(int mouseX, int mouseY) {
 		Rectangle rect = new Rectangle(pixel.x, pixel.y, WIDTH, HEIGHT);
-		if (rect.contains(new Point(mouseX, mouseY)))
-		{
+		if (rect.contains(new Point(mouseX, mouseY))){
 			return true;
 		}
-		else
-		{
+		else{
 			return false;
 		}
 	}

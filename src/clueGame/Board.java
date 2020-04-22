@@ -128,9 +128,7 @@ public class Board extends JPanel {
 		roomConfigFile = "OurClueLegend.txt";
 		Player emptyPlayer = new Player();
 		currentPlayerInGame = emptyPlayer;
-		//		this.panel = new JPanel();
-		//		JLabel name = new JLabel("Clue Game Board");
-		//		panel.add(name);
+
 
 	}
 
@@ -234,10 +232,8 @@ public class Board extends JPanel {
 			loadBoardConfig();
 			loadConfigFiles();
 			loadCards();
-			//deal the deck of cards
 			dealCards();
-			//find adjacencies (ADD THIS IN?)
-			//calcAdjacencies();
+
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found. " + e.getMessage());
 		} catch (BadConfigFormatException e) {
@@ -478,7 +474,6 @@ public class Board extends JPanel {
 					computerPlayers.add(player2);
 				}
 
-				//NEW
 				Card people = new Card (splits[0], CardType.PERSON);
 				peoplePile.add(people);
 
@@ -508,21 +503,23 @@ public class Board extends JPanel {
 		String temp;
 		Card currentCard;
 
+		//people cards
 		for(int i = 0; i < NUM_PEOPLE; i++){
 			temp = in.nextLine();
 			currentCard = new Card(CardType.PERSON, temp);
 			possiblePeople.add(currentCard);
 			cards[i] = new Card(CardType.PERSON, temp);
 		}
+		//weapon cards
 		for(int i = 0; i < NUM_WEAPONS; i++){
 			temp = in.nextLine();
-			//NEW
 			Card weapon = new Card (temp, CardType.WEAPON);
 			weaponsPile.add(weapon);
 			possibleWeapons.add(weapon);
 			currentCard = new Card(CardType.WEAPON, temp);
 			cards[i+NUM_PEOPLE] = new Card(CardType.WEAPON, temp);
 		}
+		//room cards
 		for(int i = 0; i < NUM_ROOMS; i++){
 			temp = in.nextLine();
 			currentCard = new Card(CardType.ROOM, temp);
@@ -542,18 +539,14 @@ public class Board extends JPanel {
 		return color;
 	}
 
-	//	//not sure if this is working correctly
-	private void dealCards() {
-		//answerKey = new Solution();
-		//possiblePeople.clear();
-		//possibleWeapons.clear(); 
-		//possibleRooms.clear(); 		
+	//deal cards
+	private void dealCards() {		
 		Card[] backup = new Card[cards.length];
 		for(int i = 0; i < DECK_SIZE; i++){
 			backup[i] = cards[i];
 		}
 
-
+		//randomly pick solution
 		Random rand = new Random();
 		int solutionPlayer = rand.nextInt(NUM_PEOPLE);
 		int solutionWeapon = rand.nextInt(NUM_WEAPONS) + NUM_PEOPLE;
@@ -561,6 +554,7 @@ public class Board extends JPanel {
 
 		solution = new Solution(cards[solutionPlayer].getCardName(), cards[solutionWeapon].getCardName(), cards[solutionRoom].getCardName());
 		Card remove = getCard(solution.getPerson(), CardType.PERSON);
+		//cant give solution cards out
 		cards[solutionPlayer] = null;
 		cards[solutionWeapon] = null;
 		cards[solutionRoom] = null;
@@ -595,7 +589,6 @@ public class Board extends JPanel {
 
 
 	public Card getCard(String name, CardType type) {
-
 		for (Card card : deck) {
 			if (card.getCardName().contentEquals(name) && card.getCardType().equals(type)) {
 				return card;
@@ -621,7 +614,7 @@ public class Board extends JPanel {
 
 	}
 
-	//I think this is what handleSolution is suppose to do (decide if the solution is accurate or not)
+	//handles solution for tests, same logic is used later
 	public Card handleSolution(Solution suggestion, String accusingPlayer, BoardCell clicked){
 		int startIndex = 0;
 		for(int i = 0; i < 6; i++){
@@ -661,6 +654,7 @@ public class Board extends JPanel {
 			return false; 
 		}
 
+		//if we have not returned false, then we have won
 		gameFinished = true; 
 		if(gameFinished) {
 			JOptionPane.showMessageDialog(null, "Game Over!", "Message", JOptionPane.INFORMATION_MESSAGE);
@@ -700,6 +694,7 @@ public class Board extends JPanel {
 		this.playersList = p;
 	}
 
+	//handles suggestion for tests, use same logic later
 	public Card handleSuggestion(ArrayList<Player> players, Solution suggestion, Player accuser) {
 
 		Card disproved = new Card();
@@ -800,8 +795,6 @@ public class Board extends JPanel {
 			GamePlay();
 
 		}
-
-
 		else {
 			JOptionPane.showMessageDialog(null, "Take your turn", "Message", JOptionPane.INFORMATION_MESSAGE);
 		}
@@ -838,6 +831,7 @@ public class Board extends JPanel {
 		//update location
 		player.updatePosition(newLoc.getRow(), newLoc.getCol());
 
+		//if they are in a room they make a guess and guess gets handled properly
 		if(newLoc.isDoorway()) {
 			player.createSuggestion(newLoc, possiblePeople, possibleWeapons, legend, player);
 			player.updateGuess(player.getCreatedSoln().getPerson() + ", " + player.getCreatedSoln().getRoom() + ", " + player.getCreatedSoln().getWeapon());
@@ -881,6 +875,7 @@ public class Board extends JPanel {
 			currentPlayerInGame.updateGuess("no guess");
 			currentPlayerInGame.updateResult("no result");
 			
+			//if computer is ready to accuse, they accuse
 			if(currentPlayerInGame.isAccusationReady()) {
 				if (checkAccusation(currentPlayerInGame.getAccusation()) == false ) { 
 					incorrectAccusation(currentPlayerInGame.getAccusation());  
@@ -917,11 +912,13 @@ public class Board extends JPanel {
 		//selecting a random number for selecting a found Card
 		Random rand = new Random(); 
 
+		//if did not disprove
 		if (foundCards.size() == 0) { 
 			player.setAccusation(player.getCreatedSoln());
 			player.updateResult("no new clue");
 			
 		}
+		//show a disproved card if one was disproved
 		else { 
 			int location = rand.nextInt(foundCards.size()); 
 			player.giveCard(foundCards.get(location));
@@ -967,7 +964,7 @@ public class Board extends JPanel {
 						currentPlayerInGame.updatePosition(clickRow, clickCol);
 						targetSelected = true;
 
-						//C24A
+						//suggestion box when in room
 						if (whichBox.isDoorway()) {
 							doneWithHuman = false;
 							inWindow = true; 

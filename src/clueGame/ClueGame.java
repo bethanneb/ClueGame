@@ -105,7 +105,7 @@ public class ClueGame extends JFrame {
 		Set<HumanPlayer>  humanPlayer = new HashSet<HumanPlayer>();
 		humanPlayer = board.getHumanPlayer();
 		String humanName = "";
-		//System.out.println("Size: " + humanPlayer.size());
+
 		for (HumanPlayer human: humanPlayer) { 
 			humanName = human.getPlayerName(); 
 		}

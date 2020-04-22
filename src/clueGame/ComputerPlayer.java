@@ -48,12 +48,10 @@ public class ComputerPlayer extends Player {
 				continue;
 			}
 			//if just getting to the door, will go into the room
-			else if (cell.isDoorway())
-			{
+			else if (cell.isDoorway()){
 				availableDoorways.add(cell);
 			}
-			else
-			{
+			else{
 				availablePaths.add(cell);
 			}
 		}
@@ -122,8 +120,7 @@ public class ComputerPlayer extends Player {
 			else exit = false;
 
 
-			if (seen.size() == 16)
-			{
+			if (seen.size() == 16){
 				//you can't pick a card you have already seen and there are only 12 cards total
 				createdSoln.setRoom(room);
 				createdSoln.setPerson(null);
@@ -135,8 +132,7 @@ public class ComputerPlayer extends Player {
 	}
 
 	@Override
-	public void setAccusation(Solution nextAccusation)
-	{
+	public void setAccusation(Solution nextAccusation){
 		accusation.setPerson(nextAccusation.getPerson());
 		accusation.setRoom(nextAccusation.getRoom());
 		accusation.setWeapon(nextAccusation.getWeapon());
@@ -153,16 +149,13 @@ public class ComputerPlayer extends Player {
 	}
 	
 	@Override
-	public boolean isAccusationReady()
-	{
+	public boolean isAccusationReady(){
 		if(accusation.getRoom() != "" && accusation.getPerson() != "" && accusation.getWeapon() != "") { 
 			return true; 
 		}
 		return false;
 	}
 
-	
-	//OLD
 	public void addSeenCard(Card card) {
 		seenCards.add(card);
 	}

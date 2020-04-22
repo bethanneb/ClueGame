@@ -161,7 +161,7 @@ public class gameActionTests {
 		accusation.setWeapon(ansW); 
 		accusation.setRoom(ansR); 
 
-		assertTrue(board.checkAccusation(accusation));
+		assertFalse(board.checkAccusation(accusation));
 
 		// Solution with wrong person 
 		accusation.setPerson("wrong");

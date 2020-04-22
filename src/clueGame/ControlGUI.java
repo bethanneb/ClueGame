@@ -58,14 +58,12 @@ public class ControlGUI extends JPanel {
 	//panel 1
 	public JPanel createNamePanel() {
 		JPanel panel = new JPanel();
-		// Use a grid layout, 1 row, 2 elements (label, text)
 		panel.setLayout(new GridLayout(1,1));
 		JLabel nameLabel = new JLabel("Name");
 		currentName = new JTextField();
 		panel.add(nameLabel);
 		currentName.setEditable(false);
-		//panel.setPreferredSize(new Dimension(20, 5));
-		//System.out.println("Current font: " + currentName.getFont());
+
 		panel.add(currentName);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Whose turn?"));
 		return panel;
@@ -77,7 +75,6 @@ public class ControlGUI extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1,0));
 		panel.add(nextPlayer);
-		// NOTE: nextPlayer needs to be a listener
 		nextPlayer.addActionListener(new NextPlayerButtonListener());
 		return panel;
 	}
@@ -95,18 +92,15 @@ public class ControlGUI extends JPanel {
 	//panel 4
 	private JPanel createDiePanel() {
 		currentDie = new JTextField(String.valueOf(board.currentDieRollValue()));
-		JTextField name; 
+		currentDie.setEditable(false);
+		
 		JPanel panel = new JPanel();
-		// Use a grid layout, 1 row, 2 elements (label, text)
 		panel.setLayout(new GridLayout(1,1));
 		JLabel nameLabel = new JLabel("Roll"); 
-		String die = String.valueOf(dieRoll);
-		name = new JTextField(die);
-		this.currentDie.setEditable(false);
-		name.setEditable(false);
-		panel.add(nameLabel);
 
-		panel.add(this.currentDie);
+		
+		panel.add(nameLabel);
+		panel.add(currentDie);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Die"));
 		return panel;
 	}
@@ -119,11 +113,8 @@ public class ControlGUI extends JPanel {
 		currentGuess.setFont(new java.awt.Font("Lucida Grande", Font.PLAIN, 10));
 
 		JPanel panel = new JPanel();
-		// Use a grid layout, 1 row, 2 elements (label, text)
-		//panel.setLayout(new GridLayout(1,0));
+
 		panel.setLayout(new GridLayout(2,4));
-		//panel.setPreferredSize(new Dimension(100, 100));
-		//C24A
 		panel.add(currentGuess);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Guess"));
 		return panel;
@@ -135,12 +126,10 @@ public class ControlGUI extends JPanel {
 		currentResult.setEditable(false);
 		
 		JPanel panel = new JPanel();
-		// Use a grid layout, 1 row, 2 elements (label, text)
 		panel.setLayout(new GridLayout(1,2));
 
 		JLabel nameLabel = new JLabel("Disproved:");
-		//JTextField response = new JTextField();
-		//response.setEditable(false);
+
 
 		panel.add(nameLabel);
 		panel.add(currentResult);
@@ -150,17 +139,15 @@ public class ControlGUI extends JPanel {
 
 	//We decided to implement this class within this one to make it easier to access certain variables
 	private class NextPlayerButtonListener implements ActionListener{
-
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//refreshGuessResultPanels();
-			if (board.doneWithHuman && !board.gameFinished){
-				// TODO call appropriate methods in the Board Class for processing 
-				board.nextPlayerButtonMethod();
-				
-				refreshDieAndNamePanel();
 
+			if (board.doneWithHuman && !board.gameFinished){
+				//plays game
+				board.nextPlayerButtonMethod();
+				//updates player name and die panels
+				refreshDieAndNamePanel();
+				//updates guess and result pane;s
 				refreshGuessResultPanels();
 
 			}
@@ -174,7 +161,6 @@ public class ControlGUI extends JPanel {
 
 	public void refreshDieAndNamePanel() {
 		currentName.setText(board.whoIsTheCurrentPLayer().getPlayerName());  
-		currentName.setEditable(false);
 		currentDie.setText(String.valueOf(board.currentDieRollValue()));
 	}
 

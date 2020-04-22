@@ -28,19 +28,13 @@ public class Suggestion extends JPanel {
 
 	public Suggestion(String r) { 
 
-		board = Board.getInstance();
-//		board.setConfigFiles("OurClueLayout.csv", "OurClueLegend.txt");
-//		board.setCardFiles("Players.txt", "Cards.txt");
-//		board.initialize();
-		//board.buildGamePlayers();
+		board = Board.getInstance();;
 
 		roomName = r; // Get current room from board 
 
 		peopleList = new JComboBox(people);
 		weaponsList = new JComboBox(weapons);
 
-		//JTextField suggestion = new JTextField();
-		//setBorder(new TitledBorder (new EtchedBorder(), "Suggestion"));
 		setBorder(BorderFactory.createTitledBorder(null, "Suggestion", TitledBorder.CENTER, TitledBorder.TOP, new Font("Lucida Grande",Font.PLAIN,16), Color.black));
 		setLayout(new GridLayout(4,1));
 		
@@ -67,9 +61,7 @@ public class Suggestion extends JPanel {
 		peopleList.setFont(new java.awt.Font("Lucida Grande", Font.PLAIN, 16));
 		JPanel panel = new JPanel();
 		panel.add(peopleList);
-		//panel.setBorder(new TitledBorder (new EtchedBorder(), "People Guess"));
-		
-		//panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWEED), "People Guess"));
+
 		panel.setBorder(BorderFactory.createTitledBorder(null, "People Guess", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande",Font.PLAIN,16), Color.black));
 		
 		return panel;
@@ -79,7 +71,7 @@ public class Suggestion extends JPanel {
 		weaponsList.setFont(new java.awt.Font("Lucida Grande", Font.PLAIN, 16));
 		JPanel panel = new JPanel();
 		panel.add(weaponsList);
-		//panel.setBorder(new TitledBorder (new EtchedBorder(), "Weapon Guess"));
+
 		panel.setBorder(BorderFactory.createTitledBorder(null, "Weapon Guess", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande",Font.PLAIN,16), Color.black));
 		return panel; 
 	}
@@ -89,7 +81,7 @@ public class Suggestion extends JPanel {
 		JTextField textName = new JTextField(roomName); 
 		textName.setFont(new java.awt.Font("Lucida Grande", Font.PLAIN, 16));
 		textName.setEditable(false);
-		//panel.setBorder(new TitledBorder (new EtchedBorder(), "Room Guess"));
+
 		panel.setBorder(BorderFactory.createTitledBorder(null, "Room Guess", TitledBorder.LEFT, TitledBorder.TOP, new Font("Lucida Grande",Font.PLAIN,16), Color.black));
 		
 		panel.add(textName);
@@ -131,8 +123,10 @@ public class Suggestion extends JPanel {
 			roomAnswer = roomName; 
 			setSuggestionInternal(peopleAnswer, roomAnswer, weaponAnswer);
 			
+			//update the human player's guess
 			board.whoIsTheCurrentPLayer().updateGuess(getCurrentHumanGuess());
 			
+			//gets suggestion and handles it 
 			humanSuggestedSolution = new Solution(peopleAnswer, roomAnswer, weaponAnswer);
 			board.whoIsTheCurrentPLayer().setSuggestion(humanSuggestedSolution);
 			board.handleSuggestion(board.whoIsTheCurrentPLayer());
